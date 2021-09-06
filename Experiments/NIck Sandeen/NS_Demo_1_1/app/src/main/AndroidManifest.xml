@@ -10,11 +10,14 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.NS_Demo_1_1">
         <activity
+            android:name=".LoginActivity"
+            android:exported="true" />
+        <activity
             android:name=".CounterActivity"
             android:exported="true" />
         <activity
             android:name=".MainActivity"
-            android:exported="true"></activity>
+            android:exported="true" />
     </application>
 
 </manifest>

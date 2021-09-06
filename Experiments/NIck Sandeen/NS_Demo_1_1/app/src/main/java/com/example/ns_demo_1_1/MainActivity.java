@@ -24,6 +24,7 @@ public class MainActivity extends AppCompatActivity {
         b1.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
+                Toast.makeText(getApplicationContext(), "Counter", Toast.LENGTH_SHORT).show();
                 Intent i = new Intent(MainActivity.this, CounterActivity.class);
                 startActivity(i);
             }
@@ -32,7 +33,9 @@ public class MainActivity extends AppCompatActivity {
         b2.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(getApplicationContext(), "Hello this is not actually the counter", Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "Login", Toast.LENGTH_SHORT).show();
+                Intent i2 = new Intent(MainActivity.this, LoginActivity.class);
+                startActivity(i2);
             }
         });
 

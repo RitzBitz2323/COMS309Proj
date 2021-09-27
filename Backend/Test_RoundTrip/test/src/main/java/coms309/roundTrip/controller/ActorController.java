@@ -19,17 +19,17 @@ public class ActorController {
 	@Autowired
 	ActorRepository actorRepository;
 	
-	@GetMapping("/actor/")
+	@GetMapping("/actors")
 	public List<Actor> getActors() {
 		return actorRepository.findAll();
 	}
 	
-	@GetMapping("/actor/{id}")
+	@GetMapping("/actors/{id}")
 	Actor findActorById(@PathVariable int id) {
 		return actorRepository.findById(id);
 	}
 	
-	@PostMapping("/actor/add")
+	@PostMapping("/actors/add")
 	public Actor add(@RequestBody Actor actor) {
 		
 		if(actor == null) return null;
@@ -38,12 +38,23 @@ public class ActorController {
 		return actor;
 	}
 	
-	@PostMapping("/actor/add/{first_name}/{last_name}")
-	public Actor addActor(@PathVariable String first_name, @PathVariable String last_name, @RequestParam(value="type") int user_type) {
+	@PostMapping("/actors/add/{first_name}/{last_name}")
+	public Actor addActor(@PathVariable String first_name, 
+			@PathVariable String last_name, 
+			@RequestParam(value="passworld", defaultValue="password") String password, 
+			@RequestParam(value="type") Integer user_type, 
+			@RequestBody Integer[] ticketIDs, 
+			@RequestParam(value="num_of_tickets", defaultValue="0") Integer numOfTickets,
+			@RequestParam(value="rating", defaultValue="0.0") Float rating) {
+		
 		Actor newActor = new Actor();
 		newActor.setFirstName(first_name);
 		newActor.setLastName(last_name);
 		newActor.setUserType(user_type);
+		newActor.setPassword(password.hashCode());
+		newActor.setTicketIds(ticketIDs);
+		newActor.setNumOfTickets(numOfTickets);
+		newActor.setRating(rating);
 		actorRepository.save(newActor);
 		return newActor;
 	}

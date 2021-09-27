@@ -13,14 +13,14 @@ public class Actor {
 	@Id
 	@GeneratedValue(strategy= GenerationType.AUTO)
 		
-	private int id;
+	private Integer id;
 	private String first_name;
 	private String last_name;
-	private String password;
-	private int user_type;
-	private String ticket_ids;
-	private int num_of_tickets;
-	private int rating;
+	private Integer password;
+	private Integer user_type;
+	private Integer[] ticket_ids;
+	private Integer num_of_tickets;
+	private Float rating;
 	
 	public Actor() {}
 	
@@ -40,6 +40,14 @@ public class Actor {
 		return this.last_name;
 	}
 	
+	public void setPassword(int i) {
+		this.password = i;
+	}
+	
+	public int getPassword() {
+		return this.password;
+	}
+	
 	public void setUserType(int type) {
 		this.user_type = type;
 	}
@@ -47,5 +55,30 @@ public class Actor {
 	public int getUserType() {
 		return this.user_type;
 	}
+	
+	public void setTicketIds(Integer[] ids) {
+		this.ticket_ids = ids;
+	}
+	
+	public Integer[] getTicketIds() {
+		return this.ticket_ids;
+	}
+	
+	public void setNumOfTickets(int n) {
+		this.num_of_tickets = n;
+	}
+	
+	public int getNumOfTickets() {
+		return this.num_of_tickets;
+	}
+	
+	public void setRating(float n) {
+		this.rating = n;
+	}
+	
+	public float getRating() {
+		return this.rating;
+	}
+	
 	
 }

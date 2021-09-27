@@ -1,4 +1,4 @@
-package coms309.roundTrip.test.controller;
+package coms309.roundTrip.controller;
 
 import java.util.List;
 
@@ -8,8 +8,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-import coms309.roundTrip.test.model.Trivia;
-import coms309.roundTrip.test.repository.TriviaRepository;
+
+import coms309.roundTrip.model.Trivia;
+import coms309.roundTrip.repository.TriviaRepository;
 
 @RestController
 public class TriviaController {

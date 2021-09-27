@@ -1,4 +1,4 @@
-package coms309.roundTrip.test.model;
+package coms309.roundTrip.model;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;

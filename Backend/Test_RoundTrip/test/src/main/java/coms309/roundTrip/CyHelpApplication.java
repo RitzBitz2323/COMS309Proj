@@ -1,13 +1,13 @@
-package coms309.roundTrip.test;
+package coms309.roundTrip;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class TestApplication {
+public class CyHelpApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(TestApplication.class, args);
+		SpringApplication.run(CyHelpApplication.class, args);
 	}
 	
 }

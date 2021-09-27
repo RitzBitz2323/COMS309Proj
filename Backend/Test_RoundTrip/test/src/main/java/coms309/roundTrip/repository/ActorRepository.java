@@ -9,6 +9,5 @@ public interface ActorRepository extends JpaRepository<Actor, Integer> {
 	
 	Actor findById(int id);
 	
-	//@Query("SELECT * FROM actors WHERE actor.first_name = ?1 AND actor.last_name = ?2")
-	//Actor findByFirstLastName(String first_name, String last_name);
+	
 }

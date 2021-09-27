@@ -11,18 +11,25 @@ import javax.persistence.Table;
 public class Actor {
 
 	@Id
-	@GeneratedValue(strategy= GenerationType.AUTO)
-		
-	private Integer id;
+	@GeneratedValue(strategy= GenerationType.IDENTITY)
+	private int id;
 	private String first_name;
 	private String last_name;
-	private Integer password;
-	private Integer user_type;
-	private Integer[] ticket_ids;
-	private Integer num_of_tickets;
-	private Float rating;
+	private long password;
+	private int user_type;
+	private int[] ticket_ids;
+	private int num_of_tickets;
+	private float rating;
 	
 	public Actor() {}
+	
+	public void setId(int id) {
+		this.id = id;
+	}
+	
+	public int getId() {
+		return this.id;
+	}
 	
 	public void setFirstName(String first_name) {
 		this.first_name = first_name;
@@ -40,11 +47,11 @@ public class Actor {
 		return this.last_name;
 	}
 	
-	public void setPassword(int i) {
-		this.password = i;
+	public void setPassword(long password) {
+		this.password = password;
 	}
 	
-	public int getPassword() {
+	public long getPassword() {
 		return this.password;
 	}
 	
@@ -56,11 +63,11 @@ public class Actor {
 		return this.user_type;
 	}
 	
-	public void setTicketIds(Integer[] ids) {
+	public void setTicketIds(int[] ids) {
 		this.ticket_ids = ids;
 	}
 	
-	public Integer[] getTicketIds() {
+	public int[] getTicketIds() {
 		return this.ticket_ids;
 	}
 	
@@ -79,6 +86,5 @@ public class Actor {
 	public float getRating() {
 		return this.rating;
 	}
-	
 	
 }

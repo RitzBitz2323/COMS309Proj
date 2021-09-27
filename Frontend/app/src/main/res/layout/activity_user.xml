@@ -24,19 +24,19 @@
 
     <EditText
         android:id="@+id/editTextTextMultiLine"
-        android:layout_width="325dp"
-        android:layout_height="86dp"
+        android:layout_width="328dp"
+        android:layout_height="104dp"
+        android:background="#e6f2e9"
         android:ems="10"
         android:gravity="start|top"
+        android:hint="Problem Description"
         android:inputType="textMultiLine"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.418"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.131"
-        android:background="#e6f2e9"
-        android:hint="Problem Description"/>
+        app:layout_constraintVertical_bias="0.131" />
 
     <TextView
         android:id="@+id/textView2"
@@ -51,33 +51,78 @@
         app:layout_constraintHorizontal_bias="0.121"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.277" />
+        app:layout_constraintVertical_bias="0.294" />
 
     <Spinner
-        android:id="@+id/planets_spinner"
+        android:id="@+id/spinner"
         android:layout_width="203dp"
         android:layout_height="48dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.802"
+        app:layout_constraintHorizontal_bias="0.817"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.273"
+        app:layout_constraintVertical_bias="0.292"
         tools:ignore="SpeakableTextPresentCheck" />
 
-    <TextView
-        android:id="@+id/textView3"
-        android:layout_width="wrap_content"
+    <RadioGroup
+        android:id="@+id/groupradio"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:fontFamily="sans-serif-black"
-        android:text="Tags"
-        android:textColor="#FFFFFF"
-        android:textSize="25sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.101"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.393" />
+        android:layout_marginTop="-100sp"
+        android:layout_marginLeft="30sp">
+
+        <RadioButton
+            android:id="@+id/radia_id1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif-black"
+            android:text="Use Current Location"
+            android:textColor="#FFFFFF"
+            android:textSize="25sp" />
+
+        <RadioButton
+            android:id="@+id/radia_id2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif-black"
+            android:text="Use Default Address"
+            android:textColor="#FFFFFF"
+            android:textSize="25sp" />
+
+    </RadioGroup>
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Submit Ticket"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.885" />
+
+    <EditText
+        android:id="@+id/editTextTextMultiLine3"
+        android:layout_width="328dp"
+        android:layout_height="175dp"
+        android:background="#e6f2e9"
+        android:ems="10"
+        android:gravity="start|top"
+        android:hint="Home Address"
+        android:inputType="textMultiLine"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.395"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.721" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="categories">
+        <item>Plumber</item>
+        <item>Electrical and Electronic Installer and Repairer</item>
+        <item>Automotive Mechanic</item>
+        <item>Computer and Office Machine Technician</item>
+        <item>Heating, Air Conditioning, and Refrigeration Mechanic</item>
+        <item>Home Appliance Repairer</item>
+    </string-array>
+</resources>

@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">CyHelp</string>
+    <string name="title_activity_tech_ticket_finder_map">TechTicketFinderMapActivity</string>
 </resources>

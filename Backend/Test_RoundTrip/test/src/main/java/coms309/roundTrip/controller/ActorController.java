@@ -34,7 +34,7 @@ public class ActorController {
 	
 	// GET actor with a certain id
 	@GetMapping("/actors/{id}")
-	Actor findActorById(@PathVariable int id) {
+	public Actor findActorById(@PathVariable int id) {
 		return actorRepository.findById(id);
 	}
 }

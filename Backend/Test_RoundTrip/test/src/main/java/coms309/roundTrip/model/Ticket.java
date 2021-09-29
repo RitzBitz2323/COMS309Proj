@@ -13,10 +13,16 @@ import javax.persistence.Table;
 @Table(name="Tickets")
 public class Ticket {
 	
+	// state values of the ticket
+	public static final int OPEN = 0;
+	public static final int PENDING = 1;
+	public static final int CLOSED = 2;
+	
 	@Id
 	@GeneratedValue(strategy= GenerationType.IDENTITY)
 	private int id;
-	private String name;
+	private String title;
+	private String description;
 	private String[] tags;
 	private int state;                // 0 = OPEN, 1 = PENDING, 2 = CLOSED
 	private double[] location;
@@ -33,6 +39,25 @@ public class Ticket {
 	@Column(name = "category")
 	private String category;
 	
+	
+	// CONSTRUCTORS
+	
+	public Ticket() {}
+	
+	public Ticket(String title, String description, Actor customer, Actor technician, double[] location) {
+		this.title = title;
+		this.description = description;
+		this.customerActor = customer;
+		this.technicianActor = technician;
+		this.location = location;
+		this.tags = new String[0];
+		this.state = 0;
+		this.rating = 0;
+	}
+	
+	
+	// GETTER AND SETTERS
+	
 	public void setId(int id) {
 		this.id = id;
 	}
@@ -41,12 +66,28 @@ public class Ticket {
 		return this.id;
 	}
 	
-	public void setName(String name) {
-		this.name = name;
+	public void setCategory(String cat) {
+		this.category = cat;
 	}
 	
-	public String getName() {
-		return this.name;
+	public String getCategory() {
+		return this.category;
+	}
+	
+	public void setTitle(String title) {
+		this.title = title;
+	}
+	
+	public String getTitle() {
+		return this.title;
+	}
+	
+	public void setDescription(String desc) {
+		this.description = desc;
+	}
+	
+	public String getDescription() {
+		return this.description;
 	}
 
 	public void setTags(String[] args) {
@@ -79,5 +120,22 @@ public class Ticket {
 	
 	public float getRating() {
 		return this.rating;
+	}
+	
+	// FOREGIN KEYS
+	public void setCustomer(Actor actor) {
+		this.customerActor = actor;
+	}
+		
+	public Actor getCustomer() {
+		return this.customerActor;
+	}
+		
+	public void setTechnician(Actor actor) {
+		this.technicianActor = actor;
+	}
+		
+	public Actor getTechnician() {
+		return this.technicianActor;
 	}
 }

@@ -1,13 +1,16 @@
 package coms309.roundTrip.model;
 
+import java.util.Collection;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="actors")
+@Table(name="Actors")
 public class Actor {
 
 	@Id
@@ -20,6 +23,12 @@ public class Actor {
 	private int[] ticket_ids;
 	private int num_of_tickets;
 	private float rating;
+	
+	@OneToMany(mappedBy = "customerActor")
+	private Collection<Ticket> customers;
+	
+	@OneToMany(mappedBy = "technicianActor")
+	private Collection<Ticket> technicians;
 	
 	public Actor() {}
 	

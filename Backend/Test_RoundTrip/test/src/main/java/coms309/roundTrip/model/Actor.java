@@ -27,15 +27,14 @@ public class Actor {
 	private long password;
 	private int user_type;
 	private int[] ticket_ids;
-	private int num_of_tickets;
 	private float rating;
 	
-	@OneToMany(mappedBy = "customerActor")
 	// list of tickets that this actor is the customer of
+	@OneToMany
 	private List<Ticket> customerTickets; 
 	
-	@OneToMany(mappedBy = "technicianActor")
 	// list of tickets that this actor is the technician of
+	@OneToMany
 	private List<Ticket> technicianTickets;
 	
 	public Actor() {}
@@ -63,23 +62,6 @@ public class Actor {
 	
 	public List<Ticket> getTechnicianTickets() {
 		return this.technicianTickets;
-	}
-	
-	/// ADD USER/TECH TO TICKET
-	public void addToTicket(Ticket ticket) {
-		
-		switch(this.getUserType()) {
-		
-		case Actor.USER:
-			//ticket.setCustomer(this);
-			this.customerTickets.add(ticket);
-			break;
-			
-		case Actor.TECHNICIAN:
-			//ticket.setTechnician(this);
-			this.technicianTickets.add(ticket);
-			break;
-		}
 	}
 	
 	public void setFirstName(String first_name) {
@@ -120,14 +102,6 @@ public class Actor {
 	
 	public int[] getTicketIds() {
 		return this.ticket_ids;
-	}
-	
-	public void setNumOfTickets(int n) {
-		this.num_of_tickets = n;
-	}
-	
-	public int getNumOfTickets() {
-		return this.num_of_tickets;
 	}
 	
 	public void setRating(float n) {

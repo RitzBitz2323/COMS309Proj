@@ -1,5 +1,6 @@
 package coms309.roundTrip.model;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -8,6 +9,9 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 
 @Entity
 @Table(name="Tickets")
@@ -30,10 +34,12 @@ public class Ticket {
 	
 	@ManyToOne
 	@JoinColumn(name="customer_id")
+	@JsonIgnore
 	private Actor customerActor;
 	
 	@ManyToOne
 	@JoinColumn(name="technician_id")
+	@JsonIgnore
 	private Actor technicianActor;
 	
 	@Column(name = "category")
@@ -44,15 +50,11 @@ public class Ticket {
 	
 	public Ticket() {}
 	
-	public Ticket(String title, String description, Actor customer, Actor technician, double[] location) {
+	public Ticket(String title, String description, Actor customer, double[] location) {
 		this.title = title;
 		this.description = description;
 		this.customerActor = customer;
-		this.technicianActor = technician;
 		this.location = location;
-		this.tags = new String[0];
-		this.state = 0;
-		this.rating = 0;
 	}
 	
 	

@@ -39,7 +39,7 @@
             android:name=".TechActivity"
             android:exported="true" />
         <activity
-            android:name=".UserActivity"
+            android:name=".CreateNewTicketActivity"
             android:exported="true" />
         <activity
             android:name=".MainActivity"

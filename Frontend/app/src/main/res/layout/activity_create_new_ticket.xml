@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#4763d1"
-    tools:context=".UserActivity">
+    tools:context=".CreateNewTicketActivity">
 
     <TextView
         android:id="@+id/textView"

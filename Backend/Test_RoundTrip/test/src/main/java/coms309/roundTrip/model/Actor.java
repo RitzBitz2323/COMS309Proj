@@ -100,14 +100,6 @@ public class Actor {
 		return this.user_type;
 	}
 	
-	public void setTicketIds(int[] ids) {
-		this.ticket_ids = ids;
-	}
-	
-	public int[] getTicketIds() {
-		return this.ticket_ids;
-	}
-	
 	public void setRating(float n) {
 		this.rating = n;
 	}
@@ -116,4 +108,64 @@ public class Actor {
 		return this.rating;
 	}
 	
+	@Override
+	public String toString() {
+		String[] user_types = {"USER", "TECHNICIAN", "COMPANY", "ADMINISTRATOR"};
+		return user_types[this.getUserType()] + "(id=" + this.getId() + ")";
+	}
+	
+	/// TICKETS
+	
+	public void setTicketIds(int[] ids) {
+		this.ticket_ids = ids;
+	}
+	
+	public int[] getTicketIds() {
+		return this.ticket_ids;
+	}
+	
+	//		ADD TICKETS
+	public boolean addTicket(int id) {
+		
+		int[] temp = new int[this.ticket_ids.length + 1];
+		
+		for(int i = 0; i < this.ticket_ids.length; i++) {
+			if(id == this.ticket_ids[i]) return false;
+			temp[i] = this.ticket_ids[i];
+		}
+		
+		temp[temp.length-1] = id;
+		
+		this.ticket_ids = temp.clone();
+		return true;
+	}
+	
+	public boolean addTicket(Ticket ticket) {
+		return this.addTicket(ticket.getId());
+	}
+	
+	// 		REMOVE TICKETS
+	public boolean removeTicket(int id) {
+		
+		int[] temp = new int[this.ticket_ids.length - 1];
+		boolean contains = false;
+		
+		for(int i = 0; i < this.ticket_ids.length; i++) {
+			if(this.ticket_ids[i] == id) {
+				contains = true;
+			} else {
+				temp[i - (contains ? 1 : 0)] = this.ticket_ids[i];
+			}
+		}
+		
+		if(!contains) return false;
+		
+		this.ticket_ids = temp.clone();
+		
+		return true;
+	}
+	
+	public boolean removeTicket(Ticket ticket) {
+		return this.removeTicket(ticket.getId());
+	}
 }

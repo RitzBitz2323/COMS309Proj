@@ -24,7 +24,11 @@ public class ActorController {
 		return actorRepository.findAll();
 	}
 	
-	// CREATE actors 
+	/**
+	 * Creates a Actor
+	 * @param actor
+	 * @return
+	 */
 	@PostMapping("/actors")
 	public Actor addActor(@RequestBody Actor actor) {
 		if(actor == null) return null;
@@ -32,7 +36,11 @@ public class ActorController {
 		return actor;
 	}
 	
-	// GET actor with a certain id
+	/**
+	 * GET actor with a certain id
+	 * @param id
+	 * @return
+	 */
 	@GetMapping("/actors/{id}")
 	public Actor findActorById(@PathVariable int id) {
 		return actorRepository.findById(id);

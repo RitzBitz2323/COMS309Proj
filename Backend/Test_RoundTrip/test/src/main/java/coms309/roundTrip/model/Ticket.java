@@ -1,6 +1,5 @@
 package coms309.roundTrip.model;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -18,9 +17,10 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 public class Ticket {
 	
 	// state values of the ticket
-	public static final int OPEN = 0;
+	public static final int UNACCEPTED = 0;
 	public static final int PENDING = 1;
-	public static final int CLOSED = 2;
+	public static final int OPEN = 2;
+	public static final int CLOSED = 3;
 	
 	@Id
 	@GeneratedValue(strategy= GenerationType.IDENTITY)
@@ -55,6 +55,7 @@ public class Ticket {
 		this.description = description;
 		this.customerActor = customer;
 		this.location = location;
+		this.state = Ticket.UNACCEPTED;
 	}
 	
 	
@@ -139,5 +140,14 @@ public class Ticket {
 		
 	public Actor getTechnician() {
 		return this.technicianActor;
+	}
+	
+	@Override
+	public String toString() {
+		String str = "Title: " + this.getTitle();
+		str += "\n" + "ID: " + this.getId();
+		str += "\n" + (this.getCustomer() == null ? "NULL" : this.getCustomer().toString());
+		str += " --> " + (this.getTechnician() == null ? "NULL" : this.getTechnician().toString());
+		return str;
 	}
 }

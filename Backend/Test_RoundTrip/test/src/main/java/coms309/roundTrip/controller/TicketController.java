@@ -31,6 +31,12 @@ public class TicketController {
 		return ticketRepository.findAll();
 	}
 	
+	@GetMapping("/tickets/{id}")
+	public Ticket getTicket(@PathVariable int id) {
+		return ticketRepository.getById(id);
+	}
+	
+	
 	@PostMapping("/tickets")
 	public Ticket createTicket(@RequestBody Ticket ticket) {
 		if(ticket == null) return null;
@@ -38,15 +44,19 @@ public class TicketController {
 		return ticket;
 	}
 	
-	@PutMapping("/tickets/{id}")
-	public String updateTechnicianId(@PathVariable int id, @RequestParam(name="tech_id") int tech_id) {
+	@PutMapping("/tickets/{id}/tech")
+	public String updateTechnicianId(@PathVariable int id, @RequestBody Actor technician) {
+		
 		Ticket ticket = ticketRepository.getById(id);
-		Actor tech = actorRepository.getById(tech_id);
-		if(ticket == null) return "{\"text\":\"No Ticket has that id.\"}";
-		if(tech.getUserType() != Actor.TECHNICIAN) return "{\"text\":\"That actor is not a technician.\"}";
+		Actor tech = actorRepository.getById(technician.getId());
+		
+		if(ticket == null) return "{\"message\":\"no ticket has that id.\"}";
+		if(tech.getUserType() != Actor.TECHNICIAN) return "{\"message\":\"that actor is not a technician.\"}";
+		
 		ticket.setTechnician(tech);
 		ticketRepository.save(ticket);
-		return String.format("{\"text\":\"updated ticket %o with tech_id %o.\"}", id, tech_id);
+		
+		return String.format("{\"message\":\"updated ticket %o with tech_id %o.\"}", id, technician.getId());
 	}
 	
 }

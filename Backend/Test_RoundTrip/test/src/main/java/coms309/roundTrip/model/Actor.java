@@ -1,5 +1,6 @@
 package coms309.roundTrip.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Entity;
@@ -37,7 +38,10 @@ public class Actor {
 	@OneToMany
 	private List<Ticket> technicianTickets;
 	
-	public Actor() {}
+	public Actor() {
+		this.customerTickets = new ArrayList<>();
+		this.technicianTickets = new ArrayList<>();
+	}
 	
 	public void setId(int id) {
 		this.id = id;

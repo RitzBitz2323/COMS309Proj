@@ -14,11 +14,15 @@ import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.Looper;
 import android.provider.Settings;
+import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.RequestQueue;
+import com.android.volley.toolbox.Volley;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
@@ -26,6 +30,9 @@ import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class CreateNewTicketActivity extends AppCompatActivity {
 
@@ -38,6 +45,9 @@ public class CreateNewTicketActivity extends AppCompatActivity {
     // from layout file
     TextView location_text;
     int PERMISSION_ID = 44;
+
+    double latitude;
+    double longitude;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,6 +88,8 @@ public class CreateNewTicketActivity extends AppCompatActivity {
                             requestNewLocationData();
                         } else {
                             location_text.setText(location.getLatitude() + ", " + location.getLongitude());
+                            latitude = location.getLatitude();
+                            longitude = location.getLongitude();
                         }
                     }
                 });
@@ -116,6 +128,8 @@ public class CreateNewTicketActivity extends AppCompatActivity {
         public void onLocationResult(LocationResult locationResult) {
             Location mLastLocation = locationResult.getLastLocation();
             location_text.setText(mLastLocation.getLatitude() + ", " + mLastLocation.getLongitude());
+            latitude = mLastLocation.getLatitude();
+            longitude = mLastLocation.getLongitude();
         }
     };
 
@@ -161,6 +175,28 @@ public class CreateNewTicketActivity extends AppCompatActivity {
         super.onResume();
         if (checkPermissions()) {
             getLastLocation();
+        }
+    }
+
+    public void submitTicket(View view) {
+        String postUrl = "";
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+
+        JSONObject postData = new JSONObject();
+
+        EditText problemDesc = (EditText) findViewById(R.id.problemDesc);
+
+        EditText homeAddress = (EditText) findViewById(R.id.homeAddress);
+
+        try {
+            postData.put("problem_description", problemDesc.getText().toString());
+            postData.put("home_address", homeAddress.getText().toString());
+            postData.put("latitude", latitude);
+            postData.put("longitude", longitude);
+
+
+        } catch (JSONException e) {
+            e.printStackTrace();
         }
     }
 

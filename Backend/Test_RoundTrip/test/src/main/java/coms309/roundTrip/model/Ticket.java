@@ -19,7 +19,7 @@ public class Ticket {
 	// state values of the ticket
 	public static final int UNACCEPTED = 0;
 	public static final int PENDING = 1;
-	public static final int OPEN = 2;
+	public static final int ACCEPTED = 2;
 	public static final int CLOSED = 3;
 	
 	@Id

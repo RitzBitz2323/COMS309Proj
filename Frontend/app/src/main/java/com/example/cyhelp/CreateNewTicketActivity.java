@@ -15,13 +15,18 @@ import android.os.Bundle;
 import android.os.Looper;
 import android.provider.Settings;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.Request;
 import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
@@ -34,7 +39,7 @@ import com.google.android.gms.tasks.Task;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class CreateNewTicketActivity extends AppCompatActivity {
+public class CreateNewTicketActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
     // initializing
     // FusedLocationProviderClient
@@ -48,6 +53,8 @@ public class CreateNewTicketActivity extends AppCompatActivity {
 
     double latitude;
     double longitude;
+
+    String technicianType;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -179,7 +186,7 @@ public class CreateNewTicketActivity extends AppCompatActivity {
     }
 
     public void submitTicket(View view) {
-        String postUrl = "";
+        String postUrl = "https://85487a53-5983-4947-98df-61098065d526.mock.pstmn.io/post";
         RequestQueue requestQueue = Volley.newRequestQueue(this);
 
         JSONObject postData = new JSONObject();
@@ -193,11 +200,32 @@ public class CreateNewTicketActivity extends AppCompatActivity {
             postData.put("home_address", homeAddress.getText().toString());
             postData.put("latitude", latitude);
             postData.put("longitude", longitude);
-
-
+            postData.put("technician_type", technicianType);
         } catch (JSONException e) {
             e.printStackTrace();
         }
+
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, postUrl, postData, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                System.out.println(response);
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                error.printStackTrace();
+            }
+        });
+
+        requestQueue.add(jsonObjectRequest);
+    }
+
+    public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
+        technicianType = parent.getItemAtPosition(pos).toString();
+    }
+
+    public void onNothingSelected(AdapterView<?> parent) {
+
     }
 
 

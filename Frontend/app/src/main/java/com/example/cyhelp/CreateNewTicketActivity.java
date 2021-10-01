@@ -14,11 +14,20 @@ import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.Looper;
 import android.provider.Settings;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
@@ -27,7 +36,10 @@ import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 
-public class CreateNewTicketActivity extends AppCompatActivity {
+import org.json.JSONException;
+import org.json.JSONObject;
+
+public class CreateNewTicketActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
     // initializing
     // FusedLocationProviderClient
@@ -38,6 +50,11 @@ public class CreateNewTicketActivity extends AppCompatActivity {
     // from layout file
     TextView location_text;
     int PERMISSION_ID = 44;
+
+    double latitude;
+    double longitude;
+
+    String technicianType;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,6 +95,8 @@ public class CreateNewTicketActivity extends AppCompatActivity {
                             requestNewLocationData();
                         } else {
                             location_text.setText(location.getLatitude() + ", " + location.getLongitude());
+                            latitude = location.getLatitude();
+                            longitude = location.getLongitude();
                         }
                     }
                 });
@@ -116,6 +135,8 @@ public class CreateNewTicketActivity extends AppCompatActivity {
         public void onLocationResult(LocationResult locationResult) {
             Location mLastLocation = locationResult.getLastLocation();
             location_text.setText(mLastLocation.getLatitude() + ", " + mLastLocation.getLongitude());
+            latitude = mLastLocation.getLatitude();
+            longitude = mLastLocation.getLongitude();
         }
     };
 
@@ -162,6 +183,49 @@ public class CreateNewTicketActivity extends AppCompatActivity {
         if (checkPermissions()) {
             getLastLocation();
         }
+    }
+
+    public void submitTicket(View view) {
+        String postUrl = "https://85487a53-5983-4947-98df-61098065d526.mock.pstmn.io/post";
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+
+        JSONObject postData = new JSONObject();
+
+        EditText problemDesc = (EditText) findViewById(R.id.problemDesc);
+
+        EditText homeAddress = (EditText) findViewById(R.id.homeAddress);
+
+        try {
+            postData.put("problem_description", problemDesc.getText().toString());
+            postData.put("home_address", homeAddress.getText().toString());
+            postData.put("latitude", latitude);
+            postData.put("longitude", longitude);
+            postData.put("technician_type", technicianType);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, postUrl, postData, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                System.out.println(response);
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                error.printStackTrace();
+            }
+        });
+
+        requestQueue.add(jsonObjectRequest);
+    }
+
+    public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
+        technicianType = parent.getItemAtPosition(pos).toString();
+    }
+
+    public void onNothingSelected(AdapterView<?> parent) {
+
     }
 
 

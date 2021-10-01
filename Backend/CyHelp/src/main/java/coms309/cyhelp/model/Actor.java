@@ -12,6 +12,8 @@ import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import net.bytebuddy.asm.Advice.Return;
+
 @Entity
 @Table(name="Actors")
 public class Actor {
@@ -30,6 +32,7 @@ public class Actor {
 	private long password;
 	private int user_type;
 	private float rating;
+	private String home_address;
 	
 	// list of tickets that this actor is the customer of
 	@OneToMany
@@ -44,6 +47,8 @@ public class Actor {
 	public Actor() {
 		this.customerTickets = new ArrayList<>();
 		this.technicianTickets = new ArrayList<>();
+		this.rating = 5;
+		this.home_address = "";
 	}
 	
 	public void setId(int id) {
@@ -108,6 +113,14 @@ public class Actor {
 	
 	public float getRating() {
 		return this.rating;
+	}
+	
+	public void setHomeAddress(String address) {
+		this.home_address = address;
+	}
+	
+	public String getHomeAddress() {
+		return this.home_address;
 	}
 	
 	@Override

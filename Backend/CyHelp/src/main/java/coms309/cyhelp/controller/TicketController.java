@@ -97,14 +97,16 @@ public class TicketController {
 		
 		// remove the ticket id from the ticket_list of the previous technician
 		Actor prevTech = ticket.getTechnician();
-		if(prevTech != null) prevTech.removeTicket(ticket);
+		if(prevTech != null) {
+			prevTech.removeTicket(ticket);
+			actorRepository.save(prevTech);
+		}
 		
 		ticket.setTechnician(tech);
 		ticket.setState(Ticket.PENDING);
 		
 		// returns true if this technician has not been assigned to this ticket
-		boolean assigned = tech.addTicket(ticket);
-		if(!assigned) return "{\"message\":\"this technician has been already assigned to this ticket.\"}";
+		tech.addTicket(ticket);
 		
 		ticketRepository.save(ticket);
 		actorRepository.save(tech);

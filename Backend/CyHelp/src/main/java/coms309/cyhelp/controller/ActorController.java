@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -35,6 +36,21 @@ public class ActorController {
 		if(actor == null) return null;
 		actorRepository.save(actor);
 		return actor;
+	}
+	
+	/**
+	 * Updates an actor.
+	 * @param actor
+	 * @return
+	 */
+	@PutMapping("/actors")
+	public Actor updateActor(@RequestBody Actor actor) {
+		
+		if(actor == null) return null;
+		if(actorRepository.findById(actor.getId()) == null) return null;
+		
+		actorRepository.save(actor);
+		return actorRepository.findById(actor.getId());
 	}
 	
 	/**

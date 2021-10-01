@@ -29,7 +29,9 @@ public class Ticket {
 	private String description;
 	private String[] tags;
 	private int state;                // 0 = OPEN, 1 = PENDING, 2 = CLOSED
-	private double[] location;
+	private double latitude;
+	private double longitude;
+	private String address;
 	private float rating;
 	
 	@ManyToOne
@@ -50,12 +52,13 @@ public class Ticket {
 	
 	public Ticket() {}
 	
-	public Ticket(String title, String description, Actor customer, double[] location) {
+	public Ticket(String title, String description, Actor customer, double latitude, double longitude) {
 		this.title = title;
 		this.description = description;
 		this.customerActor = customer;
-		this.location = location;
 		this.state = Ticket.UNACCEPTED;
+		this.latitude = latitude;
+		this.longitude = longitude;
 	}
 	
 	
@@ -109,12 +112,28 @@ public class Ticket {
 		return this.state;
 	}
 	
-	public void setLocation(double[] loc) {
-		this.location = loc;
+	public void setAddress(String address) {
+		this.address = address;
 	}
 	
-	public double[] getLocation() {
-		return this.location;
+	public String getAddress() {
+		return this.address;
+	}
+	
+	public void setLatitude(double x) {
+		this.latitude = x;
+	}
+	
+	public double getLatitude() {
+		return this.latitude;
+	}
+	
+	public void setLongitude(double x) {
+		this.longitude = x;
+	}
+	
+	public double getLongitude() {
+		return this.longitude;
 	}
 	
 	public void setRating(float rating) {

@@ -46,9 +46,6 @@ public class CreateNewTicketActivity extends AppCompatActivity implements Adapte
     // object
     FusedLocationProviderClient mFusedLocationClient;
 
-    // Initializing other items
-    // from layout file
-    TextView location_text;
     int PERMISSION_ID = 44;
 
     double latitude;
@@ -66,8 +63,7 @@ public class CreateNewTicketActivity extends AppCompatActivity implements Adapte
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         spinner.setAdapter(adapter);
-
-        location_text = (TextView) findViewById(R.id.location);
+        spinner.setOnItemSelectedListener(this);
 
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
 
@@ -94,7 +90,6 @@ public class CreateNewTicketActivity extends AppCompatActivity implements Adapte
                         if (location == null) {
                             requestNewLocationData();
                         } else {
-                            location_text.setText(location.getLatitude() + ", " + location.getLongitude());
                             latitude = location.getLatitude();
                             longitude = location.getLongitude();
                         }
@@ -134,7 +129,6 @@ public class CreateNewTicketActivity extends AppCompatActivity implements Adapte
         @Override
         public void onLocationResult(LocationResult locationResult) {
             Location mLastLocation = locationResult.getLastLocation();
-            location_text.setText(mLastLocation.getLatitude() + ", " + mLastLocation.getLongitude());
             latitude = mLastLocation.getLatitude();
             longitude = mLastLocation.getLongitude();
         }
@@ -186,21 +180,31 @@ public class CreateNewTicketActivity extends AppCompatActivity implements Adapte
     }
 
     public void submitTicket(View view) {
-        String postUrl = "https://85487a53-5983-4947-98df-61098065d526.mock.pstmn.io/post";
+        String postUrl = "http://coms-309-051.cs.iastate.edu:8080/tickets";
         RequestQueue requestQueue = Volley.newRequestQueue(this);
 
         JSONObject postData = new JSONObject();
+        JSONObject customerData = new JSONObject();
+        try {
+            customerData.put("id", 2);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
 
         EditText problemDesc = (EditText) findViewById(R.id.problemDesc);
 
         EditText homeAddress = (EditText) findViewById(R.id.homeAddress);
 
+        EditText problemTitle = (EditText) findViewById(R.id.problem_title);
+
         try {
-            postData.put("problem_description", problemDesc.getText().toString());
-            postData.put("home_address", homeAddress.getText().toString());
+            postData.put("customer", customerData);
+            postData.put("description", problemDesc.getText().toString());
+//            postData.put("home_address", homeAddress.getText().toString());
             postData.put("latitude", latitude);
             postData.put("longitude", longitude);
-            postData.put("technician_type", technicianType);
+            postData.put("category", technicianType);
+            postData.put("title", problemTitle.getText().toString());
         } catch (JSONException e) {
             e.printStackTrace();
         }

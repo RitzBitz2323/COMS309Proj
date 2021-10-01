@@ -23,7 +23,7 @@
         app:layout_constraintVertical_bias="0.055" />
 
     <EditText
-        android:id="@+id/editTextTextMultiLine"
+        android:id="@+id/problemDesc"
         android:layout_width="328dp"
         android:layout_height="104dp"
         android:background="#e6f2e9"
@@ -67,67 +67,35 @@
         app:layout_constraintVertical_bias="0.292"
         tools:ignore="SpeakableTextPresentCheck" />
 
-    <RadioGroup
-        android:id="@+id/groupradio"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="-100sp"
-        android:layout_marginLeft="30sp">
-
-        <RadioButton
-            android:id="@+id/radia_id1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="sans-serif-black"
-            android:text="Use Current Location"
-            android:textColor="#FFFFFF"
-            android:textSize="25sp" />
-
-        <RadioButton
-            android:id="@+id/radia_id2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="sans-serif-black"
-            android:text="Use Home Address"
-            android:textColor="#FFFFFF"
-            android:textSize="25sp" />
-
-    </RadioGroup>
-
     <Button
         android:id="@+id/button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:onClick="submitTicket"
         android:text="Create Ticket"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.885" />
+        app:layout_constraintVertical_bias="0.755" />
 
     <EditText
-        android:id="@+id/editTextTextMultiLine3"
+        android:id="@+id/homeAddress"
         android:layout_width="328dp"
         android:layout_height="175dp"
         android:background="#e6f2e9"
         android:ems="10"
         android:gravity="start|top"
         android:hint="Home Address"
+        android:inputType="textMultiLine"
         android:textColor="#000000"
         android:textColorHint="#494d4a"
-        android:inputType="textMultiLine"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.395"
+        app:layout_constraintHorizontal_bias="0.433"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.721" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/location"
@@ -140,6 +108,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.957" />
+        app:layout_constraintVertical_bias="0.869" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -3,6 +3,7 @@ package coms309.cyhelp.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -47,7 +48,7 @@ public class TicketController {
 	/**
 	 * Creates a ticket.
 	 * @param ticket
-	 * @return
+	 * @return String
 	 */
 	@PostMapping("/tickets")
 	public String createTicket(@RequestBody Ticket ticket) {
@@ -59,8 +60,20 @@ public class TicketController {
 		// get user that created the ticket and append
 		// the ticket id to their ticket list.
 		Actor customer = actorRepository.findById(ticket.getCustomer().getId());
-		customer.addTicket(ticket);
-		actorRepository.save(customer);
+		if(customer != null) {
+			customer.addTicket(ticket);
+			actorRepository.save(customer);
+		}
+		
+		// update the technician's ticket list
+		// if a technician id is provided.
+		if(ticket.getTechnician() != null) {
+			Actor technician = actorRepository.findById(ticket.getTechnician().getId());
+			if(technician != null) {
+				technician.addTicket(ticket);
+				actorRepository.save(technician);
+			}
+		}
 		
 		return ticket.toString();
 	}
@@ -70,7 +83,7 @@ public class TicketController {
 	 * to hold the technician's id. 
 	 * @param id
 	 * @param technician
-	 * @return
+	 * @return String
 	 */
 	@PutMapping("/tickets/{id}/accept")
 	public String updateTechnicianId(@PathVariable int id, @RequestBody Actor technician) {
@@ -96,7 +109,50 @@ public class TicketController {
 		ticketRepository.save(ticket);
 		actorRepository.save(tech);
 		
-		return String.format("{\"message\":\"ticket %o was accepted by tech_id %o.\"}", id, technician.getId());
+		return String.format("{\"message\":\"ticket %o was accepted by technician(id=%o).\"}", id, technician.getId());
+	}
+	
+	/**
+	 * Deletes a ticket based on the ticket provided by
+	 * the RequestBody.
+	 * @param ticket
+	 * @return String
+	 */
+	@DeleteMapping("/tickets")
+	public String deleteByRequestBody(@RequestBody Ticket ticket) {
+		
+		if(ticket == null) return "{\"message\":\"not a valid RequestBody\"}";
+		
+		return deleteByPathVariable(ticket.getId());
+	}
+	
+	/**
+	 * Deletes the ticket with the specified id.
+	 * @param id
+	 * @return
+	 */
+	@DeleteMapping("/tickets/{id}")
+	public String deleteByPathVariable(@PathVariable int id) {
+		
+		Ticket ticket = ticketRepository.findById(id);
+		if(ticket == null) return "{\"message\":\"That ticket doesn't exists\"}";
+		
+		Actor customer = ticket.getCustomer();
+		Actor technician = ticket.getTechnician();
+		
+		ticketRepository.delete(ticket);
+		
+		if(customer != null) {
+			customer.removeTicket(id);
+			actorRepository.save(customer);
+		}
+		
+		if(technician != null) {
+			technician.removeTicket(id);
+			actorRepository.save(technician);
+		}
+		
+		return "{\"message\":\"success\"}";
 	}
 	
 }

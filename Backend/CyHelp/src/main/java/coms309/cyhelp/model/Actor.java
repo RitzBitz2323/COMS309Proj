@@ -147,6 +147,8 @@ public class Actor {
 	// 		REMOVE TICKETS
 	public boolean removeTicket(int id) {
 		
+		if(this.ticket_ids.length == 0) return true;
+		
 		int[] temp = new int[this.ticket_ids.length - 1];
 		boolean contains = false;
 		

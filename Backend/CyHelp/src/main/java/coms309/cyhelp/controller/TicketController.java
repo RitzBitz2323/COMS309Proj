@@ -140,17 +140,17 @@ public class TicketController {
 		Actor customer = ticket.getCustomer();
 		Actor technician = ticket.getTechnician();
 		
-		ticketRepository.delete(ticket);
-		
 		if(customer != null) {
-			customer.removeTicket(id);
+			customer.removeTicket(ticket);
 			actorRepository.save(customer);
 		}
 		
 		if(technician != null) {
-			technician.removeTicket(id);
+			technician.removeTicket(ticket);
 			actorRepository.save(technician);
 		}
+		
+		ticketRepository.delete(ticket);
 		
 		return "{\"message\":\"success\"}";
 	}

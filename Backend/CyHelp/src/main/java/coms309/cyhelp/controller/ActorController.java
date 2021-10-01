@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import coms309.cyhelp.model.Actor;
+import coms309.cyhelp.model.Ticket;
 import coms309.cyhelp.repository.ActorRepository;
 
 @RestController
@@ -44,5 +45,15 @@ public class ActorController {
 	@GetMapping("/actors/{id}")
 	public Actor findActorById(@PathVariable int id) {
 		return actorRepository.findById(id);
+	}
+
+	@GetMapping("/actors/{id}/tickets")
+	public List<Ticket> getTickets(@PathVariable int id) {
+		
+		Actor actor = actorRepository.findById(id);
+		
+		if(actor == null) return null;
+		
+		return actor.getTickets();
 	}
 }

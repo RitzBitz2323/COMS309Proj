@@ -10,6 +10,10 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import net.bytebuddy.asm.Advice.Return;
+
 @Entity
 @Table(name="Actors")
 public class Actor {
@@ -27,20 +31,24 @@ public class Actor {
 	private String last_name;
 	private long password;
 	private int user_type;
-	private int[] ticket_ids;
 	private float rating;
+	private String home_address;
 	
 	// list of tickets that this actor is the customer of
 	@OneToMany
+	@JsonIgnore
 	private List<Ticket> customerTickets; 
 	
 	// list of tickets that this actor is the technician of
 	@OneToMany
+	@JsonIgnore
 	private List<Ticket> technicianTickets;
 	
 	public Actor() {
 		this.customerTickets = new ArrayList<>();
 		this.technicianTickets = new ArrayList<>();
+		this.rating = 5;
+		this.home_address = "";
 	}
 	
 	public void setId(int id) {
@@ -50,7 +58,6 @@ public class Actor {
 	public int getId() {
 		return this.id;
 	}
-	
 	
 	public void setCustomerTickets(List<Ticket> customerTickets) {
 		this.technicianTickets = customerTickets;
@@ -108,64 +115,59 @@ public class Actor {
 		return this.rating;
 	}
 	
+	public void setHomeAddress(String address) {
+		this.home_address = address;
+	}
+	
+	public String getHomeAddress() {
+		return this.home_address;
+	}
+	
 	@Override
 	public String toString() {
 		String[] user_types = {"USER", "TECHNICIAN", "COMPANY", "ADMINISTRATOR"};
 		return user_types[this.getUserType()] + "(id=" + this.getId() + ")";
 	}
 	
-	/// TICKETS
-	
-	public void setTicketIds(int[] ids) {
-		this.ticket_ids = ids;
-	}
-	
-	public int[] getTicketIds() {
-		return this.ticket_ids;
-	}
-	
-	//		ADD TICKETS
-	public boolean addTicket(int id) {
-		
-		int[] temp = new int[this.ticket_ids.length + 1];
-		
-		for(int i = 0; i < this.ticket_ids.length; i++) {
-			if(id == this.ticket_ids[i]) return false;
-			temp[i] = this.ticket_ids[i];
-		}
-		
-		temp[temp.length-1] = id;
-		
-		this.ticket_ids = temp.clone();
-		return true;
-	}
-	
 	public boolean addTicket(Ticket ticket) {
-		return this.addTicket(ticket.getId());
-	}
-	
-	// 		REMOVE TICKETS
-	public boolean removeTicket(int id) {
 		
-		int[] temp = new int[this.ticket_ids.length - 1];
-		boolean contains = false;
+		switch(this.getUserType()) {
 		
-		for(int i = 0; i < this.ticket_ids.length; i++) {
-			if(this.ticket_ids[i] == id) {
-				contains = true;
-			} else {
-				temp[i - (contains ? 1 : 0)] = this.ticket_ids[i];
-			}
+		case Actor.USER:
+			this.customerTickets.add(ticket);
+			return true;
+			
+		case Actor.TECHNICIAN:
+			this.technicianTickets.add(ticket);
+			return true;
 		}
 		
-		if(!contains) return false;
-		
-		this.ticket_ids = temp.clone();
-		
-		return true;
+		return false;
 	}
 	
 	public boolean removeTicket(Ticket ticket) {
-		return this.removeTicket(ticket.getId());
+		
+		switch(this.getUserType()) {
+		
+		case Actor.USER:
+			this.customerTickets.remove(ticket);
+			return true;
+			
+		case Actor.TECHNICIAN:
+			this.technicianTickets.remove(ticket);
+			return true;
+		}
+		
+		return false;
 	}
+	
+	@JsonIgnore
+	public List<Ticket> getTickets() {
+		
+		if(this.getUserType() == Actor.TECHNICIAN)
+			return this.technicianTickets;
+		
+		return this.customerTickets;
+	}
+	
 }

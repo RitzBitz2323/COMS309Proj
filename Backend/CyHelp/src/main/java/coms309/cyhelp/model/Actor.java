@@ -29,6 +29,7 @@ public class Actor {
 	private int id;
 	private String first_name;
 	private String last_name;
+	private String username;
 	private long password;
 	private int user_type;
 	private float rating;
@@ -57,6 +58,14 @@ public class Actor {
 	
 	public int getId() {
 		return this.id;
+	}
+	
+	public void setUsername(String username) {
+		this.username = username;
+	}
+	
+	public String getUsername() {
+		return this.username;
 	}
 	
 	public void setCustomerTickets(List<Ticket> customerTickets) {

@@ -58,14 +58,6 @@ public class Actor {
 		return this.id;
 	}
 	
-	public void setUsername(String username) {
-		this.username = username;
-	}
-	
-	public String getUsername() {
-		return this.username;
-	}
-	
 	public void setCustomerTickets(List<Ticket> customerTickets) {
 		this.technicianTickets = customerTickets;
 	}

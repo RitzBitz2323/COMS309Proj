@@ -52,12 +52,11 @@ public class Ticket {
 	
 	public Ticket() {}
 	
-	public Ticket(String title, String description, Actor customer, String address, double latitude, double longitude) {
+	public Ticket(String title, String description, Actor customer, double latitude, double longitude) {
 		this.title = title;
 		this.description = description;
 		this.customerActor = customer;
 		this.state = Ticket.UNACCEPTED;
-		this.address = address;
 		this.latitude = latitude;
 		this.longitude = longitude;
 	}

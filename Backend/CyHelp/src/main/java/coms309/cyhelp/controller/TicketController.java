@@ -56,6 +56,7 @@ public class TicketController {
 		if(ticket == null) return null;
 		
 		ticketRepository.save(ticket);
+		ticket = ticketRepository.findById(ticket.getId());
 		
 		// get user that created the ticket and append
 		// the ticket id to their ticket list.
@@ -64,6 +65,7 @@ public class TicketController {
 			customer.addTicket(ticket);
 			ticket.setCustomer(customer);
 			actorRepository.save(customer);
+			ticket.setCustomer(customer);
 		}
 		
 		// update the technician's ticket list
@@ -74,6 +76,7 @@ public class TicketController {
 				technician.addTicket(ticket);
 				ticket.setTechnician(technician);
 				actorRepository.save(technician);
+				ticket.setTechnician(technician);
 			}
 		}
 		

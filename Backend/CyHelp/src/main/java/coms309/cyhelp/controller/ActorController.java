@@ -33,7 +33,15 @@ public class ActorController {
 	 */
 	@PostMapping("/actors")
 	public Actor addActor(@RequestBody Actor actor) {
+		
 		if(actor == null) return null;
+		
+		List<Actor> actors = actorRepository.findAll();
+		for(Actor check : actors) {
+			System.out.println(check.getUsername());
+			if(actor.getUsername().equals(check.getUsername())) return null;
+		}
+		
 		actorRepository.save(actor);
 		return actor;
 	}
@@ -51,6 +59,25 @@ public class ActorController {
 		
 		actorRepository.save(actor);
 		return actorRepository.findById(actor.getId());
+	}
+	
+	@PostMapping("/actors/login")
+	public Actor actorLogin(@RequestBody Actor actor) {
+		
+		String username = actor.getUsername();
+		Long password = actor.getPassword();
+		
+		List<Actor> actors = actorRepository.findAll();
+		
+		for(Actor check : actors) {
+			if(check.getUsername().equals(username)) {
+				if(check.getPassword() == password) {
+					return check;
+				}
+			}
+		}
+		
+		return null;
 	}
 	
 	/**

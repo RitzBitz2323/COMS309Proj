@@ -59,7 +59,7 @@ public class CreateNewTicketActivity extends AppCompatActivity implements Adapte
         setContentView(R.layout.activity_create_new_ticket);
 
         Spinner spinner = (Spinner) findViewById(R.id.spinner);
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.categories, android.R.layout.simple_spinner_item);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.categories, R.layout.spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         spinner.setAdapter(adapter);
@@ -222,6 +222,9 @@ public class CreateNewTicketActivity extends AppCompatActivity implements Adapte
         });
 
         requestQueue.add(jsonObjectRequest);
+
+        Intent intent = new Intent(this, ViewTicketsActivity.class);
+        startActivity(intent);
     }
 
     public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {

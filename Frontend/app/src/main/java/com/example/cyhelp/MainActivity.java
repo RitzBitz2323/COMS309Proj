@@ -23,7 +23,7 @@ public class MainActivity extends AppCompatActivity {
         b1.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent userIntent = new Intent(MainActivity.this, CreateNewTicketActivity.class);
+                Intent userIntent = new Intent(MainActivity.this, ViewTicketsActivity.class);
                 startActivity(userIntent);
             }
         });

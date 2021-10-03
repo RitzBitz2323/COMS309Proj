@@ -51,11 +51,12 @@ public class TicketController {
 	 * @return String
 	 */
 	@PostMapping("/tickets")
-	public String createTicket(@RequestBody Ticket ticket) {
+	public Ticket createTicket(@RequestBody Ticket ticket) {
 		
-		if(ticket == null) return "{\"message\":\"POST was not a ticket object.\"}";
+		if(ticket == null) return null;
 		
 		ticketRepository.save(ticket);
+		ticket = ticketRepository.findById(ticket.getId());
 		
 		// get user that created the ticket and append
 		// the ticket id to their ticket list.
@@ -63,6 +64,7 @@ public class TicketController {
 		if(customer != null) {
 			customer.addTicket(ticket);
 			actorRepository.save(customer);
+			ticket.setCustomer(customer);
 		}
 		
 		// update the technician's ticket list
@@ -72,10 +74,13 @@ public class TicketController {
 			if(technician != null) {
 				technician.addTicket(ticket);
 				actorRepository.save(technician);
+				ticket.setTechnician(technician);
 			}
 		}
 		
-		return ticket.toString();
+		ticketRepository.save(ticket);
+		
+		return ticket;
 	}
 	
 	/**

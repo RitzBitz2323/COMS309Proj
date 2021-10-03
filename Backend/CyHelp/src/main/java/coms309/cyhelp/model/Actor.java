@@ -12,8 +12,6 @@ import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import net.bytebuddy.asm.Advice.Return;
-
 @Entity
 @Table(name="Actors")
 public class Actor {
@@ -22,13 +20,14 @@ public class Actor {
 	public static final int USER = 0;
 	public static final int TECHNICIAN = 1;
 	public static final int COMPANY = 2;
-	public static final int ADMINISTRATOR = 4;
+	public static final int ADMINISTRATOR = 3;
 
 	@Id
 	@GeneratedValue(strategy= GenerationType.IDENTITY)
 	private int id;
 	private String first_name;
 	private String last_name;
+	private String username;
 	private long password;
 	private int user_type;
 	private float rating;
@@ -73,6 +72,14 @@ public class Actor {
 	
 	public List<Ticket> getTechnicianTickets() {
 		return this.technicianTickets;
+	}
+	
+	public void setUsername(String username) {
+		this.username = username;
+	}
+	
+	public String getUsername() {
+		return this.username;
 	}
 	
 	public void setFirstName(String first_name) {

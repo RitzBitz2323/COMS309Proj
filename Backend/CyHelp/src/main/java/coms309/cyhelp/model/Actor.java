@@ -57,6 +57,7 @@ public class Actor {
 	public int getId() {
 		return this.id;
 	}
+
 	
 	public void setCustomerTickets(List<Ticket> customerTickets) {
 		this.technicianTickets = customerTickets;

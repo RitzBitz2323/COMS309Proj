@@ -63,6 +63,7 @@ public class TicketController {
 		Actor customer = actorRepository.findById(ticket.getCustomer().getId());
 		if(customer != null) {
 			customer.addTicket(ticket);
+			ticket.setCustomer(customer);
 			actorRepository.save(customer);
 			ticket.setCustomer(customer);
 		}
@@ -73,6 +74,7 @@ public class TicketController {
 			Actor technician = actorRepository.findById(ticket.getTechnician().getId());
 			if(technician != null) {
 				technician.addTicket(ticket);
+				ticket.setTechnician(technician);
 				actorRepository.save(technician);
 				ticket.setTechnician(technician);
 			}

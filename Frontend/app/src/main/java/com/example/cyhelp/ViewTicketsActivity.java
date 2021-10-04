@@ -24,12 +24,19 @@ import java.util.ArrayList;
 
 public class ViewTicketsActivity extends AppCompatActivity {
 
-    String url = "http://coms-309-051.cs.iastate.edu:8080/actors/2/tickets";
+    String url = "http://coms-309-051.cs.iastate.edu:8080/actors/";
+    int ID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_tickets);
+
+        Intent intent = getIntent();
+
+        ID = intent.getIntExtra("id", 2);
+
+        url += ID + "/tickets";
 
         ArrayList<String> jsonResponses = new ArrayList<> ();
 
@@ -62,6 +69,7 @@ public class ViewTicketsActivity extends AppCompatActivity {
 
     public void createNewTicket(View view) {
         Intent intent = new Intent(this, CreateNewTicketActivity.class);
+        intent.putExtra("id", ID);
         startActivity(intent);
     }
 

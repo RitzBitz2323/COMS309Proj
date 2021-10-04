@@ -70,7 +70,7 @@ public class LoginActivity extends AppCompatActivity {
                 }
                 Intent i = new Intent(LoginActivity.this, ViewTicketsActivity.class);
                 i.putExtra("id", userID);
-                startActivity(new Intent(view.getContext(), ViewTicketsActivity.class));
+                startActivity(i);
             }
         }, new Response.ErrorListener() {
             @Override

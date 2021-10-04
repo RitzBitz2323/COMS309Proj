@@ -52,6 +52,7 @@ public class CreateNewTicketActivity extends AppCompatActivity implements Adapte
     double longitude;
 
     String technicianType;
+    int ID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,6 +65,10 @@ public class CreateNewTicketActivity extends AppCompatActivity implements Adapte
 
         spinner.setAdapter(adapter);
         spinner.setOnItemSelectedListener(this);
+
+        Intent intent = getIntent();
+
+        ID = intent.getIntExtra("id", 2);
 
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
 
@@ -186,7 +191,7 @@ public class CreateNewTicketActivity extends AppCompatActivity implements Adapte
         JSONObject postData = new JSONObject();
         JSONObject customerData = new JSONObject();
         try {
-            customerData.put("id", 2);
+            customerData.put("id", ID);
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -224,6 +229,7 @@ public class CreateNewTicketActivity extends AppCompatActivity implements Adapte
         requestQueue.add(jsonObjectRequest);
 
         Intent intent = new Intent(this, ViewTicketsActivity.class);
+        intent.putExtra("id", ID);
         startActivity(intent);
     }
 

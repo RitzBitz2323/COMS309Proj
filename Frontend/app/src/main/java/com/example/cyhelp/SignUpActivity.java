@@ -85,7 +85,7 @@ public class SignUpActivity extends AppCompatActivity implements AdapterView.OnI
 
                     Intent i = new Intent(SignUpActivity.this, ViewTicketsActivity.class);
                     i.putExtra("id", userID[0]);
-                    startActivity(new Intent(view.getContext(), ViewTicketsActivity.class));
+                    startActivity(i);
 
                 }
             }, new Response.ErrorListener() {

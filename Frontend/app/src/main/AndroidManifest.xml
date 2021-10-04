@@ -18,6 +18,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.CyHelp">
         <activity
+            android:name=".SignUpActivity"
+            android:exported="true" />
+        <activity
             android:name=".LoginActivity"
             android:exported="true"
             android:label="@string/title_activity_login"

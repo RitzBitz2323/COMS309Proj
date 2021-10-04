@@ -31,7 +31,7 @@ public class SignUpActivity extends AppCompatActivity implements AdapterView.OnI
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
 
-        Spinner spinner = (Spinner) findViewById(R.id.spinner);
+        Spinner spinner = (Spinner) findViewById(R.id.spinner_SignUpActivity);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.userTypes, R.layout.spinner_item_sign_up);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 

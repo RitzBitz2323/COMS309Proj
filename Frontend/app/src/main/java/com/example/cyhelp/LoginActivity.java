@@ -34,6 +34,8 @@ import org.json.JSONObject;
 
 public class LoginActivity extends AppCompatActivity {
 
+    protected int userID;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,50 +46,39 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void loginUser(View view){
-        String postUrl = "http://coms-309-051.cs.iastate.edu:8080/actors";
+        String postUrl = "http://coms-309-051.cs.iastate.edu:8080/actors/login";
         RequestQueue requestQueue = Volley.newRequestQueue(this);
 
         JSONObject userLogin = new JSONObject();
 
         EditText username = (EditText) findViewById(R.id.editTextTextPersonName_loginActivity);
         EditText password = (EditText) findViewById(R.id.editTextTextPassword_loginActivity);
-
-        System.out.println("Login Attempted");
-
         try {
-            userLogin.put("username", username.toString());
-            userLogin.put("password", password.toString().hashCode());
+            userLogin.put("username", username.getText().toString());
+            userLogin.put("password", password.getText().toString().hashCode());
         } catch (JSONException e) {
             e.printStackTrace();
         }
 
-        int[] userID = new int[1];
-
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, postUrl, userLogin, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
-                System.out.println("POST");
                 try {
-                    userID[0] = response.getInt("id");
+                    userID = response.getInt("id");
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-
                 Intent i = new Intent(LoginActivity.this, ViewTicketsActivity.class);
-                i.putExtra("id", userID[0]);
+                i.putExtra("id", userID);
                 startActivity(new Intent(view.getContext(), ViewTicketsActivity.class));
-
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 error.printStackTrace();
             }
-
         });
-
         requestQueue.add(jsonObjectRequest);
-
     }
 
 

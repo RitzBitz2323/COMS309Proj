@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="userTypes">
+        <item>User</item>
+        <item>Technician</item>
+        <item>Company</item>
+        <item>Administrator</item>
+    </string-array>
+
+</resources>

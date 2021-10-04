@@ -17,13 +17,13 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        b1 = (Button) findViewById(R.id.userButton);
-        b2 = (Button) findViewById(R.id.techButton);
+        b1 = (Button) findViewById(R.id.loginButton);
+        b2 = (Button) findViewById(R.id.userButton);
 
         b1.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent userIntent = new Intent(MainActivity.this, ViewTicketsActivity.class);
+                Intent userIntent = new Intent(MainActivity.this, LoginActivity.class);
                 startActivity(userIntent);
             }
         });
@@ -31,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
         b2.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent techIntent = new Intent(MainActivity.this, TechTicketFinderMapActivity.class);
+                Intent techIntent = new Intent(MainActivity.this, SignUpActivity.class);
                 startActivity(techIntent);
             }
         });

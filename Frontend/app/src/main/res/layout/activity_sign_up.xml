@@ -128,17 +128,4 @@
         app:layout_constraintTop_toBottomOf="@+id/spinner_SignUpActivity"
         app:layout_constraintVertical_bias="0.197" />
 
-    <TextView
-        android:id="@+id/Error_SignUpActivity"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Error"
-        android:textAppearance="@style/TextAppearance.AppCompat.Display1"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.502"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/CreateAccount_SignUpActivity"
-        app:layout_constraintVertical_bias="0.708" />
-
 </androidx.constraintlayout.widget.ConstraintLayout>

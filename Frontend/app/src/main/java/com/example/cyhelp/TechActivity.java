@@ -15,7 +15,6 @@ public class TechActivity extends Activity {
     MapView map = null;
     @Override public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         
         //handle permissions first, before map is created. not depicted here
 

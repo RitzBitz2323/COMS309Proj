@@ -14,4 +14,41 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 @Table(name ="Category")
 public class Category {
 	
+	// values of the Category
+	@Id
+	@GeneratedValue(strategy= GenerationType.IDENTITY)
+	private int id;
+	private String title;
+	private String tag;
+	
+	// Constructors
+	
+	public Category(){}
+	
+	public Category(String title) {
+		this.title = title;
+	}
+	
+	// Getters and Setters
+	
+	public int getId() {
+		return this.id;
+	}
+	
+	public void setId(int id) {
+		this.id = id;
+	}
+	
+	public String getTitle() {
+		return this.title;
+	}
+	
+	public void setTitle(String title) {
+		this.title = title;
+	}
+	
+	@Override
+	public String toString() {
+		return (this.getTitle() + ": id = " + this.getId());
+	}
 }

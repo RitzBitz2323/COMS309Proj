@@ -1,11 +1,12 @@
 # Example  .gitlab-ci.yml file
 stages:
-  - maventry
+  - mavenbuild
   - maventest
-  - androidtry
+  - androidbuild
+  - androidtest
 
 maven-build:   #this is a JOB
-  stage: maventry
+  stage: mavenbuild
   tags:
     - springboot_server_update  # this is LINK to the shell runner on the remote-server 
   script:
@@ -30,7 +31,7 @@ android-build:
     - export GRADLE_USER_HOME=`pwd`/.gradle
     - chmod +x ./Frontend/gradlew
   tags:
-   - android_tag
+   - android_build
   script:
     - cd Frontend
     - ./gradlew build
@@ -45,7 +46,7 @@ android-test:
     - export GRADLE_USER_HOME=`pwd`/.gradle
     - chmod +x ./Frontend/gradlew
   tags:
-   - android_tag
+   - android_build
   script:
     - cd Frontend
     - ./gradlew test

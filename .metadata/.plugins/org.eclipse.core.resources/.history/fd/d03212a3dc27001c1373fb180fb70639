@@ -1,0 +1,5 @@
+package coms309.cyhelp.model;
+
+public class Category {
+
+}

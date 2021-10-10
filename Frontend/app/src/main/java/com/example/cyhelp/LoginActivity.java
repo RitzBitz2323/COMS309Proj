@@ -1,40 +1,34 @@
 package com.example.cyhelp;
 
-import static com.example.cyhelp.R.id.editTextTextPassword_loginActivity;
-import static com.example.cyhelp.R.id.editTextTextPersonName_loginActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
-
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.android.volley.AuthFailureError;
+import com.android.volley.NetworkError;
+import com.android.volley.NoConnectionError;
+import com.android.volley.ParseError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
+import com.android.volley.ServerError;
+import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
-import com.google.android.gms.location.FusedLocationProviderClient;
-import com.google.android.gms.location.LocationCallback;
-import com.google.android.gms.location.LocationRequest;
-import com.google.android.gms.location.LocationResult;
-import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
-
 
 public class LoginActivity extends AppCompatActivity {
 
     protected int userID;
+    protected int userType;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,26 +54,78 @@ public class LoginActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
+        /**
+         * Creates JsonObjectRequest
+         */
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, postUrl, userLogin, new Response.Listener<JSONObject>() {
+
+            /**
+             * On Response determine userID and userType if login is successful.
+             * Uses userType to route user to correct activity.
+             *
+             * @param response json object response from server
+             */
             @Override
             public void onResponse(JSONObject response) {
+
                 try {
                     userID = response.getInt("id");
+                    userType = response.getInt("user_type");
                 } catch (JSONException e) {
-                    e.printStackTrace();
+                    Toast.makeText(getApplicationContext(), "Invalid username and or password", Toast.LENGTH_SHORT).show();
                 }
-                Intent i = new Intent(LoginActivity.this, ViewTicketsActivity.class);
-                i.putExtra("id", userID);
-                startActivity(i);
+
+                //Check user type to determine what screen to send them to upon successful login.
+                if (userType == 0){
+                    Intent i = new Intent(LoginActivity.this, ViewTicketsActivity.class);
+                    i.putExtra("id", userID);
+                    i.putExtra("userType", userType);
+                    startActivity(i);
+                } else if (userType == 1) {
+                    Intent i = new Intent(LoginActivity.this, TechActivity.class);
+                    i.putExtra("id", userID);
+                    i.putExtra("userType", userType);
+                    startActivity(i);
+                } else if (userType == 2) {
+                    Intent i = new Intent(LoginActivity.this, CompanyActivity.class);
+                    i.putExtra("id", userID);
+                    i.putExtra("userType", userType);
+                    startActivity(i);
+                } else if (userType == 3) {
+                    Intent i = new Intent(LoginActivity.this, AdminActivity.class);
+                    i.putExtra("id", userID);
+                    i.putExtra("userType", userType);
+                    startActivity(i);
+                } else {
+                    //Should never be reached
+                    Toast.makeText(getApplicationContext(), "Invalid User Type", Toast.LENGTH_SHORT).show();
+                }
+
             }
         }, new Response.ErrorListener() {
+            /**
+             * Checks Json request errors and informs users of error.
+             * @param error
+             */
             @Override
             public void onErrorResponse(VolleyError error) {
-                error.printStackTrace();
+                String errorMessage = null;
+                if (error instanceof NetworkError) {
+                    errorMessage = "Cannot connect to Internet. Check your connection!";
+                } else if (error instanceof ServerError) {
+                    errorMessage = "Server not found. Please try again later.";
+                } else if (error instanceof AuthFailureError) {
+                    errorMessage = "Cannot connect to Internet. Check your connection!";
+                } else if (error instanceof ParseError) {
+                    errorMessage = "Parsing Error. Please try again later.";
+                } else if (error instanceof NoConnectionError) {
+                    errorMessage = "Cannot connect to Internet. Check your connection!";
+                } else if (error instanceof TimeoutError) {
+                    errorMessage = "Connection TimeOut. Check your connection!";
+                }
+                Toast.makeText(getApplicationContext(), errorMessage, Toast.LENGTH_SHORT).show();
             }
         });
         requestQueue.add(jsonObjectRequest);
     }
-
-
 }

@@ -11,7 +11,7 @@ maven-build:   #this is a JOB
     - springboot_server_update  # this is LINK to the shell runner on the remote-server 
   script:
     - cd Backend/CyHelp
-    - mvn package
+    - mvn package -B
 
 maven-test:
   stage: maventest

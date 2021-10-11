@@ -64,20 +64,28 @@ public class ActorController {
 	@PostMapping("/actors/login")
 	public Actor actorLogin(@RequestBody Actor actor) {
 		
-		String username = actor.getUsername();
-		Long password = actor.getPassword();
-		
-		List<Actor> actors = actorRepository.findAll();
-		
-		for(Actor check : actors) {
-			if(check.getUsername().equals(username)) {
-				if(check.getPassword() == password) {
-					return check;
+		try {
+			String username = actor.getUsername();
+			Long password = actor.getPassword();
+			
+			List<Actor> actors = actorRepository.findAll();
+			
+			for(Actor check : actors) {
+				if(check.getUsername().equals(username)) {
+					if(check.getPassword() == password) {
+						return check;
+					}
 				}
 			}
+			
+			return null;
+			
+		} catch(Exception e) {
+			
+			e.printStackTrace();
+			return null;
 		}
 		
-		return null;
 	}
 	
 	/**
@@ -90,6 +98,11 @@ public class ActorController {
 		return actorRepository.findById(id);
 	}
 
+	/**
+	 * Get the tickets of the specified Actor.
+	 * @param id
+	 * @return
+	 */
 	@GetMapping("/actors/{id}/tickets")
 	public List<Ticket> getTickets(@PathVariable int id) {
 		

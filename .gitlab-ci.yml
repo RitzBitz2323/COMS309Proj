@@ -34,7 +34,7 @@ android-build:
    - android_build
   script:
     - cd Frontend
-    - ./gradlew build
+    - ./gradlew assemble
   artifacts:
     paths:
     - Android_test/app/build/outputs/

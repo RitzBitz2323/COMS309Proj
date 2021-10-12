@@ -1,13 +1,14 @@
 package coms309.cyhelp.model;
 
-import javax.persistence.Column;
+import java.util.List;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
@@ -20,6 +21,10 @@ public class Category {
 	private int id;
 	private String title;
 	private String tag;
+	
+	@OneToMany
+	@JsonIgnore
+	private List<Ticket> tickets;
 	
 	// Constructors
 	
@@ -45,6 +50,22 @@ public class Category {
 	
 	public void setTitle(String title) {
 		this.title = title;
+	}
+	
+	public List<Ticket> getTickets() {
+		return this.tickets;
+	}
+	
+	public void setTickets(List<Ticket> list) {
+		this.tickets = list;
+	}
+	
+	public void addTicket(Ticket ticket) {
+		this.tickets.add(ticket);
+	}
+	
+	public void removeTicket(Ticket ticket) {
+		this.tickets.remove(ticket);
 	}
 	
 	@Override

@@ -1,13 +1,11 @@
 package coms309.cyhelp.model;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -45,9 +43,10 @@ public class Ticket {
 	@JsonIgnore
 	private Actor technicianActor;
 	
-	@Column(name = "category")
-	//@OneToOne
-	private String category;
+	@ManyToOne
+	@JoinColumn(name="category_id")
+	@JsonIgnore
+	private Category categoryObj;
 	
 	
 	// CONSTRUCTORS
@@ -72,14 +71,6 @@ public class Ticket {
 	
 	public int getId() {
 		return this.id;
-	}
-	
-	public void setCategory(String cat) {
-		this.category = cat;
-	}
-	
-	public String getCategory() {
-		return this.category;
 	}
 	
 	public void setTitle(String title) {
@@ -161,6 +152,14 @@ public class Ticket {
 		
 	public Actor getTechnician() {
 		return this.technicianActor;
+	}
+	
+	public void setCategory(Category cat) {
+		this.categoryObj = cat;
+	}
+	
+	public Category getCategory() {
+		return this.categoryObj;
 	}
 	
 	@Override

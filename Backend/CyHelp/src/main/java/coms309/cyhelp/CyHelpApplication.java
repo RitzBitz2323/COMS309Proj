@@ -18,13 +18,15 @@ public class CyHelpApplication {
 	@Bean
 	CommandLineRunner initCategory(CategoryRepository catRepo) {
 		return args ->{
+		Category cat0 = new Category("None");
 		Category cat1 = new Category("Plumber");
 		Category cat2 = new Category("Electrical and Electronic Installer and Repairer");
 		Category cat3 = new Category("Automotive Mechanic");
 		Category cat4 = new Category("Computer and Office Machine Technician");
 		Category cat5 = new Category("Heating, Air Conditioning, and Refrigeration Mechanic");
 		Category cat6 = new Category("Home Appliance Repairer");
-	
+		
+		catRepo.save(cat0);
 		catRepo.save(cat1);
 		catRepo.save(cat2);
 		catRepo.save(cat3);

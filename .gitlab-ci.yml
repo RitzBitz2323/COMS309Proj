@@ -32,13 +32,13 @@ android-build:
     - export GRADLE_USER_HOME='pwd'/.gradle
     - chmod +x ./Frontend/gradlew
   tags:
-   - FRONTEND
+    - FRONTEND
   script:
     - cd Frontend
     - ./gradlew assemble
   artifacts:
-    paths:
-    - Android_test/app/build/outputs/
+      paths:
+           - Android_test/app/build/outputs/
 
 android-test:
   image: javiersantos/android-ci:latest

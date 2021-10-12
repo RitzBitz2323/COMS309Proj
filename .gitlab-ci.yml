@@ -8,7 +8,7 @@ stages:
 maven-build:   #this is a JOB
   stage: mavenbuild
   tags:
-    - springboot_server_update  # this is LINK to the shell runner on the remote-server 
+    - BACKEND  # this is LINK to the shell runner on the remote-server 
   script:
     - cd Backend/CyHelp
     - mvn package
@@ -16,7 +16,7 @@ maven-build:   #this is a JOB
 maven-test:
   stage: maventest
   tags:
-    - springboot_server_update
+    - BACKEND
   script:
     - cd Backend/CyHelp
     - mvn test
@@ -31,7 +31,7 @@ android-build:
     - export GRADLE_USER_HOME=`pwd`/.gradle
     - chmod +x ./Frontend/gradlew
   tags:
-   - android_build
+   - FRONTEND
   script:
     - cd Frontend
     - ./gradlew assemble
@@ -46,7 +46,7 @@ android-test:
     - export GRADLE_USER_HOME=`pwd`/.gradle
     - chmod +x ./Frontend/gradlew
   tags:
-   - android_build
+   - FRONTEND
   script:
     - cd Frontend
     - ./gradlew test

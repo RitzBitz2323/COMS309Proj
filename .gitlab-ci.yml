@@ -31,7 +31,7 @@ autoDeploy:
   tags:
    - BACKEND
   script:
-    - cd Backend
+    - cd Backend/CyHelp
     - mvn package
     - sudo mv target/*.jar /target/web-demo.jar 
     - sudo systemctl stop system-web-demo

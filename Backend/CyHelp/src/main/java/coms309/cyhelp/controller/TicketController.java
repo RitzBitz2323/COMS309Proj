@@ -1,7 +1,9 @@
 package coms309.cyhelp.controller;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -183,9 +185,14 @@ public class TicketController {
 	 * @return String
 	 */
 	@DeleteMapping("/tickets")
-	public String deleteByRequestBody(@RequestBody Ticket ticket) {
+	public Map<String, String> deleteByRequestBody(@RequestBody Ticket ticket) {
 		
-		if(ticket == null) return "{\"message\":\"not a valid RequestBody\"}";
+		HashMap<String, String> result = new HashMap<String, String>();
+		
+		if(ticket == null) {
+			result.put("message", "that ticket doesn't exist.");
+			return result;
+		}
 		
 		return deleteByPathVariable(ticket.getId());
 	}
@@ -196,10 +203,15 @@ public class TicketController {
 	 * @return
 	 */
 	@DeleteMapping("/tickets/{id}")
-	public String deleteByPathVariable(@PathVariable int id) {
+	public Map<String, String> deleteByPathVariable(@PathVariable int id) {
+		
+		HashMap<String, String> result = new HashMap<String, String>();
 		
 		Ticket ticket = ticketRepository.findById(id);
-		if(ticket == null) return "{\"message\":\"That ticket doesn't exists\"}";
+		if(ticket == null) {
+			result.put("message", "that ticket doesn't exist.");
+			return result;
+		}
 		
 		Actor customer = ticket.getCustomer();
 		Actor technician = ticket.getTechnician();
@@ -215,8 +227,9 @@ public class TicketController {
 		}
 		
 		ticketRepository.delete(ticket);
+		result.put("message", "success");
 		
-		return "{\"message\":\"success\"}";
+		return result;
 	}
 	
 }

@@ -2,6 +2,7 @@
 stages:
   - mavenbuild
   - maventest
+  - mavendeploy
   - androidbuild
   - androidtest
 
@@ -24,6 +25,17 @@ maven-test:
   artifacts:
     paths:
       - Backend/CyHelp/target/*.jar
+
+autoDeploy:
+  stage: mavendeploy  #do make a stage with same name!
+  tags:
+   - BACKEND
+  script:
+    - cd Backend/CyHelp
+    - mvn package
+    - sudo mv target/*.jar /target/web-demo.jar 
+    - sudo systemctl stop system-web-demo
+    - sudo systemctl start system-web-demo
 
 android-build:
   image: javiersantos/android-ci:latest

@@ -1,6 +1,8 @@
 package coms309.cyhelp.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -8,6 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import coms309.cyhelp.model.Actor;
@@ -24,6 +27,23 @@ public class ActorController {
 	@GetMapping("/actors")
 	public List<Actor> getActors() {
 		return actorRepository.findAll();
+	}
+	
+	// CHECK if an actor with a certain username exists
+	@GetMapping("/actors/exists")
+	public Map<String, Boolean> checkUserExists(@RequestParam(value="username", required = true) String username) {
+		
+		Map<String, Boolean> results = new HashMap<String, Boolean>();
+		results.put("message", false);
+		
+		for(Actor user : actorRepository.findAll()) {
+			if(user.getUsername().equals(username)) {
+				results.replace("message", true);
+				break;
+			}
+		}
+		
+		return results; 
 	}
 	
 	/**

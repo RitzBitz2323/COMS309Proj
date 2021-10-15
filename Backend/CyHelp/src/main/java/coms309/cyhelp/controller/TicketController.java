@@ -215,6 +215,7 @@ public class TicketController {
 		
 		Actor customer = ticket.getCustomer();
 		Actor technician = ticket.getTechnician();
+		Category category = ticket.getCategory();
 		
 		if(customer != null) {
 			customer.removeTicket(ticket);
@@ -224,6 +225,11 @@ public class TicketController {
 		if(technician != null) {
 			technician.removeTicket(ticket);
 			actorRepository.save(technician);
+		}
+		
+		if(category != null) {
+			category.removeTicket(ticket);
+			categoryRepository.save(category);
 		}
 		
 		ticketRepository.delete(ticket);

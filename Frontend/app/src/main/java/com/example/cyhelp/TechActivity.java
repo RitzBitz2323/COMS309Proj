@@ -18,6 +18,12 @@ import android.preference.PreferenceManager;
 import android.provider.Settings;
 import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.Volley;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
@@ -26,11 +32,19 @@ import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.osmdroid.api.IMapController;
 import org.osmdroid.config.Configuration;
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory;
 import org.osmdroid.util.GeoPoint;
 import org.osmdroid.views.MapView;
+import org.osmdroid.views.overlay.ItemizedIconOverlay;
+import org.osmdroid.views.overlay.ItemizedOverlayWithFocus;
+import org.osmdroid.views.overlay.OverlayItem;
+
+import java.util.ArrayList;
 
 public class TechActivity extends AppCompatActivity {
 
@@ -45,6 +59,8 @@ public class TechActivity extends AppCompatActivity {
     GeoPoint startPoint;
 
     MapView map = null;
+
+    String url = "http://coms-309-051.cs.iastate.edu:8080/tickets/at";
     @Override public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
@@ -74,6 +90,27 @@ public class TechActivity extends AppCompatActivity {
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
 
         getLastLocation();
+
+        //your items
+        ArrayList<OverlayItem> items = new ArrayList<OverlayItem>();
+        items.add(new OverlayItem("Title", "Description", new GeoPoint(42.0301297,-93.6521950))); // Lat/Lon decimal degrees
+
+        //the overlay
+        ItemizedOverlayWithFocus<OverlayItem> mOverlay = new ItemizedOverlayWithFocus<OverlayItem>(items,
+                new ItemizedIconOverlay.OnItemGestureListener<OverlayItem>() {
+                    @Override
+                    public boolean onItemSingleTapUp(final int index, final OverlayItem item) {
+                        //do something
+                        return true;
+                    }
+                    @Override
+                    public boolean onItemLongPress(final int index, final OverlayItem item) {
+                        return false;
+                    }
+                }, ctx);
+        mOverlay.setFocusItemsOnTap(true);
+
+        map.getOverlays().add(mOverlay);
 
     }
 
@@ -116,10 +153,36 @@ public class TechActivity extends AppCompatActivity {
                         } else {
                             latitude = location.getLatitude();
                             longitude = location.getLongitude();
-                            System.out.println(latitude + ", " + longitude);
+                            url += "?lat=" + latitude + "&long=" + longitude;
                             startPoint = new GeoPoint(latitude, longitude);
-                            System.out.println("Start point: " + startPoint);
                             mapController.setCenter(startPoint);
+
+                            ArrayList<String> jsonResponses = new ArrayList<> ();
+
+                            RequestQueue requestQueue = Volley.newRequestQueue(TechActivity.this);
+                            JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
+                                @Override
+                                public void onResponse(JSONArray response) {
+                                    try {
+                                        System.out.println(response);
+                                        for(int i = 0; i < response.length(); i++){
+                                            JSONObject jsonObject = response.getJSONObject(i);
+                                            String title = jsonObject.getString("title");
+
+                                            jsonResponses.add(title);
+                                        }
+                                    } catch (JSONException e) {
+                                        e.printStackTrace();
+                                    }
+                                }
+                            }, new Response.ErrorListener() {
+                                @Override
+                                public void onErrorResponse(VolleyError error) {
+                                    error.printStackTrace();
+                                }
+                            });
+
+                            requestQueue.add(jsonArrayRequest);
                         }
                     }
                 });
@@ -159,6 +222,7 @@ public class TechActivity extends AppCompatActivity {
             Location mLastLocation = locationResult.getLastLocation();
             latitude = mLastLocation.getLatitude();
             longitude = mLastLocation.getLongitude();
+            url += "?lat=" + latitude + "&long=" + longitude;
             System.out.println(latitude + ", " + longitude);
             startPoint = new GeoPoint(latitude, longitude);
             mapController.setCenter(startPoint);

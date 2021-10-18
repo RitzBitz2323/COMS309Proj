@@ -1,3 +1,0 @@
-INDEX VERSION 1.131+C:\GitLab\3_mc_2\Backend\Test_RoundTrip\.metadata\.plugins\org.eclipse.jdt.core
-69606486.index
-3271193799.index

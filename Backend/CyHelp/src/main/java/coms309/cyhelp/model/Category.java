@@ -20,12 +20,13 @@ public class Category {
 	@GeneratedValue(strategy= GenerationType.IDENTITY)
 	private int id;
 	private String title;
-	private String tag;
 	
 	@OneToMany
 	@JsonIgnore
 	private List<Ticket> tickets;
 	
+	@ManyToMany
+	private String tag;
 	// Constructors
 	
 	public Category(){}

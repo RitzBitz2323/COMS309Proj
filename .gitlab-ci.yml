@@ -26,7 +26,7 @@ maven-test:
     paths:
       - Backend/CyHelp/target/*.jar
 
-autoDeploy:
+auto_deploy:
   stage: mavendeploy  #do make a stage with same name!
   tags:
    - BACKEND
@@ -47,7 +47,7 @@ android-build:
     - FRONTEND
   script:
     - cd Frontend
-    - ./gradlew assemble
+    - ./gradlew assemble --stacktrace
   artifacts:
       paths:
            - Android_test/app/build/outputs/

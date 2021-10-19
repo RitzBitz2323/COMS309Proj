@@ -16,8 +16,6 @@ public class CategoryController {
 	@Autowired
 	CategoryRepository categoryRepository;
 
-	
-
 	/**
 	 * Gets all of the category in the repository.
 	 * @return

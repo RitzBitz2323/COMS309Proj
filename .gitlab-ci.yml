@@ -8,6 +8,9 @@ stages:
 
 maven-build:   #this is a JOB
   stage: mavenbuild
+  only:
+    refs: [main]
+    changes: [Backend/**/*]
   tags:
     - BACKEND  # this is LINK to the shell runner on the remote-server 
   script:

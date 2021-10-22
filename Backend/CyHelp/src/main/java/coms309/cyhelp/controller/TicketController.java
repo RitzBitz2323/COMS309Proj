@@ -45,14 +45,14 @@ public class TicketController {
 	}
 	
 	@GetMapping("/tickets/at")
-	public List<Ticket> getNearLocation(@RequestParam(value="lat", required=true) double latitude, @RequestParam(value="long", required=true) double longitude, @RequestParam(value="range", required=false) double range) {
+	public List<Ticket> getNearLocation(@RequestParam(value="lat", required=true) double latitude, @RequestParam(value="long", required=true) double longitude, @RequestParam(value="range", required=true) double range) {
 		
 		List<Ticket> list = new ArrayList<Ticket>();
 		final double c = Math.PI / 180.0; // used to convert latitude and longitude values to radians
 		double lat1 = latitude * c;
 		double long1 = longitude * c;
 		
-		if(range == 0.0) {
+		if(range <= 0.0) {
 			range = 50.0;
 		}
 		

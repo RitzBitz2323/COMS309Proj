@@ -60,6 +60,8 @@ public class TechActivity extends AppCompatActivity {
 
     MapView map = null;
 
+    Context ctx;
+
     String url = "http://coms-309-051.cs.iastate.edu:8080/tickets/at";
     @Override public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -67,7 +69,7 @@ public class TechActivity extends AppCompatActivity {
         //handle permissions first, before map is created. not depicted here
 
         //load/initialize the osmdroid configuration, this can be done
-        Context ctx = getApplicationContext();
+        ctx = getApplicationContext();
         Configuration.getInstance().load(ctx, PreferenceManager.getDefaultSharedPreferences(ctx));
         //setting this before the layout is inflated is a good idea
         //it 'should' ensure that the map has a writable location for the map cache, even without permissions
@@ -90,27 +92,6 @@ public class TechActivity extends AppCompatActivity {
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
 
         getLastLocation();
-
-        //your items
-        ArrayList<OverlayItem> items = new ArrayList<OverlayItem>();
-        items.add(new OverlayItem("Title", "Description", new GeoPoint(42.0301297,-93.6521950))); // Lat/Lon decimal degrees
-
-        //the overlay
-        ItemizedOverlayWithFocus<OverlayItem> mOverlay = new ItemizedOverlayWithFocus<OverlayItem>(items,
-                new ItemizedIconOverlay.OnItemGestureListener<OverlayItem>() {
-                    @Override
-                    public boolean onItemSingleTapUp(final int index, final OverlayItem item) {
-                        //do something
-                        return true;
-                    }
-                    @Override
-                    public boolean onItemLongPress(final int index, final OverlayItem item) {
-                        return false;
-                    }
-                }, ctx);
-        mOverlay.setFocusItemsOnTap(true);
-
-        map.getOverlays().add(mOverlay);
 
     }
 
@@ -153,11 +134,12 @@ public class TechActivity extends AppCompatActivity {
                         } else {
                             latitude = location.getLatitude();
                             longitude = location.getLongitude();
-                            url += "?lat=" + latitude + "&long=" + longitude;
+                            url += "?lat=" + latitude + "&long=" + longitude + "&range=5000.0";
                             startPoint = new GeoPoint(latitude, longitude);
                             mapController.setCenter(startPoint);
 
-                            ArrayList<String> jsonResponses = new ArrayList<> ();
+                            ArrayList<Double> latitudeList = new ArrayList<> ();
+                            ArrayList<Double> longitudeList = new ArrayList<> ();
 
                             RequestQueue requestQueue = Volley.newRequestQueue(TechActivity.this);
                             JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
@@ -167,10 +149,44 @@ public class TechActivity extends AppCompatActivity {
                                         System.out.println(response);
                                         for(int i = 0; i < response.length(); i++){
                                             JSONObject jsonObject = response.getJSONObject(i);
-                                            String title = jsonObject.getString("title");
+                                            System.out.println("JSON object: " + jsonObject);
+                                            double latitudeU = jsonObject.getDouble("latitude");
+                                            System.out.println("Ticket Latitude: " + latitudeU);
+                                            double longitudeU = jsonObject.getDouble("longitude");
+                                            System.out.println("Ticket Longitude: " + longitudeU);
 
-                                            jsonResponses.add(title);
+                                            latitudeList.add(latitudeU);
+                                            longitudeList.add(longitudeU);
                                         }
+
+                                        System.out.println("Latitudes: " + latitudeList);
+                                        System.out.println("Longitudes: " + longitudeList);
+
+                                        //your items
+                                        ArrayList<OverlayItem> items = new ArrayList<OverlayItem>();
+                                        for (int j = 0; j < latitudeList.size(); j++) {
+                                            items.add(new OverlayItem("Title", "Description", new GeoPoint(latitudeList.get(j),longitudeList.get(j)))); // Lat/Lon decimal degrees
+                                        }
+
+
+                                        //the overlay
+                                        ItemizedOverlayWithFocus<OverlayItem> mOverlay = new ItemizedOverlayWithFocus<OverlayItem>(items,
+                                                new ItemizedIconOverlay.OnItemGestureListener<OverlayItem>() {
+                                                    @Override
+                                                    public boolean onItemSingleTapUp(final int index, final OverlayItem item) {
+                                                        //do something
+                                                        return true;
+                                                    }
+                                                    @Override
+                                                    public boolean onItemLongPress(final int index, final OverlayItem item) {
+                                                        return false;
+                                                    }
+                                                }, ctx);
+                                        mOverlay.setFocusItemsOnTap(true);
+
+                                        map.getOverlays().add(mOverlay);
+
+
                                     } catch (JSONException e) {
                                         e.printStackTrace();
                                     }
@@ -183,6 +199,8 @@ public class TechActivity extends AppCompatActivity {
                             });
 
                             requestQueue.add(jsonArrayRequest);
+
+
                         }
                     }
                 });

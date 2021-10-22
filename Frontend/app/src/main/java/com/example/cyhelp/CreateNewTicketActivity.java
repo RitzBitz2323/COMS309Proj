@@ -52,6 +52,7 @@ public class CreateNewTicketActivity extends AppCompatActivity implements Adapte
     double longitude;
 
     String technicianType;
+    int categoryID;
     int ID;
 
     @Override
@@ -196,6 +197,15 @@ public class CreateNewTicketActivity extends AppCompatActivity implements Adapte
             e.printStackTrace();
         }
 
+        System.out.println("Category ID: " + categoryID);
+
+        JSONObject categoryData = new JSONObject();
+        try {
+            categoryData.put("id", categoryID);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
         EditText problemDesc = (EditText) findViewById(R.id.problemDesc);
 
         EditText homeAddress = (EditText) findViewById(R.id.homeAddress);
@@ -208,8 +218,9 @@ public class CreateNewTicketActivity extends AppCompatActivity implements Adapte
 //            postData.put("home_address", homeAddress.getText().toString());
             postData.put("latitude", latitude);
             postData.put("longitude", longitude);
-            postData.put("category", technicianType);
+            postData.put("category", categoryData);
             postData.put("title", problemTitle.getText().toString());
+            System.out.println(postData);
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -234,7 +245,8 @@ public class CreateNewTicketActivity extends AppCompatActivity implements Adapte
     }
 
     public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
-        technicianType = parent.getItemAtPosition(pos).toString();
+        System.out.println("Position: " + pos);
+        categoryID = pos + 2;
     }
 
     public void onNothingSelected(AdapterView<?> parent) {

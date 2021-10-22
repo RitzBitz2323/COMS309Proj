@@ -9,8 +9,10 @@ stages:
 maven-build:   #this is a JOB
   stage: mavenbuild
   only:
-    refs: [main]
-    changes: [Backend/**/*]
+    refs: 
+      - main
+    changes: 
+      - Backend/**/*
   tags:
     - BACKEND  # this is LINK to the shell runner on the remote-server 
   script:
@@ -19,6 +21,11 @@ maven-build:   #this is a JOB
 
 maven-test:
   stage: maventest
+  only:
+    refs: 
+      - main
+    changes: 
+      - Backend/**/*
   tags:
     - BACKEND
   script:
@@ -31,6 +38,11 @@ maven-test:
 
 auto_deploy:
   stage: mavendeploy  #do make a stage with same name!
+  only:
+    refs: 
+      - main
+    changes: 
+      - Backend/**/*
   tags:
    - BACKEND
   script:
@@ -43,6 +55,11 @@ auto_deploy:
 android-build:
   image: javiersantos/android-ci:latest
   stage: androidbuild
+  only:
+    refs: 
+      - main
+    changes: 
+      - Frontend/**/*
   before_script:
     - export GRADLE_USER_HOME='pwd'/.gradle
     - chmod +x ./Frontend/gradlew
@@ -58,6 +75,11 @@ android-build:
 android-test:
   image: javiersantos/android-ci:latest
   stage: androidtest
+  only:
+    refs: 
+      - main
+    changes: 
+      - Frontend/**/*
   before_script:
     - export GRADLE_USER_HOME='pwd'/.gradle
     - chmod +x ./Frontend/gradlew

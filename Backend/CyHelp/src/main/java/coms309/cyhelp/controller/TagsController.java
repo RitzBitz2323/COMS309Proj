@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -45,10 +46,19 @@ public class TagsController {
 	
 	/**
 	 * Create a tag with specified string
-	 * @param name
+	 * @param tag
 	 * @return String
 	 */
-	
+	@PostMapping("/tags")
+	public Tags createTag(@RequestBody Tags input_tag) {
+		// if tag is empty will return null
+		if(input_tag == null) return null;
+		
+		Tags tag = new Tags(input_tag.getTagName());
+		
+		tagsRepository.save(tag);
+		return tag;
+	}
 	
 	/**
 	 * Deletes a tag based on the tag provided by

@@ -40,17 +40,17 @@ public class Tags {
 		this.id = id;
 	}
 	
-	public String getTag() {
+	public String getTagName() {
 		return this.tagName;
 	}
 	
-	public void setTag(String name) {
+	public void setTaName(String name) {
 		this.tagName = name;
 	}
 	
 	@Override
 	public String toString() {
-		return (this.getTag() + ": id = " + this.getId());
+		return (this.getTagName() + ": id = " + this.getId());
 	}
 
 }

@@ -22,7 +22,7 @@ public class Tags {
 	private String tagName;
 	
 	@ManyToMany(mappedBy = "tags")
-	private List<Category> categories;
+	private List<Tags> tags;
 	
 	public Tags() {
 		

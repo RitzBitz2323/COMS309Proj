@@ -6,9 +6,13 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinTable;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import coms309.cyhelp.model.Tags;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
@@ -20,12 +24,14 @@ public class Category {
 	@GeneratedValue(strategy= GenerationType.IDENTITY)
 	private int id;
 	private String title;
-	private String tag;
 	
 	@OneToMany
 	@JsonIgnore
 	private List<Ticket> tickets;
 	
+	@ManyToMany
+	@JoinTable(name = "tags_for_category", joinColumns = @JoinColumn(name = "category_id"), inverseJoinColumns = @JoinColumn(name = "tag_id"))
+	private List<Tags> tags;
 	// Constructors
 	
 	public Category(){}

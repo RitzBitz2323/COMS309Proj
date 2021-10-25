@@ -63,21 +63,20 @@ public class TechActivity extends AppCompatActivity {
     Context ctx;
 
     String url = "http://coms-309-051.cs.iastate.edu:8080/tickets/at";
+
     @Override public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        //handle permissions first, before map is created. not depicted here
-
-        //load/initialize the osmdroid configuration, this can be done
+        // load/initialize the osmdroid configuration, this can be done
         ctx = getApplicationContext();
         Configuration.getInstance().load(ctx, PreferenceManager.getDefaultSharedPreferences(ctx));
-        //setting this before the layout is inflated is a good idea
-        //it 'should' ensure that the map has a writable location for the map cache, even without permissions
-        //if no tiles are displayed, you can try overriding the cache path using Configuration.getInstance().setCachePath
-        //see also StorageUtils
-        //note, the load method also sets the HTTP User Agent to your application's package name, abusing osm's tile servers will get you banned based on this string
+        // setting this before the layout is inflated is a good idea
+        // it 'should' ensure that the map has a writable location for the map cache, even without permissions
+        // if no tiles are displayed, you can try overriding the cache path using Configuration.getInstance().setCachePath
+        // see also StorageUtils
+        // note, the load method also sets the HTTP User Agent to your application's package name, abusing osm's tile servers will get you banned based on this string
 
-        //inflate and create the map
+        // inflate and create the map
         setContentView(R.layout.activity_tech);
 
         map = (MapView) findViewById(R.id.map);
@@ -97,111 +96,111 @@ public class TechActivity extends AppCompatActivity {
 
     public void onResume(){
         super.onResume();
-        //this will refresh the osmdroid configuration on resuming.
-        //if you make changes to the configuration, use
-        //SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-        //Configuration.getInstance().load(this, PreferenceManager.getDefaultSharedPreferences(this));
+        // this will refresh the osmdroid configuration on resuming.
+        // if you make changes to the configuration, use
+        // SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        // Configuration.getInstance().load(this, PreferenceManager.getDefaultSharedPreferences(this));
         map.onResume(); //needed for compass, my location overlays, v6.0.0 and up
     }
 
     public void onPause(){
         super.onPause();
-        //this will refresh the osmdroid configuration on resuming.
-        //if you make changes to the configuration, use
-        //SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-        //Configuration.getInstance().save(this, prefs);
+        // this will refresh the osmdroid configuration on resuming.
+        // if you make changes to the configuration, use
+        // SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        // Configuration.getInstance().save(this, prefs);
         map.onPause();  //needed for compass, my location overlays, v6.0.0 and up
     }
 
     @SuppressLint("MissingPermission")
     private void getLastLocation() {
-        // check if permissions are given
+        // check if location permissions are given
         if (checkPermissions()) {
 
             // check if location is enabled
             if (isLocationEnabled()) {
 
-                // getting last
-                // location from
-                // FusedLocationClient
-                // object
+                // get the location of technician from FusedLocationClient object
                 mFusedLocationClient.getLastLocation().addOnCompleteListener(new OnCompleteListener<Location>() {
                     @Override
                     public void onComplete(@NonNull Task<Location> task) {
                         Location location = task.getResult();
-                        if (location == null) {
-                            requestNewLocationData();
-                        } else {
-                            latitude = location.getLatitude();
-                            longitude = location.getLongitude();
-                            url += "?lat=" + latitude + "&long=" + longitude + "&range=5000.0";
-                            startPoint = new GeoPoint(latitude, longitude);
-                            mapController.setCenter(startPoint);
 
-                            ArrayList<Double> latitudeList = new ArrayList<> ();
-                            ArrayList<Double> longitudeList = new ArrayList<> ();
+                        // get coordinates of technician
+                        latitude = location.getLatitude();
+                        longitude = location.getLongitude();
 
-                            RequestQueue requestQueue = Volley.newRequestQueue(TechActivity.this);
-                            JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
-                                @Override
-                                public void onResponse(JSONArray response) {
-                                    try {
-                                        System.out.println(response);
-                                        for(int i = 0; i < response.length(); i++){
-                                            JSONObject jsonObject = response.getJSONObject(i);
-                                            System.out.println("JSON object: " + jsonObject);
-                                            double latitudeU = jsonObject.getDouble("latitude");
-                                            System.out.println("Ticket Latitude: " + latitudeU);
-                                            double longitudeU = jsonObject.getDouble("longitude");
-                                            System.out.println("Ticket Longitude: " + longitudeU);
+                        // center map at technician's coordinates
+                        startPoint = new GeoPoint(latitude, longitude);
+                        mapController.setCenter(startPoint);
 
-                                            latitudeList.add(latitudeU);
-                                            longitudeList.add(longitudeU);
-                                        }
+                        // constructing url to fetch tickets near technician
+                        url += "?lat=" + latitude + "&long=" + longitude + "&range=100.0";
 
-                                        System.out.println("Latitudes: " + latitudeList);
-                                        System.out.println("Longitudes: " + longitudeList);
+                        // lists to store coordinates of tickets near technician
+                        ArrayList<Double> latitudeList = new ArrayList<> ();
+                        ArrayList<Double> longitudeList = new ArrayList<> ();
 
-                                        //your items
-                                        ArrayList<OverlayItem> items = new ArrayList<OverlayItem>();
-                                        for (int j = 0; j < latitudeList.size(); j++) {
-                                            items.add(new OverlayItem("Title", "Description", new GeoPoint(latitudeList.get(j),longitudeList.get(j)))); // Lat/Lon decimal degrees
-                                        }
+                        // get the tickets near the technician
+                        RequestQueue requestQueue = Volley.newRequestQueue(TechActivity.this);
+                        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
+                            @Override
+                            public void onResponse(JSONArray response) {
+                                try {
+                                    System.out.println(response);
 
+                                    // process each ticket returned by server
+                                    for(int i = 0; i < response.length(); i++){
+                                        JSONObject jsonObject = response.getJSONObject(i);
 
-                                        //the overlay
-                                        ItemizedOverlayWithFocus<OverlayItem> mOverlay = new ItemizedOverlayWithFocus<OverlayItem>(items,
-                                                new ItemizedIconOverlay.OnItemGestureListener<OverlayItem>() {
-                                                    @Override
-                                                    public boolean onItemSingleTapUp(final int index, final OverlayItem item) {
-                                                        //do something
-                                                        return true;
-                                                    }
-                                                    @Override
-                                                    public boolean onItemLongPress(final int index, final OverlayItem item) {
-                                                        return false;
-                                                    }
-                                                }, ctx);
-                                        mOverlay.setFocusItemsOnTap(true);
+                                        // get latitude and longitude for each ticket and store in corresponding list
+                                        double latitudeU = jsonObject.getDouble("latitude");
+                                        double longitudeU = jsonObject.getDouble("longitude");
+                                        latitudeList.add(latitudeU);
+                                        longitudeList.add(longitudeU);
 
-                                        map.getOverlays().add(mOverlay);
-
-
-                                    } catch (JSONException e) {
-                                        e.printStackTrace();
+                                        System.out.println("JSON object: " + jsonObject);
+                                        System.out.println("Ticket Latitude: " + latitudeU);
+                                        System.out.println("Ticket Longitude: " + longitudeU);
                                     }
+
+                                    // the items are the icons that will be displayed on the map
+                                    // each item contains the coordinates of a ticket
+                                    ArrayList<OverlayItem> items = new ArrayList<OverlayItem>();
+                                    for (int j = 0; j < latitudeList.size(); j++) {
+                                        items.add(new OverlayItem("Title", "Description", new GeoPoint(latitudeList.get(j),longitudeList.get(j)))); // Lat/Lon decimal degrees
+                                    }
+
+
+                                    // the overlay that will display all the icons
+                                    ItemizedOverlayWithFocus<OverlayItem> mOverlay = new ItemizedOverlayWithFocus<OverlayItem>(items,
+                                            new ItemizedIconOverlay.OnItemGestureListener<OverlayItem>() {
+                                                @Override
+                                                public boolean onItemSingleTapUp(final int index, final OverlayItem item) {
+                                                    //do something
+                                                    return true;
+                                                }
+                                                @Override
+                                                public boolean onItemLongPress(final int index, final OverlayItem item) {
+                                                    return false;
+                                                }
+                                            }, ctx);
+                                    mOverlay.setFocusItemsOnTap(true);
+
+                                    map.getOverlays().add(mOverlay);
+
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
                                 }
-                            }, new Response.ErrorListener() {
-                                @Override
-                                public void onErrorResponse(VolleyError error) {
-                                    error.printStackTrace();
-                                }
-                            });
+                            }
+                        }, new Response.ErrorListener() {
+                            @Override
+                            public void onErrorResponse(VolleyError error) {
+                                error.printStackTrace();
+                            }
+                        });
 
-                            requestQueue.add(jsonArrayRequest);
-
-
-                        }
+                        requestQueue.add(jsonArrayRequest);
                     }
                 });
             } else {
@@ -216,44 +215,40 @@ public class TechActivity extends AppCompatActivity {
         }
     }
 
-    @SuppressLint("MissingPermission")
-    private void requestNewLocationData() {
-
-        // Initializing LocationRequest
-        // object with appropriate methods
-        LocationRequest mLocationRequest = new LocationRequest();
-        mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
-        mLocationRequest.setInterval(5);
-        mLocationRequest.setFastestInterval(0);
-        mLocationRequest.setNumUpdates(1);
-
-        // setting LocationRequest
-        // on FusedLocationClient
-        mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
-        mFusedLocationClient.requestLocationUpdates(mLocationRequest, mLocationCallback, Looper.myLooper());
-    }
-
-    private LocationCallback mLocationCallback = new LocationCallback() {
-
-        @Override
-        public void onLocationResult(LocationResult locationResult) {
-            Location mLastLocation = locationResult.getLastLocation();
-            latitude = mLastLocation.getLatitude();
-            longitude = mLastLocation.getLongitude();
-            url += "?lat=" + latitude + "&long=" + longitude;
-            System.out.println(latitude + ", " + longitude);
-            startPoint = new GeoPoint(latitude, longitude);
-            mapController.setCenter(startPoint);
-        }
-    };
+//    @SuppressLint("MissingPermission")
+//    private void requestNewLocationData() {
+//
+//        // Initializing LocationRequest object with appropriate methods
+//        LocationRequest mLocationRequest = new LocationRequest();
+//        mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+//        mLocationRequest.setInterval(5);
+//        mLocationRequest.setFastestInterval(0);
+//        mLocationRequest.setNumUpdates(1);
+//
+//        // setting LocationRequest on FusedLocationClient
+//        mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
+//        mFusedLocationClient.requestLocationUpdates(mLocationRequest, mLocationCallback, Looper.myLooper());
+//    }
+//
+//    private LocationCallback mLocationCallback = new LocationCallback() {
+//
+//        @Override
+//        public void onLocationResult(LocationResult locationResult) {
+//            Location mLastLocation = locationResult.getLastLocation();
+//            latitude = mLastLocation.getLatitude();
+//            longitude = mLastLocation.getLongitude();
+//            url += "?lat=" + latitude + "&long=" + longitude;
+//            System.out.println(latitude + ", " + longitude);
+//            startPoint = new GeoPoint(latitude, longitude);
+//            mapController.setCenter(startPoint);
+//        }
+//    };
 
     // method to check for permissions
     private boolean checkPermissions() {
         return ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED;
 
-        // If we want background location
-        // on Android 10.0 and higher,
-        // use:
+        // If we want background location on Android 10.0 and higher, use:
         // ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_BACKGROUND_LOCATION) == PackageManager.PERMISSION_GRANTED
     }
 
@@ -264,8 +259,7 @@ public class TechActivity extends AppCompatActivity {
                 Manifest.permission.ACCESS_FINE_LOCATION}, PERMISSION_ID);
     }
 
-    // method to check
-    // if location is enabled
+    // method to check if location is enabled
     private boolean isLocationEnabled() {
         LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) || locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);

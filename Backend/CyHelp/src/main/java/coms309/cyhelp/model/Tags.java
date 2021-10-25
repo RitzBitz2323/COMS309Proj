@@ -44,8 +44,24 @@ public class Tags {
 		return this.tagName;
 	}
 	
-	public void setTaName(String name) {
+	public void setTagName(String name) {
 		this.tagName = name;
+	}
+	
+	public List<Category> getCategories() {
+		return this.categories;
+	}
+	
+	public void setCategories(List<Category> categories) {
+		this.categories = categories;
+	}
+	
+	public void addCategory(Category cat) {
+		this.categories.add(cat);
+	}
+	
+	public void removeCategory(Category cat) {
+		this.categories.remove(cat);
 	}
 	
 	@Override

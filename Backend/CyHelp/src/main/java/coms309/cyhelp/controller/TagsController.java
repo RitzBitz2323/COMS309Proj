@@ -20,10 +20,9 @@ import coms309.cyhelp.repository.TagsRepository;
 
 @RestController
 public class TagsController {
+	
 	@Autowired
 	TagsRepository tagsRepository;
-
-	
 
 	/**
 	 * Gets all of the tags in the repository.

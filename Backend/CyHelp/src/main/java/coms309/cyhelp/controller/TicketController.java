@@ -45,14 +45,14 @@ public class TicketController {
 	}
 	
 	@GetMapping("/tickets/at")
-	public List<Ticket> getNearLocation(@RequestParam(value="lat", required=true) double latitude, @RequestParam(value="long", required=true) double longitude, @RequestParam(value="range", required=true) double range) {
+	public List<Ticket> getNearLocation(@RequestParam(value="lat", required=true) double latitude, @RequestParam(value="long", required=true) double longitude, @RequestParam(value="range", required=false) double range) {
 		
 		List<Ticket> list = new ArrayList<Ticket>();
 		final double c = Math.PI / 180.0; // used to convert latitude and longitude values to radians
 		double lat1 = latitude * c;
 		double long1 = longitude * c;
 		
-		if(range <= 0.0) {
+		if(range == 0.0) {
 			range = 50.0;
 		}
 		
@@ -150,14 +150,24 @@ public class TicketController {
 	 * @return String
 	 */
 	@PutMapping("/tickets/{id}/accept")
-	public String updateTechnicianId(@PathVariable int id, @RequestBody Actor technician) {
+	public HashMap<String, String> updateTechnicianId(@PathVariable int id, @RequestBody Actor technician) {
 		
 		Ticket ticket = ticketRepository.findById(id);
 		Actor tech = actorRepository.findById(technician.getId());
+		HashMap<String, String> result = new HashMap<String, String>();
 		
-		if(ticket == null) return String.format("{\"message\":\"ticket(id=%o) doesn't exist.\"}", id);
-		if(tech == null) return "{\"message\":\"not a valid technician.\"}";
-		if(tech.getUserType() != Actor.TECHNICIAN) return "{\"message\":\"this actor is not a technician.\"}";
+		if(ticket == null) {
+			result.put("message", String.format("ticket(id=%o) doesn't exist.", id));
+			return result ;
+		}
+		if(tech == null) {
+			result.put("message", "not a valid technician.");
+			return result;
+		}
+		if(tech.getUserType() != Actor.TECHNICIAN) {
+			result.put("message", "this actor is not a technician.");
+			return result;
+		}
 		
 		// remove the ticket id from the ticket_list of the previous technician
 		Actor prevTech = ticket.getTechnician();
@@ -175,7 +185,8 @@ public class TicketController {
 		ticketRepository.save(ticket);
 		actorRepository.save(tech);
 		
-		return String.format("{\"message\":\"ticket %o was accepted by technician(id=%o).\"}", id, technician.getId());
+		result.put("message", String.format("ticket %o was accepted by technician(id=%o).", id, technician.getId()));
+		return result;
 	}
 	
 	/**

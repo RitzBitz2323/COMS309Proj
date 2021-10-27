@@ -58,7 +58,6 @@ public class ActorController {
 		
 		List<Actor> actors = actorRepository.findAll();
 		for(Actor check : actors) {
-			System.out.println(check.getUsername());
 			if(actor.getUsername().equals(check.getUsername())) return null;
 		}
 		

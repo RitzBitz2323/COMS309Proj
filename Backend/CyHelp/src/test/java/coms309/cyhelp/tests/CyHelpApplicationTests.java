@@ -1,4 +1,4 @@
-package coms309.cyhelp.test;
+package coms309.cyhelp.tests;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

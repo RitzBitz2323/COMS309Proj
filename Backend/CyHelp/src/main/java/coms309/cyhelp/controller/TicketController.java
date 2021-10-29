@@ -169,23 +169,25 @@ public class TicketController {
 			return result;
 		}
 		
-		// remove the ticket id from the ticket_list of the previous technician
+		// de-associate this ticket from the previous technician (if there is one)
 		Actor prevTech = ticket.getTechnician();
 		if(prevTech != null) {
 			prevTech.removeTicket(ticket);
 			actorRepository.save(prevTech);
 		}
 		
+		// associate the ticket to this technician
 		ticket.setTechnician(tech);
 		ticket.setState(Ticket.PENDING);
 		
-		// returns true if this technician has not been assigned to this ticket
+		// assign the technician to this ticket
 		tech.addTicket(ticket);
 		
+		// save changes
 		ticketRepository.save(ticket);
 		actorRepository.save(tech);
 		
-		result.put("message", String.format("ticket %o was accepted by technician(id=%o).", id, technician.getId()));
+		result.put("message", "success");
 		return result;
 	}
 	
@@ -218,6 +220,7 @@ public class TicketController {
 		
 		HashMap<String, String> result = new HashMap<String, String>();
 		
+		// try to find the desired ticket
 		Ticket ticket = ticketRepository.findById(id);
 		if(ticket == null) {
 			result.put("message", "that ticket doesn't exist.");
@@ -228,16 +231,19 @@ public class TicketController {
 		Actor technician = ticket.getTechnician();
 		Category category = ticket.getCategory();
 		
+		// disconnect the customer from this ticket
 		if(customer != null) {
 			customer.removeTicket(ticket);
 			actorRepository.save(customer);
 		}
 		
+		// disconnect the technician from this ticket
 		if(technician != null) {
 			technician.removeTicket(ticket);
 			actorRepository.save(technician);
 		}
 		
+		// disconnect the category from this ticket
 		if(category != null) {
 			category.removeTicket(ticket);
 			categoryRepository.save(category);

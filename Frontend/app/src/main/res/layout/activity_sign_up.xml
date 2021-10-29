@@ -4,46 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#2B2B2B"
     tools:context=".SignUpActivity"
     tools:layout_editor_absoluteX="-5dp"
     tools:layout_editor_absoluteY="-173dp">
-
-    <TextView
-        android:id="@+id/PasswordTextView_SignUpActivity"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Password:"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large"
-        app:layout_constraintBottom_toBottomOf="@+id/editTextPassword_SignUpActivity"
-        app:layout_constraintEnd_toStartOf="@+id/editTextUsername_SignUpActivity"
-        app:layout_constraintHorizontal_bias="0.468"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/editTextPassword_SignUpActivity"
-        app:layout_constraintVertical_bias="0.533" />
-
-    <TextView
-        android:id="@+id/LastNameTextView_SignUpActivity"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Last Name:"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large"
-        app:layout_constraintBottom_toBottomOf="@+id/editTextLastName_SignUpActivity"
-        app:layout_constraintEnd_toStartOf="@+id/editTextUsername_SignUpActivity"
-        app:layout_constraintHorizontal_bias="0.583"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/editTextLastName_SignUpActivity" />
-
-    <TextView
-        android:id="@+id/FirstNameTextView_SignUpActivity"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="First Name:"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large"
-        app:layout_constraintBottom_toBottomOf="@+id/editTextFirstName_SignUpActivity"
-        app:layout_constraintEnd_toStartOf="@+id/editTextUsername_SignUpActivity"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/editTextFirstName_SignUpActivity"
-        app:layout_constraintVertical_bias="0.0" />
 
     <TextView
         android:id="@+id/loading_SignUpActivity"
@@ -51,6 +15,7 @@
         android:layout_height="wrap_content"
         android:text="Loading..."
         android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+        android:textColor="#FFFFFF"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -59,18 +24,18 @@
 
     <EditText
         android:id="@+id/editTextTextPostalAddress_SignUpActivity"
-        android:layout_width="326dp"
-        android:layout_height="55dp"
-        android:layout_marginTop="40dp"
+        android:layout_width="370dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
         android:ems="10"
         android:hint="Address"
         android:inputType="textPostalAddress"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:textColor="#FFFFFF"
+        android:textColorHint="#AAFFFFFF"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.388"
+        app:layout_constraintHorizontal_bias="0.487"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextConfirmPassword_SignUpActivity"
-        app:layout_constraintVertical_bias="0.124" />
+        app:layout_constraintTop_toBottomOf="@+id/editTextConfirmPassword_SignUpActivity" />
 
     <TextView
         android:id="@+id/Title_SignUpActivity"
@@ -78,80 +43,89 @@
         android:layout_height="wrap_content"
         android:text="Sign Up for CyHelp!"
         android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+        android:textColor="#FFFFFF"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.494"
+        app:layout_constraintHorizontal_bias="0.566"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.021" />
+        app:layout_constraintVertical_bias="0.065" />
 
     <EditText
         android:id="@+id/editTextUsername_SignUpActivity"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="370dp"
+        android:layout_height="50dp"
         android:ems="10"
         android:hint="Username"
         android:inputType="textPersonName"
+        android:textColor="#FFFFFF"
+        android:textColorHint="#AAFFFFFF"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.825"
+        app:layout_constraintHorizontal_bias="0.487"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/Title_SignUpActivity"
-        app:layout_constraintVertical_bias="0.035" />
+        app:layout_constraintVertical_bias="0.037" />
+
+    <EditText
+        android:id="@+id/editTextPassword_SignUpActivity"
+        android:layout_width="370dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="8dp"
+        android:ems="10"
+        android:hint="Password"
+        android:inputType="textPassword"
+        android:textColor="#FFFFFF"
+        android:textColorHint="#AAFFFFFF"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.487"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTextLastName_SignUpActivity" />
+
+    <EditText
+        android:id="@+id/editTextFirstName_SignUpActivity"
+        android:layout_width="370dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="8dp"
+        android:ems="10"
+        android:hint="First Name"
+        android:inputType="textPersonName"
+        android:textColor="#FFFFFF"
+        android:textColorHint="#AAFFFFFF"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.487"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTextUsername_SignUpActivity" />
+
+    <EditText
+        android:id="@+id/editTextConfirmPassword_SignUpActivity"
+        android:layout_width="370dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="12dp"
+        android:ems="10"
+        android:hint="Confirm Password"
+        android:inputType="textPassword"
+        android:textColor="#FFFFFF"
+        android:textColorHint="#AAFFFFFF"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.487"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTextPassword_SignUpActivity" />
 
     <EditText
         android:id="@+id/editTextLastName_SignUpActivity"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="370dp"
+        android:layout_height="50dp"
         android:layout_marginTop="12dp"
         android:ems="10"
         android:hint="Last Name"
         android:inputType="textPersonName"
+        android:textColor="#FFFFFF"
+        android:textColorHint="#AAFFFFFF"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.825"
+        app:layout_constraintHorizontal_bias="0.487"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editTextFirstName_SignUpActivity" />
-
-    <EditText
-        android:id="@+id/editTextPassword_SignUpActivity"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="Password"
-        android:inputType="textPassword"
-        app:layout_constraintBottom_toTopOf="@+id/editTextConfirmPassword_SignUpActivity"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.825"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextLastName_SignUpActivity"
-        app:layout_constraintVertical_bias="0.404" />
-
-    <EditText
-        android:id="@+id/editTextConfirmPassword_SignUpActivity"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="Confirm Password"
-        android:inputType="textPassword"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.825"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextUsername_SignUpActivity"
-        app:layout_constraintVertical_bias="0.369" />
-
-    <EditText
-        android:id="@+id/editTextFirstName_SignUpActivity"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:ems="10"
-        android:hint="First Name"
-        android:inputType="textPersonName"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.825"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextUsername_SignUpActivity" />
 
     <Spinner
         android:id="@+id/spinner_SignUpActivity"
@@ -159,58 +133,24 @@
         android:layout_height="66dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.493"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editTextTextPostalAddress_SignUpActivity"
-        app:layout_constraintVertical_bias="0.151" />
+        app:layout_constraintVertical_bias="0.1" />
 
     <Button
         android:id="@+id/CreateAccount_SignUpActivity"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:background="#FFC31313"
+        android:backgroundTint="#C31313"
         android:onClick="loginUser"
         android:text="Create Account"
+        app:iconTint="#C31313"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/spinner_SignUpActivity"
         app:layout_constraintVertical_bias="0.09" />
-
-    <TextView
-        android:id="@+id/usernameTextView_SignUpActivity"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Username:"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large"
-        app:layout_constraintBottom_toBottomOf="@+id/editTextUsername_SignUpActivity"
-        app:layout_constraintEnd_toStartOf="@+id/editTextUsername_SignUpActivity"
-        app:layout_constraintHorizontal_bias="0.583"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/editTextUsername_SignUpActivity"
-        app:layout_constraintVertical_bias="0.533" />
-
-    <TextView
-        android:id="@+id/ConfirmPasswordTextView_SignUpActivity"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Confirm \nPassword:"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large"
-        app:layout_constraintBottom_toBottomOf="@+id/editTextConfirmPassword_SignUpActivity"
-        app:layout_constraintEnd_toStartOf="@+id/editTextConfirmPassword_SignUpActivity"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/editTextConfirmPassword_SignUpActivity" />
-
-    <TextView
-        android:id="@+id/AddressTextView_SignUpActivity"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:text="Home Address:"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large"
-        app:layout_constraintBottom_toTopOf="@+id/editTextTextPostalAddress_SignUpActivity"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.107"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ConfirmPasswordTextView_SignUpActivity"
-        app:layout_constraintVertical_bias="1.0" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

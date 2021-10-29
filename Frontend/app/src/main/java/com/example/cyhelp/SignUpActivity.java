@@ -1,7 +1,5 @@
 package com.example.cyhelp;
 
-import static com.android.volley.Response.ErrorListener;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -14,33 +12,14 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.android.volley.AuthFailureError;
-import com.android.volley.NetworkError;
-import com.android.volley.NoConnectionError;
-import com.android.volley.ParseError;
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.ServerError;
-import com.android.volley.TimeoutError;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.Volley;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
 public class SignUpActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
     protected String actorType;
     protected int actorTypeID;
     TextView loading;
     protected boolean UsernameAvailable;
-    protected int[] userID;
-    protected int[] userType;
-
-    String TempTest;
-
+    protected int ActorID;
+    protected int ActorType;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,8 +39,13 @@ public class SignUpActivity extends AppCompatActivity implements AdapterView.OnI
         UsernameAvailable = false;
     }
 
+    /**
+     *
+     * @param view
+     */
+    public void loginUser(View view) {
 
-    public void loginUser(View view){
+        loading.setVisibility(View.VISIBLE);
 
         EditText username = (EditText) findViewById(R.id.editTextUsername_SignUpActivity);
         EditText firstName = (EditText) findViewById(R.id.editTextFirstName_SignUpActivity);
@@ -71,14 +55,7 @@ public class SignUpActivity extends AppCompatActivity implements AdapterView.OnI
         EditText address = (EditText) findViewById(R.id.editTextTextPostalAddress_SignUpActivity);
         Spinner spinner = (Spinner) findViewById(R.id.spinner_SignUpActivity);
 
-        String postUrlUsernameAvailable = "http://coms-309-051.cs.iastate.edu:8080/actors/exists?username=" + username.getText().toString();
-        String postUrlCreateActor = "http://coms-309-051.cs.iastate.edu:8080/actors";
-        RequestQueue requestQueue = Volley.newRequestQueue(this);
-
-        System.out.println(postUrlUsernameAvailable);
-
-        JSONObject UniqueUsername = new JSONObject();
-        JSONObject createActor = new JSONObject();
+        SignUpPresenter presenter = new SignUpPresenter(view, view.getContext());
 
         if (username.getText().toString().length() != 0 &&
                 firstName.getText().length() != 0 &&
@@ -89,128 +66,47 @@ public class SignUpActivity extends AppCompatActivity implements AdapterView.OnI
                 spinner.toString().length() != 0 &&
                 password.getText().toString().equals(confirmPassword.getText().toString())) {
 
-            loading.setVisibility(View.VISIBLE);
 
+            Boolean ActorCreated = presenter.SignUpUser(username.getText().toString(), firstName.getText().toString(),
+                                                        lastName.getText().toString(), password.getText().toString(),
+                                                        address.getText().toString(), actorTypeID);
 
+            if (ActorCreated) {
+                ActorID = presenter.getActorID();
+                ActorType = presenter.getActorType();
 
-            //JsonRequest to verify that the username provided is not already in use.
-            JsonObjectRequest UsernameAvailableRequest = new JsonObjectRequest(Request.Method.GET, postUrlUsernameAvailable, UniqueUsername, new Response.Listener<JSONObject>() {
-                @Override
-                public void onResponse(JSONObject response) {
-                    try {
-                        String UsernameAvailableResponse = response.getString("message");
-                        TempTest = "hello";
-                        if (UsernameAvailableResponse.equals("false")) {
-                            UsernameAvailable = true;
-                            TempTest = TempTest + " True";
-                        }
-                        else {
-                            UsernameAvailable = false;
-                            TempTest = TempTest + " False";
-                        }
-                    } catch (JSONException e) {
-                        TempTest = "bye";
-                        //e.printStackTrace();
-                    }
-                }
-            }, new ErrorListener() {
-                @Override
-                public void onErrorResponse(VolleyError error) {
-                    String errorMessage = null;
-                    if (error instanceof NetworkError) {
-                        errorMessage = "Cannot connect to Internet. Check your connection!";
-                    } else if (error instanceof ServerError) {
-                        errorMessage = "Server not found. Please try again later.";
-                    } else if (error instanceof AuthFailureError) {
-                        errorMessage = "Cannot connect to Internet. Check your connection!";
-                    } else if (error instanceof ParseError) {
-                        errorMessage = "Parsing Error. Please try again later.";
-                    } else if (error instanceof NoConnectionError) {
-                        errorMessage = "Cannot connect to Internet. Check your connection!";
-                    } else if (error instanceof TimeoutError) {
-                        errorMessage = "Connection TimeOut. Check your connection!";
-                    }
-                    loading.setVisibility(View.GONE);
-                    Toast.makeText(getApplicationContext(), errorMessage, Toast.LENGTH_SHORT).show();
-                }
-            });
-
-            requestQueue.add(UsernameAvailableRequest);
-
-            //System.out.println(UsernameAvailableResponse + "\n\n\n\n\n");
-            System.out.println(TempTest + "\n\n\n\n\n");
-
-
-
-
-
-            /**
-             * If username is unique entered user info is added to the Json object and a JsonObjectRequest is sent
-             * creating a new user. Otherwise an error message is sent informing the user that the username is not
-             * available.
-             */
-            if (UsernameAvailable) {
-
-                try {
-                    createActor.put("username", username.getText().toString());
-                    createActor.put("firstName", firstName.getText().toString());
-                    createActor.put("lastName", lastName.getText().toString());
-                    createActor.put("password", password.getText().toString().hashCode());
-                    createActor.put("homeAddress", address.getText().toString());
-                    createActor.put("userType", actorTypeID);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-
-                userID = new int[1];
-                userType = new int[1];
-
-                JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, postUrlCreateActor, createActor, new Response.Listener<JSONObject>() {
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        try {
-                            userID[0] = response.getInt("id");
-                            userType[0] = response.getInt( "userType");
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-
-                        Intent i = new Intent(SignUpActivity.this, ViewTicketsActivity.class);
-                        i.putExtra("id", userID[0]);
-                        i.putExtra("userType", userType[0]);
-                        startActivity(i);
-
-                    }
-                }, new ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        String errorMessage = null;
-                        if (error instanceof NetworkError) {
-                            errorMessage = "Cannot connect to Internet. Check your connection!";
-                        } else if (error instanceof ServerError) {
-                            errorMessage = "Server not found. Please try again later.";
-                        } else if (error instanceof AuthFailureError) {
-                            errorMessage = "Cannot connect to Internet. Check your connection!";
-                        } else if (error instanceof ParseError) {
-                            errorMessage = "Parsing Error. Please try again later.";
-                        } else if (error instanceof NoConnectionError) {
-                            errorMessage = "Cannot connect to Internet. Check your connection!";
-                        } else if (error instanceof TimeoutError) {
-                            errorMessage = "Connection TimeOut. Check your connection!";
-                        }
-                        loading.setVisibility(View.GONE);
-                        Toast.makeText(getApplicationContext(), errorMessage, Toast.LENGTH_SHORT).show();
-                    }
-                });
-
-                requestQueue.add(jsonObjectRequest);
-            } else {
-                Toast.makeText(getApplicationContext(), "Username unavailable! Please select a unique username.", Toast.LENGTH_SHORT).show();
                 loading.setVisibility(View.GONE);
+
+                if (ActorType == 0){
+                    Intent i = new Intent(SignUpActivity.this, ViewTicketsActivity.class);
+                    i.putExtra("id", ActorID);
+                    i.putExtra("userType", ActorType);
+                    startActivity(i);
+                } else if (ActorType == 1) {
+                    Intent i = new Intent(SignUpActivity.this, TechActivity.class);
+                    i.putExtra("id", ActorID);
+                    i.putExtra("userType", ActorType);
+                    startActivity(i);
+                } else if (ActorType == 2) {
+                    Intent i = new Intent(SignUpActivity.this, CompanyActivity.class);
+                    i.putExtra("id", ActorID);
+                    i.putExtra("userType", ActorType);
+                    startActivity(i);
+                } else if (ActorType == 3) {
+                    Intent i = new Intent(SignUpActivity.this, AdminActivity.class);
+                    i.putExtra("id", ActorID);
+                    i.putExtra("userType", ActorType);
+                    startActivity(i);
+                }
+            } else {
+                //Display reason for failed signup
+                loading.setVisibility(View.GONE);
+                this.setToast(presenter.getErrorMessage());
             }
+
         }
         //User error messages
-          else if (username.getText().toString().length() == 0) {
+        else if (username.getText().toString().length() == 0) {
             Toast.makeText(getApplicationContext(), "Please enter a username!", Toast.LENGTH_SHORT).show();
         } else if (firstName.getText().toString().length() == 0) {
             Toast.makeText(getApplicationContext(), "Please enter your first name!", Toast.LENGTH_SHORT).show();
@@ -226,27 +122,32 @@ public class SignUpActivity extends AppCompatActivity implements AdapterView.OnI
             Toast.makeText(getApplicationContext(), "Passwords must match!", Toast.LENGTH_SHORT).show();
         }
 
+        loading.setVisibility(View.GONE);
     }
 
     @Override
-    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-        actorType = adapterView.getItemAtPosition(i).toString();
-        if (actorType.equals("User")) {
-            actorTypeID = 0;
+    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l){
+            actorType = adapterView.getItemAtPosition(i).toString();
+            if (actorType.equals("User")) {
+                actorTypeID = 0;
+            }
+            if (actorType.equals("Technician")) {
+                actorTypeID = 1;
+            }
+            if (actorType.equals("Company")) {
+                actorTypeID = 2;
+            }
+            if (actorType.equals("Administrator")) {
+                actorTypeID = 3;
+            }
         }
-        if (actorType.equals("Technician")){
-            actorTypeID = 1;
-        }
-        if (actorType.equals("Company")){
-            actorTypeID = 2;
-        }
-        if (actorType.equals("Administrator")){
-            actorTypeID = 3;
-        }
-    }
 
     @Override
     public void onNothingSelected(AdapterView<?> adapterView) {
 
+    }
+
+    public void setToast(String s) {
+        Toast.makeText(getApplicationContext(), s, Toast.LENGTH_SHORT).show();
     }
 }

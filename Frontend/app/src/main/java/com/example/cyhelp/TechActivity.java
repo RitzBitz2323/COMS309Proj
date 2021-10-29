@@ -140,6 +140,7 @@ public class TechActivity extends AppCompatActivity {
                         // lists to store coordinates of tickets near technician
                         ArrayList<Double> latitudeList = new ArrayList<> ();
                         ArrayList<Double> longitudeList = new ArrayList<> ();
+                        ArrayList<Integer> ticketIds = new ArrayList<> ();
 
                         // get the tickets near the technician
                         RequestQueue requestQueue = Volley.newRequestQueue(TechActivity.this);
@@ -156,8 +157,10 @@ public class TechActivity extends AppCompatActivity {
                                         // get latitude and longitude for each ticket and store in corresponding list
                                         double latitudeU = jsonObject.getDouble("latitude");
                                         double longitudeU = jsonObject.getDouble("longitude");
+                                        int ticketId = jsonObject.getInt("id");
                                         latitudeList.add(latitudeU);
                                         longitudeList.add(longitudeU);
+                                        ticketIds.add(ticketId);
 
                                         System.out.println("JSON object: " + jsonObject);
                                         System.out.println("Ticket Latitude: " + latitudeU);
@@ -178,6 +181,12 @@ public class TechActivity extends AppCompatActivity {
                                                 @Override
                                                 public boolean onItemSingleTapUp(final int index, final OverlayItem item) {
                                                     //do something
+                                                    System.out.println(index);
+                                                    int currentTicket = ticketIds.get(index);
+
+                                                    Intent intent = new Intent(TechActivity.this, ViewTechTicketActivity.class);
+                                                    intent.putExtra("id", currentTicket);
+                                                    startActivity(intent);
                                                     return true;
                                                 }
                                                 @Override

@@ -1,30 +1,26 @@
 package com.example.cyhelp;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
+import android.widget.Toast;
 
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.Volley;
-
-import org.json.JSONException;
-import org.json.JSONObject;
+import androidx.appcompat.app.AppCompatActivity;
 
 public class SignUpActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
     protected String actorType;
     protected int actorTypeID;
+    private TextView loading;
+    protected boolean UsernameAvailable;
+    protected int ActorID;
+    protected int ActorType;
+    private SignUpPresenter presenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,16 +34,19 @@ public class SignUpActivity extends AppCompatActivity implements AdapterView.OnI
         spinner.setAdapter(adapter);
         spinner.setOnItemSelectedListener(this);
 
-        String actorType;
+        loading = (TextView) findViewById(R.id.loading_SignUpActivity);
+        loading.setVisibility(View.GONE);
 
+        UsernameAvailable = false;
     }
 
+    /**
+     *
+     * @param view
+     */
+    public void loginUser(View view) {
 
-    public void loginUser(View view){
-        String postUrl = "http://coms-309-051.cs.iastate.edu:8080/actors";
-        RequestQueue requestQueue = Volley.newRequestQueue(this);
-
-        JSONObject userLogin = new JSONObject();
+        loading.setVisibility(View.VISIBLE);
 
         EditText username = (EditText) findViewById(R.id.editTextUsername_SignUpActivity);
         EditText firstName = (EditText) findViewById(R.id.editTextFirstName_SignUpActivity);
@@ -57,73 +56,110 @@ public class SignUpActivity extends AppCompatActivity implements AdapterView.OnI
         EditText address = (EditText) findViewById(R.id.editTextTextPostalAddress_SignUpActivity);
         Spinner spinner = (Spinner) findViewById(R.id.spinner_SignUpActivity);
 
-        if (username.getText() != null && firstName.getText() != null && lastName.getText() != null && password.getText() != null
-                && confirmPassword.getText() != null && address.getText() != null &&
+        presenter = new SignUpPresenter(view, view.getContext(), this);
+
+        if (username.getText().toString().length() != 0 &&
+                firstName.getText().length() != 0 &&
+                lastName.getText().length() != 0 &&
+                password.getText().length() != 0 &&
+                confirmPassword.getText().length() != 0 &&
+                address.getText().length() != 0 &&
+                spinner.toString().length() != 0 &&
                 password.getText().toString().equals(confirmPassword.getText().toString())) {
 
-            try {
-                userLogin.put("username", username.getText().toString());
-                userLogin.put("firstName", firstName.getText().toString());
-                userLogin.put("lastName", lastName.getText().toString());
-                userLogin.put("password", password.getText().toString().hashCode());
-                userLogin.put("homeAddress", address.getText().toString());
-                userLogin.put("userType", actorTypeID);
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-
-            int[] userID = new int[1];
-
-            JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, postUrl, userLogin, new Response.Listener<JSONObject>() {
-                @Override
-                public void onResponse(JSONObject response) {
-                    try {
-                        userID[0] = response.getInt("id");
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-
-                    Intent i = new Intent(SignUpActivity.this, ViewTicketsActivity.class);
-                    i.putExtra("id", userID[0]);
-                    startActivity(i);
-
-                }
-            }, new Response.ErrorListener() {
-                @Override
-                public void onErrorResponse(VolleyError error) {
-                    error.printStackTrace();
-                }
-
-            });
-
-            requestQueue.add(jsonObjectRequest);
-
-
-        } else {
-            //Add a way to show the cause of error
+            presenter.SignUpUser(username.getText().toString(), firstName.getText().toString(),
+                                                        lastName.getText().toString(), password.getText().toString(),
+                                                        address.getText().toString(), actorTypeID);
+        }
+        //User error messages
+        else if (username.getText().toString().length() == 0) {
+            Toast.makeText(getApplicationContext(), "Please enter a username!", Toast.LENGTH_SHORT).show();
+        } else if (firstName.getText().toString().length() == 0) {
+            Toast.makeText(getApplicationContext(), "Please enter your first name!", Toast.LENGTH_SHORT).show();
+        } else if (lastName.getText().toString().length() == 0) {
+            Toast.makeText(getApplicationContext(), "Please enter your last name!", Toast.LENGTH_SHORT).show();
+        } else if (password.getText().toString().length() == 0) {
+            Toast.makeText(getApplicationContext(), "Please enter a password!", Toast.LENGTH_SHORT).show();
+        } else if (confirmPassword.getText().toString().length() == 0) {
+            Toast.makeText(getApplicationContext(), "Please confirm your password!", Toast.LENGTH_SHORT).show();
+        } else if (address.getText().toString().length() == 00) {
+            Toast.makeText(getApplicationContext(), "Please enter your home address!", Toast.LENGTH_SHORT).show();
+        } else if (!password.getText().toString().equals(confirmPassword.getText().toString())) {
+            Toast.makeText(getApplicationContext(), "Passwords must match!", Toast.LENGTH_SHORT).show();
         }
 
+        loading.setVisibility(View.GONE);
     }
+
+
+
+    public void ActorCreated(Boolean ActorCreated){
+
+
+        if (ActorCreated) {
+            ActorID = presenter.getActorID();
+            ActorType = presenter.getActorType();
+
+            //System.out.println("Actor Type: " + ActorType);
+
+            loading.setVisibility(View.GONE);
+
+            if (ActorType == 0){
+                Intent i = new Intent(SignUpActivity.this, ViewTicketsActivity.class);
+                i.putExtra("id", ActorID);
+                i.putExtra("userType", ActorType);
+                startActivity(i);
+            } else if (ActorType == 1) {
+                Intent i = new Intent(SignUpActivity.this, TechActivity.class);
+                i.putExtra("id", ActorID);
+                i.putExtra("userType", ActorType);
+                startActivity(i);
+            } else if (ActorType == 2) {
+                Intent i = new Intent(SignUpActivity.this, CompanyActivity.class);
+                i.putExtra("id", ActorID);
+                i.putExtra("userType", ActorType);
+                startActivity(i);
+            } else if (ActorType == 3) {
+                Intent i = new Intent(SignUpActivity.this, AdminActivity.class);
+                i.putExtra("id", ActorID);
+                i.putExtra("userType", ActorType);
+                startActivity(i);
+            }
+        } else {
+            //Display reason for failed signup
+            loading.setVisibility(View.GONE);
+            //System.out.println("HHHHHHHHHHH " + presenter.getErrorMessage());
+            //this.setToast(presenter.getErrorMessage());
+            Toast.makeText(getApplicationContext(), presenter.getErrorMessage(), Toast.LENGTH_SHORT).show();
+        }
+    }
+
+
+
 
     @Override
-    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-        actorType = adapterView.getItemAtPosition(i).toString();
-        if (actorType.equals("User")) {
-            actorTypeID = 0;
+    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l){
+            actorType = adapterView.getItemAtPosition(i).toString();
+            if (actorType.equals("User")) {
+                actorTypeID = 0;
+            }
+            if (actorType.equals("Technician")) {
+                actorTypeID = 1;
+            }
+            if (actorType.equals("Company")) {
+                actorTypeID = 2;
+            }
+            if (actorType.equals("Administrator")) {
+                actorTypeID = 3;
+            }
         }
-        if (actorType.equals("Technician")){
-            actorTypeID = 1;
-        }
-        if (actorType.equals("Company")){
-            actorTypeID = 2;
-        }
-        if (actorType.equals("Administrator")){
-            actorTypeID = 3;
-        }
-    }
 
     @Override
     public void onNothingSelected(AdapterView<?> adapterView) {
 
+    }
+
+    public void setToast(String s) {
+        Toast.makeText(getApplicationContext(), s, Toast.LENGTH_SHORT).show();
     }
 }

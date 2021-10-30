@@ -50,6 +50,15 @@ public class Actor {
 		this.home_address = "";
 	}
 	
+	public Actor(int type, String firstName, String lastName, String username, long password) {
+		this();
+		this.user_type = type;
+		this.first_name = firstName;
+		this.last_name = lastName;
+		this.username = username;
+		this.password = password;
+	}
+	
 	public void setId(int id) {
 		this.id = id;
 	}
@@ -60,7 +69,7 @@ public class Actor {
 
 	
 	public void setCustomerTickets(List<Ticket> customerTickets) {
-		this.technicianTickets = customerTickets;
+		this.customerTickets = customerTickets;
 	}
 	
 	public List<Ticket> getCustomerTickets() {
@@ -174,7 +183,6 @@ public class Actor {
 		
 		if(this.getUserType() == Actor.TECHNICIAN)
 			return this.technicianTickets;
-		
 		return this.customerTickets;
 	}
 	

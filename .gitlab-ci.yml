@@ -1,0 +1,92 @@
+# Example  .gitlab-ci.yml file
+stages:
+  - mavenbuild
+  - maventest
+  - mavendeploy
+  - androidbuild
+  - androidtest
+
+maven-build:   #this is a JOB
+  stage: mavenbuild
+  only:
+    refs: 
+      - main
+    changes: 
+      - Backend/**/*
+  tags:
+    - BACKEND  # this is LINK to the shell runner on the remote-server 
+  script:
+    - cd Backend/CyHelp
+    - mvn package -B
+
+maven-test:
+  stage: maventest
+  only:
+    refs: 
+      - main
+    changes: 
+      - Backend/**/*
+  tags:
+    - BACKEND
+  script:
+    - cd Backend/CyHelp
+    - mvn test
+    - mvn package -B
+  artifacts:
+    paths:
+      - Backend/CyHelp/target/*.jar
+
+auto_deploy:
+  stage: mavendeploy  #do make a stage with same name!
+  only:
+    refs: 
+      - main
+    changes: 
+      - Backend/**/*
+  tags:
+   - BACKEND
+  script:
+    - cd Backend/CyHelp
+    - mvn package
+    - sudo mv target/*.jar /target/web-demo.jar 
+    - sudo systemctl stop system-web-demo
+    - sudo systemctl start system-web-demo
+
+android-build:
+  image: javiersantos/android-ci:latest
+  stage: androidbuild
+  only:
+    refs: 
+      - main
+    changes: 
+      - Frontend/**/*
+  before_script:
+    - export GRADLE_USER_HOME='pwd'/.gradle
+    - chmod +x ./Frontend/gradlew
+  tags:
+    - FRONTEND
+  script:
+    - cd Frontend
+    - ./gradlew assemble --stacktrace
+  artifacts:
+      paths:
+           - Android_test/app/build/outputs/
+
+android-test:
+  image: javiersantos/android-ci:latest
+  stage: androidtest
+  only:
+    refs: 
+      - main
+    changes: 
+      - Frontend/**/*
+  before_script:
+    - export GRADLE_USER_HOME='pwd'/.gradle
+    - chmod +x ./Frontend/gradlew
+  tags:
+   - FRONTEND
+  script:
+    - cd Frontend
+    - ./gradlew test
+
+

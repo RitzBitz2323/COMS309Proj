@@ -29,6 +29,9 @@
             android:name=".CompanyActivity"
             android:exported="true" />
         <activity
+            android:name=".ViewTechTicketActivity"
+            android:exported="false" />
+        <activity
             android:name=".TechActivity"
             android:exported="true" />
         <activity

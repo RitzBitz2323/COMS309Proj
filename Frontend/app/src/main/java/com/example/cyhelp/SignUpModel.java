@@ -26,10 +26,12 @@ public class SignUpModel {
     protected String ErrorMessage;
     protected int UserID;
     protected int UserType;
+    private Boolean ResponseReceived;
 
 
     public SignUpModel(Context context) {
         Queue = Volley.newRequestQueue(context);
+        ResponseReceived = false;
     }
 
 
@@ -37,11 +39,13 @@ public class SignUpModel {
      *
      * @return
      */
-    public void httpCreateUserRequest(JSONObject createActor) {
+    public void httpCreateUserRequest(JSONObject createActor, SignUpPresenter signUpPresenter) {
 
         String postUrlCreateActor = "http://coms-309-051.cs.iastate.edu:8080/actors";
 
         ErrorMessage = "";
+        UserID = 0;
+        UserType = 5;
 
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, postUrlCreateActor, createActor, new Response.Listener<JSONObject>() {
             @Override
@@ -52,6 +56,8 @@ public class SignUpModel {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
+                ResponseReceived = true;
+                signUpPresenter.getActorInfo();
             }
         }, new Response.ErrorListener() {
             @Override
@@ -69,13 +75,11 @@ public class SignUpModel {
                 } else if (error instanceof TimeoutError) {
                     ErrorMessage = "Connection TimeOut. Check your connection!";
                 }
-                UserID = 0;
-                UserType = 4;
+                ResponseReceived = true;
+                signUpPresenter.getActorInfo();
             }
         });
-        UserType = 5;
         Queue.add(jsonObjectRequest);
-
     }
 
     public String getErrorMessage() {
@@ -84,4 +88,5 @@ public class SignUpModel {
 
     public int getUserID() {return UserID;}
     public int getUserType() {return UserType;}
+    public Boolean getResponseReceived() {return ResponseReceived;}
 }

@@ -10,18 +10,20 @@ public class SignUpPresenter {
 
     private View view;
     private SignUpModel model;
+    private SignUpActivity activity;
     private Boolean ActorCreated;
     private String ErrorMessage;
     private int ActorID;
     private int ActorType;
 
-    public SignUpPresenter(View v, Context context) {
+    public SignUpPresenter(View v, Context context, SignUpActivity a) {
         this.view = v;
         this.model = new SignUpModel(context);
+        this.activity = a;
     }
 
 
-    public boolean SignUpUser(String username, String firstName,
+    public void SignUpUser(String username, String firstName,
                            String lastName, String password,
                            String address, int actorTypeID) {
 
@@ -36,8 +38,10 @@ public class SignUpPresenter {
         } catch (JSONException e) {
             e.printStackTrace();
         }
+        model.httpCreateUserRequest(createActor, this);
+    }
 
-        model.httpCreateUserRequest(createActor);
+    public void getActorInfo() {
 
         int userID = model.getUserID();
         System.out.println("User ID: " + userID);
@@ -45,19 +49,28 @@ public class SignUpPresenter {
 
         if (model.getUserType() >= 4) {
             ActorCreated = false;
+            ActorType = model.getUserType();
             ErrorMessage = model.getErrorMessage();
+            System.out.println(ErrorMessage);
         } else {
             ActorID = userID;
             ActorType = model.getUserType();
             ErrorMessage = "";
             ActorCreated = true;
         }
+        activity.ActorCreated(ActorCreated);
+    }
+
+
+
+    public boolean CreateActor(){
+
         return ActorCreated;
     }
+
+
 
     public int getActorID() {return ActorID;}
     public int getActorType() {return ActorType;}
     public String getErrorMessage() {return ErrorMessage;}
-
-
 }

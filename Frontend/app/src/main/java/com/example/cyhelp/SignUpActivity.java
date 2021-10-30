@@ -16,10 +16,11 @@ public class SignUpActivity extends AppCompatActivity implements AdapterView.OnI
 
     protected String actorType;
     protected int actorTypeID;
-    TextView loading;
+    private TextView loading;
     protected boolean UsernameAvailable;
     protected int ActorID;
     protected int ActorType;
+    private SignUpPresenter presenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,7 +56,7 @@ public class SignUpActivity extends AppCompatActivity implements AdapterView.OnI
         EditText address = (EditText) findViewById(R.id.editTextTextPostalAddress_SignUpActivity);
         Spinner spinner = (Spinner) findViewById(R.id.spinner_SignUpActivity);
 
-        SignUpPresenter presenter = new SignUpPresenter(view, view.getContext());
+        presenter = new SignUpPresenter(view, view.getContext(), this);
 
         if (username.getText().toString().length() != 0 &&
                 firstName.getText().length() != 0 &&
@@ -66,44 +67,9 @@ public class SignUpActivity extends AppCompatActivity implements AdapterView.OnI
                 spinner.toString().length() != 0 &&
                 password.getText().toString().equals(confirmPassword.getText().toString())) {
 
-
-            Boolean ActorCreated = presenter.SignUpUser(username.getText().toString(), firstName.getText().toString(),
+            presenter.SignUpUser(username.getText().toString(), firstName.getText().toString(),
                                                         lastName.getText().toString(), password.getText().toString(),
                                                         address.getText().toString(), actorTypeID);
-
-            if (ActorCreated) {
-                ActorID = presenter.getActorID();
-                ActorType = presenter.getActorType();
-
-                loading.setVisibility(View.GONE);
-
-                if (ActorType == 0){
-                    Intent i = new Intent(SignUpActivity.this, ViewTicketsActivity.class);
-                    i.putExtra("id", ActorID);
-                    i.putExtra("userType", ActorType);
-                    startActivity(i);
-                } else if (ActorType == 1) {
-                    Intent i = new Intent(SignUpActivity.this, TechActivity.class);
-                    i.putExtra("id", ActorID);
-                    i.putExtra("userType", ActorType);
-                    startActivity(i);
-                } else if (ActorType == 2) {
-                    Intent i = new Intent(SignUpActivity.this, CompanyActivity.class);
-                    i.putExtra("id", ActorID);
-                    i.putExtra("userType", ActorType);
-                    startActivity(i);
-                } else if (ActorType == 3) {
-                    Intent i = new Intent(SignUpActivity.this, AdminActivity.class);
-                    i.putExtra("id", ActorID);
-                    i.putExtra("userType", ActorType);
-                    startActivity(i);
-                }
-            } else {
-                //Display reason for failed signup
-                loading.setVisibility(View.GONE);
-                this.setToast(presenter.getErrorMessage());
-            }
-
         }
         //User error messages
         else if (username.getText().toString().length() == 0) {
@@ -124,6 +90,52 @@ public class SignUpActivity extends AppCompatActivity implements AdapterView.OnI
 
         loading.setVisibility(View.GONE);
     }
+
+
+
+    public void ActorCreated(Boolean ActorCreated){
+
+
+        if (ActorCreated) {
+            ActorID = presenter.getActorID();
+            ActorType = presenter.getActorType();
+
+            //System.out.println("Actor Type: " + ActorType);
+
+            loading.setVisibility(View.GONE);
+
+            if (ActorType == 0){
+                Intent i = new Intent(SignUpActivity.this, ViewTicketsActivity.class);
+                i.putExtra("id", ActorID);
+                i.putExtra("userType", ActorType);
+                startActivity(i);
+            } else if (ActorType == 1) {
+                Intent i = new Intent(SignUpActivity.this, TechActivity.class);
+                i.putExtra("id", ActorID);
+                i.putExtra("userType", ActorType);
+                startActivity(i);
+            } else if (ActorType == 2) {
+                Intent i = new Intent(SignUpActivity.this, CompanyActivity.class);
+                i.putExtra("id", ActorID);
+                i.putExtra("userType", ActorType);
+                startActivity(i);
+            } else if (ActorType == 3) {
+                Intent i = new Intent(SignUpActivity.this, AdminActivity.class);
+                i.putExtra("id", ActorID);
+                i.putExtra("userType", ActorType);
+                startActivity(i);
+            }
+        } else {
+            //Display reason for failed signup
+            loading.setVisibility(View.GONE);
+            //System.out.println("HHHHHHHHHHH " + presenter.getErrorMessage());
+            //this.setToast(presenter.getErrorMessage());
+            Toast.makeText(getApplicationContext(), presenter.getErrorMessage(), Toast.LENGTH_SHORT).show();
+        }
+    }
+
+
+
 
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l){

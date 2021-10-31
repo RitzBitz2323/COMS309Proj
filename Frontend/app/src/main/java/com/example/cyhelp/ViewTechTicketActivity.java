@@ -2,6 +2,8 @@ package com.example.cyhelp;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -20,7 +22,10 @@ import java.util.ArrayList;
 
 public class ViewTechTicketActivity extends AppCompatActivity {
 
-    String url = "http://coms-309-051.cs.iastate.edu:8080/tickets/";
+    String ticketDataURL = "http://coms-309-051.cs.iastate.edu:8080/tickets/";
+    String acceptTicketURL = "http://coms-309-051.cs.iastate.edu:8080/tickets/";
+
+    int techID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,14 +34,16 @@ public class ViewTechTicketActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
 
-        int id = intent.getIntExtra("id", 2);
-        url += id;
-        System.out.println("ID of ticket: " + id);
+        int ticketID = intent.getIntExtra("ticketID", 2);
+        techID = intent.getIntExtra("techID", 2);
+        ticketDataURL += ticketID;
+        acceptTicketURL += ticketID + "/accept";
+        System.out.println("ID of ticket: " + ticketID);
 
         ArrayList<String> jsonResponses = new ArrayList<> ();
 
         RequestQueue requestQueue = Volley.newRequestQueue(this);
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, ticketDataURL, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
                 try {
@@ -64,5 +71,36 @@ public class ViewTechTicketActivity extends AppCompatActivity {
         });
 
         requestQueue.add(jsonObjectRequest);
+    }
+
+    public void acceptTicket(View view) {
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+
+        JSONObject techData = new JSONObject();
+        try {
+            techData.put("id", techID);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        System.out.println("Tech ID: " + techID);
+
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.PUT, acceptTicketURL, techData, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                System.out.println(response);
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                error.printStackTrace();
+            }
+        });
+
+        requestQueue.add(jsonObjectRequest);
+
+        Intent intent = new Intent(this, TechActivity.class);
+        intent.putExtra("id", techID);
+        startActivity(intent);
     }
 }

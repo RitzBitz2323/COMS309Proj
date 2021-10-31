@@ -64,8 +64,14 @@ public class TechActivity extends AppCompatActivity {
 
     String url = "http://coms-309-051.cs.iastate.edu:8080/tickets/at";
 
+    int techID;
+
     @Override public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        Intent intent = getIntent();
+
+        techID = intent.getIntExtra("id", 2);
 
         // load/initialize the osmdroid configuration, this can be done
         ctx = getApplicationContext();
@@ -185,7 +191,8 @@ public class TechActivity extends AppCompatActivity {
                                                     int currentTicket = ticketIds.get(index);
 
                                                     Intent intent = new Intent(TechActivity.this, ViewTechTicketActivity.class);
-                                                    intent.putExtra("id", currentTicket);
+                                                    intent.putExtra("ticketID", currentTicket);
+                                                    intent.putExtra("techID", techID);
                                                     startActivity(intent);
                                                     return true;
                                                 }

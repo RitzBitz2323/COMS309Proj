@@ -20,9 +20,26 @@ public class TestCategoryRepository {
 		CategoryRepository categoryRepository = mock(CategoryRepository.class);
 		when(categoryRepository.findById(1)).thenReturn(new Category("HVAC"));
 		
-		Ticket ticket1 = new Ticket("Laptop Screen Broken", "Played football with my mac and accidentally broke it", null, 19.0, 42.0);
-		Ticket ticket2 = new Ticket("Sink pipes burst", "Tried cleaning the hood of my car in the sink", null, 21.0, 29.0);
-		Ticket ticket3 = new Ticket("Patio on fire", "Accidentally lit my patio on fire", null, 44.0, -20.0);
+		Ticket ticket1 = mock(Ticket.class);
+		when(ticket1.getTitle()).thenReturn("Laptop Screen Broken");
+		when(ticket1.getDescription()).thenReturn("Played football with my mac and accidentally broke it");
+		when(ticket1.getCustomer()).thenReturn(null);
+		when(ticket1.getLatitude()).thenReturn(19.0);
+		when(ticket1.getLongitude()).thenReturn(42.0);
+		
+		Ticket ticket2 = mock(Ticket.class);
+		when(ticket1.getTitle()).thenReturn("Sink pipes burst");
+		when(ticket1.getDescription()).thenReturn("Tried cleaning the hood of my car in the sink");
+		when(ticket1.getCustomer()).thenReturn(null);
+		when(ticket1.getLatitude()).thenReturn(21.0);
+		when(ticket1.getLongitude()).thenReturn(29.0);
+		
+		Ticket ticket3 = mock(Ticket.class);
+		when(ticket1.getTitle()).thenReturn("Patio on fire");
+		when(ticket1.getDescription()).thenReturn("Accidentally lit my patio on fire");
+		when(ticket1.getCustomer()).thenReturn(null);
+		when(ticket1.getLatitude()).thenReturn(44.0);
+		when(ticket1.getLongitude()).thenReturn(-20.0);
 		
 		Category categoryTest = categoryRepository.findById(1);
 		categoryTest.addTicket(ticket1);

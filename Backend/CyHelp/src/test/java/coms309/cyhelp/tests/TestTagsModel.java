@@ -18,7 +18,7 @@ public class TestTagsModel {
 		
 		Tags newTag = new Tags("Broken mirror");
 		
-		assertEquals(1, newTag.getId());
+		assertEquals(0, newTag.getId());
 		assertEquals("Broken mirror", newTag.getTagName());
 	}
 	

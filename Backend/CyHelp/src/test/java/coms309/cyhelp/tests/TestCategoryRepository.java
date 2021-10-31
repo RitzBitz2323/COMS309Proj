@@ -21,6 +21,15 @@ public class TestCategoryRepository {
 		when(categoryRepository.findById(0)).thenReturn(new Category("HVAC"));
 		
 		Ticket ticket1 = mock(Ticket.class);
+		Ticket ticket2 = mock(Ticket.class);
+		Ticket ticket3 = mock(Ticket.class);
+		
+		Category categoryTest = categoryRepository.findById(0);
+		categoryTest.addTicket(ticket1);
+		categoryTest.addTicket(ticket2);
+		categoryTest.addTicket(ticket3);
+		
+	//	Ticket ticket1 = mock(Ticket.class);
 		when(ticket1.getTitle()).thenReturn("Laptop Screen Broken");
 		when(categoryRepository.findById(0).getTicket(0)).thenReturn(ticket1);
 		when(ticket1.getDescription()).thenReturn("Played football with my mac and accidentally broke it");
@@ -32,7 +41,7 @@ public class TestCategoryRepository {
 		when(ticket1.getLongitude()).thenReturn(42.0);
 		when(categoryRepository.findById(0).getTicket(0)).thenReturn(ticket1);
 		
-		Ticket ticket2 = mock(Ticket.class);
+	//	Ticket ticket2 = mock(Ticket.class);
 		when(ticket2.getTitle()).thenReturn("Sink pipes burst");
 		when(categoryRepository.findById(0).getTicket(1)).thenReturn(ticket2);
 		when(ticket2.getDescription()).thenReturn("Tried cleaning the hood of my car in the sink");
@@ -44,7 +53,7 @@ public class TestCategoryRepository {
 		when(ticket2.getLongitude()).thenReturn(29.0);
 		when(categoryRepository.findById(0).getTicket(1)).thenReturn(ticket2);
 		
-		Ticket ticket3 = mock(Ticket.class);
+	//	Ticket ticket3 = mock(Ticket.class);
 		when(ticket3.getTitle()).thenReturn("Patio on fire");
 		when(categoryRepository.findById(0).getTicket(2)).thenReturn(ticket3);
 		when(ticket3.getDescription()).thenReturn("Accidentally lit my patio on fire");
@@ -56,10 +65,10 @@ public class TestCategoryRepository {
 		when(ticket3.getLongitude()).thenReturn(-20.0);
 		when(categoryRepository.findById(0).getTicket(2)).thenReturn(ticket3);
 		
-		Category categoryTest = categoryRepository.findById(0);
-		categoryTest.addTicket(ticket1);
-		categoryTest.addTicket(ticket2);
-		categoryTest.addTicket(ticket3);
+	//	Category categoryTest = categoryRepository.findById(0);
+	//	categoryTest.addTicket(ticket1);
+	//	categoryTest.addTicket(ticket2);
+	//	categoryTest.addTicket(ticket3);
 
 		assertEquals("HVAC", categoryTest.getTitle());
 		assertEquals(1, categoryTest.getId());

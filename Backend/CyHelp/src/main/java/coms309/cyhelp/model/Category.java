@@ -58,8 +58,12 @@ public class Category {
 		this.title = title;
 	}
 	
-	public List<Ticket> getTickets() {
+	public List<Ticket> getAllTickets() {
 		return this.tickets;
+	}
+	
+	public Ticket getTicket(int id) {
+		return tickets.get(id);
 	}
 	
 	public void setTickets(List<Ticket> list) {

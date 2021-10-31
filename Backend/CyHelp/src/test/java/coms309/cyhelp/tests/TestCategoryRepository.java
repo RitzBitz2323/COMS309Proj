@@ -18,7 +18,7 @@ public class TestCategoryRepository {
 	public void testFindById() {
 		
 		CategoryRepository categoryRepository = mock(CategoryRepository.class);
-		when(categoryRepository.findById(1)).thenReturn(new Category("HVAC"));
+		when(categoryRepository.findById(0)).thenReturn(new Category("HVAC"));
 		
 		Ticket ticket1 = mock(Ticket.class);
 		when(ticket1.getTitle()).thenReturn("Laptop Screen Broken");
@@ -41,7 +41,7 @@ public class TestCategoryRepository {
 		when(ticket1.getLatitude()).thenReturn(44.0);
 		when(ticket1.getLongitude()).thenReturn(-20.0);
 		
-		Category categoryTest = categoryRepository.findById(1);
+		Category categoryTest = categoryRepository.findById(0);
 		categoryTest.addTicket(ticket1);
 		categoryTest.addTicket(ticket2);
 		categoryTest.addTicket(ticket3);

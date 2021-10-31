@@ -58,6 +58,10 @@ public class Category {
 		this.title = title;
 	}
 	
+	public void setLowercase() {
+		this.title.toLowerCase();
+	}
+	
 	public List<Ticket> getAllTickets() {
 		return this.tickets;
 	}

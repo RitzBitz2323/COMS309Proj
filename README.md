@@ -1,5 +1,9 @@
 # 3_MC_2
 **Project Name**
-<br>CyHelp<br>
+<br>CyHelp
 # 
-Developed by: Nick Sandeen, Parthiv Ganguly, Ritvik Ambekar, and Brandon Schumacher
+*Developed by* <br>
+- Nick Sandeen
+- Parthiv Ganguly
+- Ritvik Ambekar
+- Brandon Schumacher

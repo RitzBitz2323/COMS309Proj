@@ -1,5 +1,6 @@
 package coms309.cyhelp.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Entity;
@@ -27,7 +28,7 @@ public class Category {
 	
 	@OneToMany
 	@JsonIgnore
-	private List<Ticket> tickets;
+	private List<Ticket> tickets = new ArrayList<Ticket>();
 	
 	@ManyToMany
 	@JoinTable(name = "tags_for_category", joinColumns = @JoinColumn(name = "category_id"), inverseJoinColumns = @JoinColumn(name = "tag_id"))

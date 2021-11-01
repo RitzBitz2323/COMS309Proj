@@ -47,6 +47,17 @@ public class Category {
 		return this.id;
 	}
 	
+	public int getTicketId(Ticket input) {
+		
+		int ticketId = 0;
+		for(int i = 0; i < tickets.size(); i ++) {
+			if(tickets.get(i) == input) {
+				return i;
+			}
+		}
+		return ticketId;
+	}
+	
 	public void setId(int id) {
 		this.id = id;
 	}

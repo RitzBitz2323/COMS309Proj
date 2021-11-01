@@ -7,3 +7,5 @@
 - Parthiv Ganguly
 - Ritvik Ambekar
 - Brandon Schumacher
+# 
+<img src="https://cdn.discordapp.com/attachments/880143044039540786/881398042517975060/Team_Picture_With_Names.jpg">

@@ -52,7 +52,7 @@ public class TestCategoryRepository {
 		categoryTest.addTicket(ticket3);
 
 		assertEquals("HVAC", categoryTest.getTitle());
-		assertEquals(1, categoryTest.getId());
+		assertEquals(0, categoryTest.getId());
 		assertEquals("Played football with my mac and accidentally broke it", categoryTest.getTicket(0).getDescription());
 		assertEquals(21.0 , categoryTest.getTicket(1).getLatitude());
 		assertEquals(null , categoryTest.getTicket(2).getCustomer());

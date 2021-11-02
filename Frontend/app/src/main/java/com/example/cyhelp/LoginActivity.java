@@ -80,9 +80,9 @@ public class LoginActivity extends AppCompatActivity {
 
                     try {
                         userID = response.getInt("id");
-                        userType = response.getInt("user_type");
+                        userType = response.getInt("userType");
                     } catch (JSONException e) {
-                        Toast.makeText(getApplicationContext(), "Invalid username and or password", Toast.LENGTH_SHORT).show();
+                        e.printStackTrace();
                     }
 
                     //Check user type to determine what screen to send them to upon successful login.
@@ -127,7 +127,7 @@ public class LoginActivity extends AppCompatActivity {
                     } else if (error instanceof AuthFailureError) {
                         errorMessage = "Cannot connect to Internet. Check your connection!";
                     } else if (error instanceof ParseError) {
-                        errorMessage = "Parsing Error. Please try again later.";
+                        errorMessage = "Username and or Password Incorrect! Please try again!";
                     } else if (error instanceof NoConnectionError) {
                         errorMessage = "Cannot connect to Internet. Check your connection!";
                     } else if (error instanceof TimeoutError) {

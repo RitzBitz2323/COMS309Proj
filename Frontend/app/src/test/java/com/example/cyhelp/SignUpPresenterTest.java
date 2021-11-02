@@ -28,7 +28,7 @@ public class SignUpPresenterTest {
     public MockitoRule mockitoRule = MockitoJUnit.rule();
 
     @Test
-    public void getActorInfoTest_errorMessageWhenInvalidUserType() {
+    public void getActorInfoTest_errorMessageWhenUserTypeInvalid() {
         SignUpModel testModel = mock(SignUpModel.class);
         SignUpActivity testActivity = mock(SignUpActivity.class);
         View testView = mock(View.class);
@@ -74,6 +74,21 @@ public class SignUpPresenterTest {
 
         verify(testModel, times(1)).httpCreateUserRequest(isA(JSONObject.class), isA(SignUpPresenter.class));
 
+    }
+
+    @Test
+    public void getActorInfoTest_errorMessageWhenUserTypeValid() {
+        SignUpModel testModel = mock(SignUpModel.class);
+        SignUpActivity testActivity = mock(SignUpActivity.class);
+        View testView = mock(View.class);
+
+        when(testModel.getUserID()).thenReturn(1);
+        when(testModel.getUserType()).thenReturn(3);
+        when(testModel.getErrorMessage()).thenReturn("Invalid User Type");
+
+        SignUpPresenter presenter = new SignUpPresenter(testView, testModel, testActivity);
+        presenter.getActorInfo();
+        Assert.assertEquals("", presenter.getErrorMessage());
     }
 
 

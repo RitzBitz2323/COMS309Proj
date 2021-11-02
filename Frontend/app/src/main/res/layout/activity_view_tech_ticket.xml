@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ViewTechTicketActivity"
-    android:background="#4763d1">
+    android:background="#2B2B2B"
+    tools:context=".ViewTechTicketActivity">
 
     <TextView
         android:id="@+id/description"
@@ -55,12 +55,24 @@
         android:id="@+id/button4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:backgroundTint="#13cf45"
+        android:onClick="acceptTicket"
         android:text="Accept"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.775"
-        android:backgroundTint="#13cf45"
-        android:onClick="acceptTicket"/>
+        app:layout_constraintVertical_bias="0.775" />
+
+    <Button
+        android:id="@+id/back_Button_viewTechTicketActivity"
+        android:layout_width="94dp"
+        android:layout_height="wrap_content"
+        android:text="Back"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.501"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button4"
+        app:layout_constraintVertical_bias="0.133" />
 </androidx.constraintlayout.widget.ConstraintLayout>

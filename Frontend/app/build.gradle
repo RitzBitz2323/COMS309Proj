@@ -45,4 +45,14 @@ dependencies {
     implementation 'com.google.android.gms:play-services-location:18.0.0'
     implementation 'com.android.volley:volley:1.2.1'
     implementation 'org.osmdroid:osmdroid-android:6.1.10'
+    testImplementation 'org.mockito:mockito-core:2.22.0'
+
+
+    androidTestImplementation 'com.android.support.test:runner:1.0.2'
+    androidTestImplementation 'com.android.support.test:rules:1.0.2'
+    androidTestImplementation 'org.mockito:mockito-core:2.22.0'
+    androidTestImplementation 'com.crittercism.dexmaker:dexmaker:1.4'
+    androidTestImplementation 'com.crittercism.dexmaker:dexmaker-dx:1.4'
+    androidTestImplementation 'com.crittercism.dexmaker:dexmaker-mockito:1.4'
+
 }

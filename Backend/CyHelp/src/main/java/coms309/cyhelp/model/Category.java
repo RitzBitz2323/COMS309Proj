@@ -1,18 +1,18 @@
 package coms309.cyhelp.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinTable;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import coms309.cyhelp.model.Tags;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
@@ -27,7 +27,7 @@ public class Category {
 	
 	@OneToMany
 	@JsonIgnore
-	private List<Ticket> tickets;
+	private List<Ticket> tickets = new ArrayList<Ticket>();
 	
 	@ManyToMany
 	@JoinTable(name = "tags_for_category", joinColumns = @JoinColumn(name = "category_id"), inverseJoinColumns = @JoinColumn(name = "tag_id"))
@@ -46,6 +46,17 @@ public class Category {
 		return this.id;
 	}
 	
+	public int getTicketId(Ticket input) {
+		
+		int ticketId = 0;
+		for(int i = 0; i < tickets.size(); i ++) {
+			if(tickets.get(i) == input) {
+				return i;
+			}
+		}
+		return ticketId;
+	}
+	
 	public void setId(int id) {
 		this.id = id;
 	}
@@ -58,8 +69,17 @@ public class Category {
 		this.title = title;
 	}
 	
-	public List<Ticket> getTickets() {
+	public void setLowercase() {
+		this.title.toLowerCase();
+	}
+	
+	@JsonIgnore
+	public List<Ticket> getAllTickets() {
 		return this.tickets;
+	}
+	
+	public Ticket getTicket(int id) {
+		return tickets.get(id);
 	}
 	
 	public void setTickets(List<Ticket> list) {

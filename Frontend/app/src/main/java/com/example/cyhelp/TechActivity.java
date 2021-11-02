@@ -92,7 +92,7 @@ public class TechActivity extends AppCompatActivity {
         map.setMultiTouchControls(true);
 
         mapController = map.getController();
-        mapController.setZoom(20);
+        mapController.setZoom(15);
 
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
 
@@ -147,6 +147,8 @@ public class TechActivity extends AppCompatActivity {
                         ArrayList<Double> latitudeList = new ArrayList<> ();
                         ArrayList<Double> longitudeList = new ArrayList<> ();
                         ArrayList<Integer> ticketIds = new ArrayList<> ();
+                        ArrayList<String> titles = new ArrayList<> ();
+                        ArrayList<String> problemDescs = new ArrayList<> ();
 
                         // get the tickets near the technician
                         RequestQueue requestQueue = Volley.newRequestQueue(TechActivity.this);
@@ -163,6 +165,8 @@ public class TechActivity extends AppCompatActivity {
                                         // get latitude and longitude for each ticket and store in corresponding list
                                         double latitudeU = jsonObject.getDouble("latitude");
                                         double longitudeU = jsonObject.getDouble("longitude");
+                                        titles.add(jsonObject.getString("title"));
+                                        problemDescs.add(jsonObject.getString("description"));
                                         int ticketId = jsonObject.getInt("id");
                                         latitudeList.add(latitudeU);
                                         longitudeList.add(longitudeU);
@@ -177,7 +181,7 @@ public class TechActivity extends AppCompatActivity {
                                     // each item contains the coordinates of a ticket
                                     ArrayList<OverlayItem> items = new ArrayList<OverlayItem>();
                                     for (int j = 0; j < latitudeList.size(); j++) {
-                                        items.add(new OverlayItem("Title", "Description", new GeoPoint(latitudeList.get(j),longitudeList.get(j)))); // Lat/Lon decimal degrees
+                                        items.add(new OverlayItem(titles.get(j), problemDescs.get(j), new GeoPoint(latitudeList.get(j),longitudeList.get(j)))); // Lat/Lon decimal degrees
                                     }
 
 

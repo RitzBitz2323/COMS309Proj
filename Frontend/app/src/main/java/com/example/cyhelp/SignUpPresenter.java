@@ -88,7 +88,6 @@ public class SignUpPresenter {
 
 
     public boolean CreateActor(){
-
         return ActorCreated;
     }
 
@@ -97,5 +96,4 @@ public class SignUpPresenter {
     public int getActorID() {return ActorID;}
     public int getActorType() {return ActorType;}
     public String getErrorMessage() {return ErrorMessage;}
-//    public void setModel(SignUpModel model) {this.model=model;}
 }

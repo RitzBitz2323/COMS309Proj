@@ -28,7 +28,7 @@ public class SignUpPresenterTest {
     public MockitoRule mockitoRule = MockitoJUnit.rule();
 
     @Test
-    public void getActorInfoTest_returnsInvalidUserType() {
+    public void getActorInfoTest_errorMessageWhenInvalidUserType() {
         SignUpModel testModel = mock(SignUpModel.class);
         SignUpActivity testActivity = mock(SignUpActivity.class);
         View testView = mock(View.class);
@@ -37,15 +37,29 @@ public class SignUpPresenterTest {
         when(testModel.getUserType()).thenReturn(4);
         when(testModel.getErrorMessage()).thenReturn("Invalid User Type");
 
-//        doNothing().when(testModel).httpCreateUserRequest(isA(JSONObject.class), isA(SignUpPresenter.class));
-
         SignUpPresenter presenter = new SignUpPresenter(testView, testModel, testActivity);
         presenter.getActorInfo();
         Assert.assertEquals("Invalid User Type", presenter.getErrorMessage());
     }
 
     @Test
-    public void signUpUserTest() throws JSONException {
+    public void getActorInfoTest_actorNotCreatedWhenUserTypeInvalid() {
+        SignUpModel testModel = mock(SignUpModel.class);
+        SignUpActivity testActivity = mock(SignUpActivity.class);
+        View testView = mock(View.class);
+
+        when(testModel.getUserID()).thenReturn(1);
+        when(testModel.getUserType()).thenReturn(4);
+        when(testModel.getErrorMessage()).thenReturn("Invalid User Type");
+
+        SignUpPresenter presenter = new SignUpPresenter(testView, testModel, testActivity);
+        presenter.getActorInfo();
+        Assert.assertEquals(false, presenter.CreateActor());
+        verify(testActivity, times(1)).ActorCreated(false);
+    }
+
+    @Test
+    public void signUpUserTest_runsHttpsCreateRequest() throws JSONException {
 
         SignUpModel testModel = mock(SignUpModel.class);
         SignUpActivity testActivity = mock(SignUpActivity.class);
@@ -54,10 +68,6 @@ public class SignUpPresenterTest {
 
         when(testJSONObject.put(anyString(), anyString())).thenReturn(new JSONObject());
         when(testJSONObject.put(anyString(), anyInt())).thenReturn(new JSONObject());
-
-//        when(testModel.getUserID()).thenReturn(1);
-//        when(testModel.getUserType()).thenReturn(4);
-//        when(testModel.getErrorMessage()).thenReturn("Invalid User Type");
 
         SignUpPresenter presenter = new SignUpPresenter(testView, testModel, testActivity);
         presenter.SignUpUser("p2048", "parthiv", "ganguly", "hello", "ISU", 1, testJSONObject);

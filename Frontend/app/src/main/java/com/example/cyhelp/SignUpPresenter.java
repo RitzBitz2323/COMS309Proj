@@ -22,6 +22,12 @@ public class SignUpPresenter {
         this.activity = a;
     }
 
+    public SignUpPresenter(View v, SignUpModel model, SignUpActivity a) {
+        this.view = v;
+        this.model = model;
+        this.activity = a;
+    }
+
 
     public void SignUpUser(String username, String firstName,
                            String lastName, String password,
@@ -73,4 +79,5 @@ public class SignUpPresenter {
     public int getActorID() {return ActorID;}
     public int getActorType() {return ActorType;}
     public String getErrorMessage() {return ErrorMessage;}
+//    public void setModel(SignUpModel model) {this.model=model;}
 }

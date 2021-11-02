@@ -3,7 +3,7 @@ package com.example.cyhelp;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.EditText;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -71,6 +71,17 @@ public class ViewTechTicketActivity extends AppCompatActivity {
         });
 
         requestQueue.add(jsonObjectRequest);
+
+        Button backButton = (Button) findViewById(R.id.back_Button_viewTechTicketActivity);
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(ViewTechTicketActivity.this, TechActivity.class);
+                intent.putExtra("id", techID);
+                startActivity(intent);
+            }
+        });
+
     }
 
     public void acceptTicket(View view) {

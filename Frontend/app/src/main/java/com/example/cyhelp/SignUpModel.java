@@ -82,11 +82,10 @@ public class SignUpModel {
         Queue.add(jsonObjectRequest);
     }
 
+
     public String getErrorMessage() {
         return ErrorMessage;
     }
-
     public int getUserID() {return UserID;}
     public int getUserType() {return UserType;}
-    public Boolean getResponseReceived() {return ResponseReceived;}
 }

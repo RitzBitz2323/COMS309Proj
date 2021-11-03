@@ -27,7 +27,7 @@ public class Ticket {
 	private String title;
 	private String description;
 	private String[] tags;
-	private int state;                // 0 = OPEN, 1 = PENDING, 2 = CLOSED
+	private int state;
 	private double latitude;
 	private double longitude;
 	private String address;

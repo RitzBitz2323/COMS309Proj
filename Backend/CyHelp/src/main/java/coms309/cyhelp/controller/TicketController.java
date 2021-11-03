@@ -95,8 +95,6 @@ public class TicketController {
 		ticketRepository.save(ticket);
 		ticket = ticketRepository.findById(ticket.getId());
 		
-		
-		
 		// set the ticket's category to the provided category id
 		boolean setToNone = false;
 		if(ticket.getCategory() != null) {
@@ -116,7 +114,6 @@ public class TicketController {
 			categoryRepository.save(none);
 		}
 		
-
 		// get user that created the ticket and append
 		// the ticket id to their ticket list.
 		Actor customer = actorRepository.findById(ticket.getCustomer().getId());

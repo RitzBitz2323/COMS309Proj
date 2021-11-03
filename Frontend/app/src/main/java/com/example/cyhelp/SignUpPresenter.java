@@ -22,12 +22,36 @@ public class SignUpPresenter {
         this.activity = a;
     }
 
+    public SignUpPresenter(View v, SignUpModel model, SignUpActivity a) {
+        this.view = v;
+        this.model = model;
+        this.activity = a;
+    }
+
 
     public void SignUpUser(String username, String firstName,
                            String lastName, String password,
                            String address, int actorTypeID) {
 
         JSONObject createActor = new JSONObject();
+        try {
+            createActor.put("username", username);
+            createActor.put("firstName", firstName);
+            createActor.put("lastName", lastName);
+            createActor.put("password", password.hashCode());
+            createActor.put("homeAddress", address);
+            createActor.put("userType", actorTypeID);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        model.httpCreateUserRequest(createActor, this);
+    }
+
+    public void SignUpUser(String username, String firstName,
+                           String lastName, String password,
+                           String address, int actorTypeID, JSONObject actor) {
+
+        JSONObject createActor = actor;
         try {
             createActor.put("username", username);
             createActor.put("firstName", firstName);
@@ -64,7 +88,6 @@ public class SignUpPresenter {
 
 
     public boolean CreateActor(){
-
         return ActorCreated;
     }
 

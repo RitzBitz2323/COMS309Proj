@@ -10,8 +10,14 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 import coms309.cyhelp.model.Category;
 import coms309.cyhelp.repository.CategoryRepository;
+import springfox.documentation.builders.PathSelectors;
+import springfox.documentation.builders.RequestHandlerSelectors;
+import springfox.documentation.spi.DocumentationType;
+import springfox.documentation.spring.web.plugins.Docket;
+import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 @SpringBootApplication
+@EnableSwagger2
 @EntityScan(basePackages = {"coms309.cyhelp.model"})
 @EnableJpaRepositories(basePackages = {"coms309.cyhelp.repository"})
 @ComponentScan(basePackages = {"coms309.cyhelp.controller"})
@@ -41,4 +47,14 @@ public class CyHelpApplication {
 		catRepo.save(cat6);
 		};
 	}
+	
+	@Bean
+    public Docket getAPIdocs() {
+        return new Docket(DocumentationType.SWAGGER_2)  
+          .select()                                  
+          .apis(RequestHandlerSelectors.any())              
+          .paths(PathSelectors.any())                          
+          .build(); 
+    }
+
 }

@@ -1,0 +1,1 @@
+packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html"},{"l":"coms309.cyhelp.controller"},{"l":"coms309.cyhelp.model"},{"l":"coms309.cyhelp.repository"}];updateSearchResults();

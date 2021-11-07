@@ -17,7 +17,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import io.swagger.annotations.ApiModelProperty;
 /**
-* This is the Tags model class.
+* This is the Category model class.
 * @author Ritvik Ambekar, Brandon Schumacher
 * 
 */

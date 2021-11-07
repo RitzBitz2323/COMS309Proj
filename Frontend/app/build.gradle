@@ -22,8 +22,8 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_11
+        targetCompatibility JavaVersion.VERSION_11
     }
     buildFeatures {
         viewBinding true
@@ -56,3 +56,11 @@ dependencies {
     androidTestImplementation 'com.crittercism.dexmaker:dexmaker-mockito:1.4'
 
 }
+
+//task createJavadocs(type: Javadoc) {
+//    source = project.android.sourceSets.main.java.srcDirs
+//    options.linkSource true
+//    classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
+//    destinationDir = file("C:/Users/parth/Documents/JavaDocs_309")
+//    failOnError false
+//}

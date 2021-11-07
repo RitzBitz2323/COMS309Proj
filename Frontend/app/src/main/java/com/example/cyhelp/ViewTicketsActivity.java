@@ -100,12 +100,22 @@ public class ViewTicketsActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * This method is called when the Create New Ticket button is pressed by the user.
+     * It starts the Create New Ticket Activity
+     * @param view
+     */
     public void createNewTicket(View view) {
         Intent intent = new Intent(this, CreateNewTicketActivity.class);
         intent.putExtra("id", ID);
         startActivity(intent);
     }
 
+    /**
+     * This method populates the ListView on the screen with the titles of the different tickets that were
+     * pulled from the server.
+     * @param titles The list of titles of the tickets created by the user
+     */
     public void fillList(ArrayList<String> titles) {
         adapter = new ArrayAdapter<String>(this, R.layout.activity_listview, titles);
 

@@ -87,6 +87,7 @@ public class ViewTechTicketActivity extends AppCompatActivity {
     /**
      * This method is called when the Technician presses the Accept button.
      * It sends a request to the server with the Tech ID to show that the Technician has accepted this ticket.
+     * Once the request is sent, the methods starts TechActivity
      * @param view
      */
     public void acceptTicket(View view) {

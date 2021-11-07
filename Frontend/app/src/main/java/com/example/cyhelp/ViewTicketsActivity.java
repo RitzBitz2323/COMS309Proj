@@ -23,6 +23,11 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
+/**
+ * ViewTicketsActivity allows a user to view all of their tickets.
+ *
+ * @author Parthiv Ganguly
+ */
 public class ViewTicketsActivity extends AppCompatActivity {
 
     String url = "http://coms-309-051.cs.iastate.edu:8080/actors/";

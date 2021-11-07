@@ -7,6 +7,11 @@ import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+/**
+ * CompanyActivity is used by companies, who have multiple technicians under them, to manage their technicians and track their technicians current ticket or past tickets.
+ *
+ * @author Nick Sandeen
+ */
 public class CompanyActivity extends AppCompatActivity {
 
     @Override

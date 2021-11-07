@@ -17,8 +17,11 @@ import coms309.cyhelp.model.Category;
 import coms309.cyhelp.model.Tags;
 import coms309.cyhelp.model.Ticket;
 import coms309.cyhelp.repository.TagsRepository;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 
 @RestController
+@Api(value="Tags Controller", description = "Rest controllery for Tags entity")
 public class TagsController {
 	@Autowired
 	TagsRepository tagsRepository;
@@ -29,6 +32,7 @@ public class TagsController {
 	 * Gets all of the tags in the repository.
 	 * @return
 	 */
+	@ApiOperation(value="To obtain the list of all tags within the database.")
 	@GetMapping("/tags")
 	public List<Tags> getAllTags() {
 		return tagsRepository.findAll();
@@ -39,6 +43,7 @@ public class TagsController {
 	 * @param id
 	 * @return
 	 */
+	@ApiOperation(value="To obtain a specific tag by an input of ID within the database.")
 	@GetMapping("/tags/{id}")
 	public Tags getTag(@PathVariable int id) {
 		return tagsRepository.findById(id);
@@ -49,6 +54,7 @@ public class TagsController {
 	 * @param tag
 	 * @return String
 	 */
+	@ApiOperation(value="To create a specific tag by an input of a already created tag.")
 	@PostMapping("/tags")
 	public Tags createTag(@RequestBody Tags input_tag) {
 		// if tag is empty will return null
@@ -66,6 +72,7 @@ public class TagsController {
 	 * @param tag
 	 * @return String
 	 */
+	@ApiOperation(value="To delete a specific tag by speciying the tag to delete.")
 	@DeleteMapping("/tags")
 	public Map<String, String> deleteByRequestBody(@RequestBody Tags tag) {
 		
@@ -85,6 +92,7 @@ public class TagsController {
 	 * @param id
 	 * @return
 	 */
+	@ApiOperation(value="To delete a specific tag by speciying the id in which the tag is to delete.")
 	@DeleteMapping("/tags/{id}")
 	public Map<String, String> deleteByPathVariable(@PathVariable int id) {
 		

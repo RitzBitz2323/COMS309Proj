@@ -26,6 +26,11 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+/**
+ * ViewUserTicketActivity allows a user to view the details of a ticket they select from the ViewTicketsActivity.
+ *
+ * @author Nick Sandeen
+ */
 public class ViewUserTicketActivity extends AppCompatActivity {
 
     protected int UserId;

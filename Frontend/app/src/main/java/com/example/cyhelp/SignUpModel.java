@@ -18,7 +18,11 @@ import com.android.volley.toolbox.Volley;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-
+/**
+ * SignUpModel is called by SignUpPresenter and sends a request to the server to create an actor based on the inputs from the presenter.
+ *
+ * @author Nick Sandeen
+ */
 public class SignUpModel {
 
 

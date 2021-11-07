@@ -28,7 +28,17 @@ public class SignUpPresenter {
         this.activity = a;
     }
 
-
+    /**
+     * This method is called by the SignUpActivity when the user clicks the Sign Up button.
+     * It takes all the information entered by the user (which is passed into this method),
+     * and creates a new JSON object which will be sent to the server
+     * @param username username entered by user
+     * @param firstName first name entered by user
+     * @param lastName last name entered by user
+     * @param password password entered by user
+     * @param address home address entered by user
+     * @param actorTypeID the type of actor (user, technician, admin, etc.)
+     */
     public void SignUpUser(String username, String firstName,
                            String lastName, String password,
                            String address, int actorTypeID) {
@@ -47,6 +57,18 @@ public class SignUpPresenter {
         model.httpCreateUserRequest(createActor, this);
     }
 
+    /**
+     * This method is similar to the one called by the SignUpActivity when the user clicks the Sign Up button.
+     * It takes all the information entered by the user (which is passed into this method),
+     * and adds it to an existing JSON object for the actor, which will be sent to the server
+     * @param username username entered by user
+     * @param firstName first name entered by user
+     * @param lastName last name entered by user
+     * @param password password entered by user
+     * @param address home address entered by user
+     * @param actorTypeID the type of actor (user, technician, admin, etc.)
+     * @param actor an existing JSON object representing the actor
+     */
     public void SignUpUser(String username, String firstName,
                            String lastName, String password,
                            String address, int actorTypeID, JSONObject actor) {
@@ -65,6 +87,11 @@ public class SignUpPresenter {
         model.httpCreateUserRequest(createActor, this);
     }
 
+    /**
+     * This method is used fetch actor information like actor ID and actor type (user, technician, etc.).
+     * It then called the ActorCreated method of SignUpActivity which is responsible for starting different
+     * activities based on actor type
+     */
     public void getActorInfo() {
 
         int userID = model.getUserID();
@@ -86,7 +113,10 @@ public class SignUpPresenter {
     }
 
 
-
+    /**
+     * This method returns whether the actor has been successfully created
+     * @return if actor has been successfully created
+     */
     public boolean CreateActor(){
         return ActorCreated;
     }

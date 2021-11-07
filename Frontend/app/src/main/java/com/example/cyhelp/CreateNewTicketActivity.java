@@ -77,6 +77,11 @@ public class CreateNewTicketActivity extends AppCompatActivity implements Adapte
         getLastLocation();
     }
 
+    /**
+     * This method uses Google Play Services to fetch the most recent location of the User.
+     * The most recent location of the user is the User's current location almost all of the time.
+     * Once it fetches the location, the latitude and longitude are stored in global variables.
+     */
     @SuppressLint("MissingPermission")
     private void getLastLocation() {
         // check if permissions are given
@@ -93,12 +98,8 @@ public class CreateNewTicketActivity extends AppCompatActivity implements Adapte
                     @Override
                     public void onComplete(@NonNull Task<Location> task) {
                         Location location = task.getResult();
-                        if (location == null) {
-                            requestNewLocationData();
-                        } else {
-                            latitude = location.getLatitude();
-                            longitude = location.getLongitude();
-                        }
+                        latitude = location.getLatitude();
+                        longitude = location.getLongitude();
                     }
                 });
             } else {
@@ -113,34 +114,37 @@ public class CreateNewTicketActivity extends AppCompatActivity implements Adapte
         }
     }
 
-    @SuppressLint("MissingPermission")
-    private void requestNewLocationData() {
+//    @SuppressLint("MissingPermission")
+//    private void requestNewLocationData() {
+//
+//        // Initializing LocationRequest
+//        // object with appropriate methods
+//        LocationRequest mLocationRequest = new LocationRequest();
+//        mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+//        mLocationRequest.setInterval(5);
+//        mLocationRequest.setFastestInterval(0);
+//        mLocationRequest.setNumUpdates(1);
+//
+//        // setting LocationRequest
+//        // on FusedLocationClient
+//        mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
+//        mFusedLocationClient.requestLocationUpdates(mLocationRequest, mLocationCallback, Looper.myLooper());
+//    }
+//
+//    private LocationCallback mLocationCallback = new LocationCallback() {
+//
+//        @Override
+//        public void onLocationResult(LocationResult locationResult) {
+//            Location mLastLocation = locationResult.getLastLocation();
+//            latitude = mLastLocation.getLatitude();
+//            longitude = mLastLocation.getLongitude();
+//        }
+//    };
 
-        // Initializing LocationRequest
-        // object with appropriate methods
-        LocationRequest mLocationRequest = new LocationRequest();
-        mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
-        mLocationRequest.setInterval(5);
-        mLocationRequest.setFastestInterval(0);
-        mLocationRequest.setNumUpdates(1);
-
-        // setting LocationRequest
-        // on FusedLocationClient
-        mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
-        mFusedLocationClient.requestLocationUpdates(mLocationRequest, mLocationCallback, Looper.myLooper());
-    }
-
-    private LocationCallback mLocationCallback = new LocationCallback() {
-
-        @Override
-        public void onLocationResult(LocationResult locationResult) {
-            Location mLastLocation = locationResult.getLastLocation();
-            latitude = mLastLocation.getLatitude();
-            longitude = mLastLocation.getLongitude();
-        }
-    };
-
-    // method to check for permissions
+    /**
+     * This method is used to check whether Location permission has been granted to app
+     * @return if location has been enabled
+     */
     private boolean checkPermissions() {
         return ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED;
 
@@ -150,21 +154,29 @@ public class CreateNewTicketActivity extends AppCompatActivity implements Adapte
         // ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_BACKGROUND_LOCATION) == PackageManager.PERMISSION_GRANTED
     }
 
-    // method to request for permissions
+    /** This method requests for Location permissions
+     */
     private void requestPermissions() {
         ActivityCompat.requestPermissions(this, new String[]{
                 Manifest.permission.ACCESS_COARSE_LOCATION,
                 Manifest.permission.ACCESS_FINE_LOCATION}, PERMISSION_ID);
     }
 
-    // method to check
-    // if location is enabled
+    /**
+     * This method checks if Location is enabled
+     * @return whether the Location is enabled
+     */
     private boolean isLocationEnabled() {
         LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) || locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
     }
 
-    // If everything is alright then
+    /**
+     * This method checks if the request for Location permissions has been granted
+     * @param requestCode
+     * @param permissions
+     * @param grantResults
+     */
     @Override
     public void
     onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
@@ -185,6 +197,13 @@ public class CreateNewTicketActivity extends AppCompatActivity implements Adapte
         }
     }
 
+    /**
+     * This method is called when User clicks the Submit button
+     * It collects all the information entered by the User and packages it into a JSON object
+     * Then, the method send the JSON object to the server along with the User's ID
+     * Once the request has been added to the Request Queue, the method starts the View Ticket Activity
+     * @param view the View that was clicked
+     */
     public void submitTicket(View view) {
         String postUrl = "http://coms-309-051.cs.iastate.edu:8080/tickets";
         RequestQueue requestQueue = Volley.newRequestQueue(this);
@@ -244,6 +263,14 @@ public class CreateNewTicketActivity extends AppCompatActivity implements Adapte
         startActivity(intent);
     }
 
+    /**
+     * This method is called when an item is selected from the Category drop down menu
+     * It records the item selected so that it can be sent to the server as part of a ticket
+     * @param parent The AdapterView where the selection happened
+     * @param view The View within the AdapterView that was selected
+     * @param pos The position of the item selected, starting at 0
+     * @param id The row ID of the item that is selected
+     */
     public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
         System.out.println("Position: " + pos);
         categoryID = pos + 2;

@@ -81,7 +81,7 @@ public class ViewUserTicketActivity extends AppCompatActivity {
             public void onResponse(JSONArray response) {
                 System.out.println("In JSON Request");
                 try {
-                    System.out.println("Recieved Server Response");
+                    System.out.println("Received Server Response");
                     System.out.println(response);
                     JSONObject jsonObject = response.getJSONObject(TicketPosition);
                     System.out.println(jsonObject.toString());

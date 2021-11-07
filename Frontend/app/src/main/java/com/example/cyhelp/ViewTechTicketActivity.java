@@ -84,6 +84,11 @@ public class ViewTechTicketActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * This method is called when the Technician presses the Accept button.
+     * It sends a request to the server with the Tech ID to show that the Technician has accepted this ticket.
+     * @param view
+     */
     public void acceptTicket(View view) {
         RequestQueue requestQueue = Volley.newRequestQueue(this);
 

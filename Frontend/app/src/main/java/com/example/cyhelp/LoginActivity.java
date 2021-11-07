@@ -45,6 +45,13 @@ public class LoginActivity extends AppCompatActivity {
         Loading.setVisibility(View.GONE);
     }
 
+    /**
+     * This method is called when the Log In button is pressed
+     * It sends the username and password entered by the user to the server
+     * Once it gets back a response, it starts another activity based on the actor type
+     * If there was an error in the response (like incorrect username and password), then the appropriate error message is displayed
+     * @param view
+     */
     public void loginUser(View view){
         EditText username = (EditText) findViewById(R.id.editTextTextPersonName_loginActivity);
         EditText password = (EditText) findViewById(R.id.editTextTextPassword_loginActivity);

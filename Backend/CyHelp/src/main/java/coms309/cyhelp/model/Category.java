@@ -15,6 +15,8 @@ import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import io.swagger.annotations.ApiModelProperty;
+
 @Entity
 @Table(name ="Category")
 public class Category {
@@ -22,15 +24,19 @@ public class Category {
 	// values of the Category
 	@Id
 	@GeneratedValue(strategy= GenerationType.IDENTITY)
+	@ApiModelProperty(notes = "Category Identification Number",name="id")
 	private int id;
+	@ApiModelProperty(notes = "Title of the category",name="title")
 	private String title;
 	
 	@OneToMany
 	@JsonIgnore
+	@ApiModelProperty(notes = "List of tickets",name="tickets")
 	private List<Ticket> tickets = new ArrayList<Ticket>();
 	
 	@ManyToMany
 	@JoinTable(name = "tags_for_category", joinColumns = @JoinColumn(name = "category_id"), inverseJoinColumns = @JoinColumn(name = "tag_id"))
+	@ApiModelProperty(notes = "List of Tags within categories",name="tags")
 	private List<Tags> tags;
 	// Constructors
 	

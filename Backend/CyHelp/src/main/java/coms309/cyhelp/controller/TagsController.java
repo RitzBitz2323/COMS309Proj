@@ -21,7 +21,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
 @RestController
-@Api(value="Tags Controller", description = "Rest controllery for Tags entity")
+@Api(value="Tags Controller", description = "Rest controller for Tags entity")
 public class TagsController {
 	@Autowired
 	TagsRepository tagsRepository;

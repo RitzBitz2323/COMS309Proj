@@ -11,7 +11,7 @@ import coms309.cyhelp.model.Category;
 import coms309.cyhelp.repository.CategoryRepository;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-@Api(value="Category Controller", description = "Rest controllery for Category entity")
+@Api(value="Category Controller", description = "Rest controller for Category entity")
 @RestController
 public class CategoryController {
 

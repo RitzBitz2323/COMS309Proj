@@ -9,6 +9,8 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import coms309.cyhelp.model.Category;
+import io.swagger.annotations.ApiModelProperty;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
@@ -18,10 +20,14 @@ public class Tags {
 	//values of the Tags
 	@Id
 	@GeneratedValue(strategy= GenerationType.IDENTITY)
+	@ApiModelProperty(notes = "Identification Number of the Tag",name="id")
 	private int id;
+	
+	@ApiModelProperty(notes = "Name of the tag",name="tagName")
 	private String tagName;
 	
 	@ManyToMany(mappedBy = "tags")
+	@ApiModelProperty(notes = "List of Categories",name="categories")
 	private List<Category> categories;
 	
 	public Tags() {

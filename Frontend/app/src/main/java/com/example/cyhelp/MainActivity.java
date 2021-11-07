@@ -8,6 +8,11 @@ import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+/**
+ * MainActivity is the landing page when the actor opens the application.
+ *
+ * @author Parthiv Ganguly
+ */
 public class MainActivity extends AppCompatActivity {
 
     Button b1, b2;

@@ -26,6 +26,11 @@ import com.android.volley.toolbox.Volley;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+/**
+ * LoginActivity allows an existing user to sign in to the app. It also warns the user if the either the username or password being incorrect.
+ *
+ * @author Nick Sandeen
+ */
 public class LoginActivity extends AppCompatActivity {
 
     protected int userID;

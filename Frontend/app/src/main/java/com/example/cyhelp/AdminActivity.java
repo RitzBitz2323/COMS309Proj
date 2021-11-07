@@ -7,6 +7,11 @@ import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+/**
+ * Admin Activity allows an admin to perform various task like banning actors and deleting tickets.
+ *
+ * @author Parthiv Ganguly
+ */
 public class AdminActivity extends AppCompatActivity {
 
     @Override

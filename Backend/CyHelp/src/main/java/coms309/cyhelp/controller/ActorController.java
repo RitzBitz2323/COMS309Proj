@@ -16,7 +16,10 @@ import org.springframework.web.bind.annotation.RestController;
 import coms309.cyhelp.model.Actor;
 import coms309.cyhelp.model.Ticket;
 import coms309.cyhelp.repository.ActorRepository;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 
+@Api(value = "ActorController", description = "Rest Controller for the Actor Entity.")
 @RestController
 public class ActorController {
 
@@ -24,12 +27,14 @@ public class ActorController {
 	ActorRepository actorRepository;
 	
 	// GET all actors
+	@ApiOperation(value = "Gets the list of all actors.")
 	@GetMapping("/actors")
 	public List<Actor> getActors() {
 		return actorRepository.findAll();
 	}
 	
 	// CHECK if an actor with a certain username exists
+	@ApiOperation(value = "Checks if an actor with a certain username exists.")
 	@GetMapping("/actors/exists")
 	public Map<String, Boolean> checkUserExists(@RequestParam(value="username", required = true) String username) {
 		
@@ -51,6 +56,7 @@ public class ActorController {
 	 * @param actor
 	 * @return
 	 */
+	@ApiOperation(value = "Creates a new actor.")
 	@PostMapping("/actors")
 	public Actor addActor(@RequestBody Actor actor) {
 		
@@ -70,6 +76,7 @@ public class ActorController {
 	 * @param actor
 	 * @return
 	 */
+	@ApiOperation(value = "Updates the actor and save the new data.")
 	@PutMapping("/actors")
 	public Actor updateActor(@RequestBody Actor actor) {
 		
@@ -80,6 +87,7 @@ public class ActorController {
 		return actorRepository.findById(actor.getId());
 	}
 	
+	@ApiOperation(value = "Checks if the provided username and password is correct and returns the corresponding actor.")
 	@PostMapping("/actors/login")
 	public Actor actorLogin(@RequestBody Actor actor) {
 		
@@ -111,6 +119,7 @@ public class ActorController {
 	 * @param id
 	 * @return
 	 */
+	@ApiOperation("Gets the actor with the specified id.")
 	@GetMapping("/actors/{id}")
 	public Actor findActorById(@PathVariable int id) {
 		return actorRepository.findById(id);
@@ -121,6 +130,7 @@ public class ActorController {
 	 * @param id
 	 * @return
 	 */
+	@ApiOperation("Returns the list of tickets that the actor with a certain id is associated with.")
 	@GetMapping("/actors/{id}/tickets")
 	public List<Ticket> getTickets(@PathVariable int id) {
 		

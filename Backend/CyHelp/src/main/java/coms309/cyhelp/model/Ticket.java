@@ -10,6 +10,8 @@ import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import io.swagger.annotations.ApiModelProperty;
+
 
 @Entity
 @Table(name="Tickets")
@@ -24,28 +26,37 @@ public class Ticket {
 	@Id
 	@GeneratedValue(strategy= GenerationType.IDENTITY)
 	private int id;
+	@ApiModelProperty(notes = "Title of the ticket.")
 	private String title;
+	@ApiModelProperty(notes = "Description of the ticket.")
 	private String description;
-	private String[] tags;
+	@ApiModelProperty(notes = "State of the ticket: 0 = UNACCEPTED, 1 = PENDING, 2 = ACCEPTED, 3 = CLOSED")
 	private int state;
+	@ApiModelProperty(notes = "The latitude coordinate of the ticket's location.")
 	private double latitude;
+	@ApiModelProperty(notes = "The longitude coordinate of the ticket's location.")
 	private double longitude;
+	@ApiModelProperty(notes = "The address of the ticket.")
 	private String address;
+	@ApiModelProperty(notes = "The customer's rating on the ticket.")
 	private float rating;
 	
 	@ManyToOne
 	@JoinColumn(name="customer_id")
 	@JsonIgnore
+	@ApiModelProperty(notes = "The actor that represents the customer of the ticket.")
 	private Actor customerActor;
 	
 	@ManyToOne
 	@JoinColumn(name="technician_id")
 	@JsonIgnore
+	@ApiModelProperty(notes = "The actor that represents the technician of the ticket.")
 	private Actor technicianActor;
 	
 	@ManyToOne
 	@JoinColumn(name="category_id")
 	@JsonIgnore
+	@ApiModelProperty(notes = "The category of the ticket.")
 	private Category categoryObj;
 	
 	
@@ -87,14 +98,6 @@ public class Ticket {
 	
 	public String getDescription() {
 		return this.description;
-	}
-
-	public void setTags(String[] args) {
-		this.tags = args;
-	}
-	
-	public String[] getTags() {
-		return this.tags;
 	}
 	
 	public void setState(int s) {

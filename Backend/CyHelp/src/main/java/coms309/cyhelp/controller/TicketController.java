@@ -21,8 +21,11 @@ import coms309.cyhelp.model.Ticket;
 import coms309.cyhelp.repository.ActorRepository;
 import coms309.cyhelp.repository.CategoryRepository;
 import coms309.cyhelp.repository.TicketRepository;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 
 @RestController
+@Api(value = "TicketController", description = "Rest Controller for the Ticket Entity.")
 public class TicketController {
 
 	@Autowired
@@ -39,11 +42,13 @@ public class TicketController {
 	 * Gets all of the tickets in the repository.
 	 * @return
 	 */
+	@ApiOperation(value = "Returns a list containing all of the tickets ")
 	@GetMapping("/tickets")
 	public List<Ticket> getAllTickets() {
 		return ticketRepository.findAll();
 	}
 	
+	@ApiOperation(value = "Returns a list of tickets that are within a certain distance.")
 	@GetMapping("/tickets/at")
 	public List<Ticket> getNearLocation(@RequestParam(value="lat", required=true) double latitude, @RequestParam(value="long", required=true) double longitude, @RequestParam(value="range", required=false) double range) {
 		
@@ -77,6 +82,7 @@ public class TicketController {
 	 * @param id
 	 * @return
 	 */
+	@ApiOperation(value = "Get the ticket with the specified id.")
 	@GetMapping("/tickets/{id}")
 	public Ticket getTicket(@PathVariable int id) {
 		return ticketRepository.findById(id);
@@ -87,6 +93,7 @@ public class TicketController {
 	 * @param ticket
 	 * @return String
 	 */
+	@ApiOperation(value = "Creates a new ticket using the data from the RequestBody.")
 	@PostMapping("/tickets")
 	public Ticket createTicket(@RequestBody Ticket ticket) {
 		
@@ -146,6 +153,7 @@ public class TicketController {
 	 * @param technician
 	 * @return String
 	 */
+	@ApiOperation(value = "The provided technician object accepts the ticket with the specified id.")
 	@PutMapping("/tickets/{id}/accept")
 	public HashMap<String, String> updateTechnicianId(@PathVariable int id, @RequestBody Actor technician) {
 		
@@ -194,6 +202,7 @@ public class TicketController {
 	 * @param ticket
 	 * @return String
 	 */
+	@ApiOperation(value = "Deletes the ticket.")
 	@DeleteMapping("/tickets")
 	public Map<String, String> deleteByRequestBody(@RequestBody Ticket ticket) {
 		
@@ -212,6 +221,7 @@ public class TicketController {
 	 * @param id
 	 * @return
 	 */
+	@ApiOperation(value = "Deletes a ticket with a certain id.")
 	@DeleteMapping("/tickets/{id}")
 	public Map<String, String> deleteByPathVariable(@PathVariable int id) {
 		

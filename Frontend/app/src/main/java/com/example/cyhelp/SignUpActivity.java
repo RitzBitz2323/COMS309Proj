@@ -12,6 +12,11 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+/**
+ * SignUpActivity takes user input and passes info to the SignUpPresenter in order to create a new actor.
+ *
+ * @author Nick Sandeen
+ */
 public class SignUpActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
     protected String actorType;

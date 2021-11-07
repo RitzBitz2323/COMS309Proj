@@ -20,6 +20,11 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
+/**
+ *  ViewTechTicketActivity allows a technician to view a user ticket they select on the map.
+ *
+ * @author Parthiv Ganguly
+ */
 public class ViewTechTicketActivity extends AppCompatActivity {
 
     String ticketDataURL = "http://coms-309-051.cs.iastate.edu:8080/tickets/";

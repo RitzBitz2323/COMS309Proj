@@ -6,6 +6,12 @@ import android.view.View;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+/**
+ * SignUpPresenter handles creating a JSON object to pass to the SignUpModel and passes information back to the SignUpActivity.
+ * The presenter also checks for errors and passes error messages back to the SignUpActivity.
+ *
+ * @author Nick Sandeen
+ */
 public class SignUpPresenter {
 
     private View view;

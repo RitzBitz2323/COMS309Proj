@@ -41,8 +41,12 @@ public class SignUpActivity extends AppCompatActivity implements AdapterView.OnI
     }
 
     /**
-     *
-     * @param view
+     * This method is called when the user clicks the Sign Up button
+     * It uses all the information entered by the user to initialise a SignUpPresenter object
+     * If all the information entered is not empty and the password matches with confirm password,
+     * the SignUpPresenter's SignUpUser method is called
+     * If the information entered was incorrect, the appropriate error message is displayed as a Toast.
+     * @param view the View that was clicked
      */
     public void loginUser(View view) {
 
@@ -92,7 +96,11 @@ public class SignUpActivity extends AppCompatActivity implements AdapterView.OnI
     }
 
 
-
+    /**
+     * This method is called after the user's information is sent to the server and their account has been created.
+     * Based on the actor type (user, technician, etc.), it starts another activity
+     * @param ActorCreated whether the actor has been created
+     */
     public void ActorCreated(Boolean ActorCreated){
 
 
@@ -135,8 +143,14 @@ public class SignUpActivity extends AppCompatActivity implements AdapterView.OnI
     }
 
 
-
-
+    /**
+     * This method is called when an item is selected from the Category drop down menu
+     * It records the item selected so that it can be sent to the server as part of a ticket
+     * @param adapterView The AdapterView where the selection happened
+     * @param view The View within the AdapterView that was selected
+     * @param i The position of the item selected, starting at 0
+     * @param l The row ID of the item that is selected
+     */
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l){
             actorType = adapterView.getItemAtPosition(i).toString();

@@ -36,8 +36,10 @@ public class SignUpModel {
 
 
     /**
-     *
-     * @return
+     * This method is called by SignUpPresenter after it has collected all the user information in a JSON object
+     * which is passed to this method. This method sends this JSON object to the server using a POST request to
+     * create the Actor. Once it has sent the response, it calls the getActorInfo method of SignUpPresenter.
+     * In the case of an error, an error message is assigned to a variable.
      */
     public void httpCreateUserRequest(JSONObject createActor, SignUpPresenter signUpPresenter) {
 

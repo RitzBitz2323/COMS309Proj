@@ -1,5 +1,10 @@
 package coms309.cyhelp.controller;
 
+/**
+* This is the Tags model class.
+* @author Ritvik Ambekar, Brandon Schumacher
+* 
+*/
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +16,7 @@ import coms309.cyhelp.model.Category;
 import coms309.cyhelp.repository.CategoryRepository;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-@Api(value="Category Controller", description = "Rest controllery for Category entity")
+@Api(value="Category Controller", description = "Rest controller for Category entity")
 @RestController
 public class CategoryController {
 
@@ -20,7 +25,7 @@ public class CategoryController {
 
 	/**
 	 * Gets all of the category in the repository.
-	 * @return
+	 * @return list of categories
 	 */
 	@ApiOperation(value="To obtain the list of all categories within the database.")
 	@GetMapping("/categories")
@@ -31,7 +36,7 @@ public class CategoryController {
 	/**
 	 * Returns the category with the specified id. 
 	 * @param id
-	 * @return
+	 * @return category
 	 */
 	@ApiOperation(value="To obtain a specific category by an input of ID within the database.")
 	@GetMapping("/categories/{id}")

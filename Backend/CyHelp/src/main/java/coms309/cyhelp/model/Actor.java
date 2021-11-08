@@ -12,6 +12,8 @@ import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import io.swagger.annotations.ApiModelProperty;
+
 @Entity
 @Table(name="Actors")
 public class Actor {
@@ -25,22 +27,31 @@ public class Actor {
 	@Id
 	@GeneratedValue(strategy= GenerationType.IDENTITY)
 	private int id;
+	@ApiModelProperty(notes = "First name of the Actor")
 	private String first_name;
+	@ApiModelProperty(notes = "Last name of the Actor")
 	private String last_name;
+	@ApiModelProperty(notes = "The username the Actor")
 	private String username;
+	@ApiModelProperty(notes = "The hashCode representation of the string password of the Actor")
 	private long password;
+	@ApiModelProperty(notes = "The type of Actor: 0 = USER, 1 = TECHNICIAN, 2 = COMPANY, 3 = ADMINISTRATOR")
 	private int user_type;
+	@ApiModelProperty(notes = "The average rating of the actor.")
 	private float rating;
+	@ApiModelProperty(notes = "The home address of the actor.")
 	private String home_address;
 	
 	// list of tickets that this actor is the customer of
 	@OneToMany
 	@JsonIgnore
+	@ApiModelProperty(notes = "List of tickets that this actor is the customer.")
 	private List<Ticket> customerTickets; 
 	
 	// list of tickets that this actor is the technician of
 	@OneToMany
 	@JsonIgnore
+	@ApiModelProperty(notes = "List of tickets that this actor is the technician.")
 	private List<Ticket> technicianTickets;
 	
 	public Actor() {

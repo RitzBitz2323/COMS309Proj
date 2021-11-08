@@ -20,8 +20,14 @@ import coms309.cyhelp.repository.TagsRepository;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
+/**
+* This is the Tags model class.
+* @author Ritvik Ambekar, Brandon Schumacher
+* 
+*/
+
 @RestController
-@Api(value="Tags Controller", description = "Rest controllery for Tags entity")
+@Api(value="Tags Controller", description = "Rest controller for Tags entity")
 public class TagsController {
 	@Autowired
 	TagsRepository tagsRepository;
@@ -30,7 +36,7 @@ public class TagsController {
 
 	/**
 	 * Gets all of the tags in the repository.
-	 * @return
+	 * @return list of tags
 	 */
 	@ApiOperation(value="To obtain the list of all tags within the database.")
 	@GetMapping("/tags")
@@ -41,7 +47,7 @@ public class TagsController {
 	/**
 	 * Returns the tag with the specified id. 
 	 * @param id
-	 * @return
+	 * @return tag
 	 */
 	@ApiOperation(value="To obtain a specific tag by an input of ID within the database.")
 	@GetMapping("/tags/{id}")
@@ -90,7 +96,7 @@ public class TagsController {
 	/**
 	 * Deletes the tag with the specified id.
 	 * @param id
-	 * @return
+	 * @return if it is success or it doesnt exist
 	 */
 	@ApiOperation(value="To delete a specific tag by speciying the id in which the tag is to delete.")
 	@DeleteMapping("/tags/{id}")

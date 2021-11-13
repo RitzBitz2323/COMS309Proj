@@ -1,11 +1,14 @@
 package coms309.cyhelp.model;
 
+import java.util.List;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -58,6 +61,9 @@ public class Ticket {
 	@JsonIgnore
 	@ApiModelProperty(notes = "The category of the ticket.")
 	private Category categoryObj;
+	
+	@OneToMany
+	private List<ChatMessage> chatMessages;
 	
 	
 	// CONSTRUCTORS
@@ -163,6 +169,24 @@ public class Ticket {
 	
 	public Category getCategory() {
 		return this.categoryObj;
+	}
+
+	public List<ChatMessage> getMessages() {
+		return chatMessages;
+	}
+	
+	public void setMessages(List<ChatMessage> messages) {
+		this.chatMessages = messages;
+	}
+	
+	public boolean isAssociated(int actor_id) {
+		
+		Actor technician = getTechnician();
+		Actor customer = getCustomer();
+		
+		boolean valid = (technician != null && technician.getId() == actor_id) || (customer != null && customer.getId() == actor_id);
+		
+		return valid;
 	}
 	
 	@Override

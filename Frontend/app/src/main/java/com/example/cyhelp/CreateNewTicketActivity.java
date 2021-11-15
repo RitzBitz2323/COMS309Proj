@@ -234,7 +234,7 @@ public class CreateNewTicketActivity extends AppCompatActivity implements Adapte
         try {
             postData.put("customer", customerData);
             postData.put("description", problemDesc.getText().toString());
-//            postData.put("home_address", homeAddress.getText().toString());
+            postData.put("address", homeAddress.getText().toString());
             postData.put("latitude", latitude);
             postData.put("longitude", longitude);
             postData.put("category", categoryData);

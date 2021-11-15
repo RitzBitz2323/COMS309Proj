@@ -3,6 +3,7 @@ package coms309.cyhelp.model;
 import java.util.List;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -62,7 +63,7 @@ public class Ticket {
 	@ApiModelProperty(notes = "The category of the ticket.")
 	private Category categoryObj;
 	
-	@OneToMany
+	@OneToMany(fetch = FetchType.EAGER)
 	private List<ChatMessage> chatMessages;
 	
 	
@@ -177,6 +178,10 @@ public class Ticket {
 	
 	public void setMessages(List<ChatMessage> messages) {
 		this.chatMessages = messages;
+	}
+	
+	public void addMessage(ChatMessage message) {
+		this.chatMessages.add(message);
 	}
 	
 	public boolean isAssociated(int actor_id) {

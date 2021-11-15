@@ -36,22 +36,21 @@ public class ChatSocket {
 	private final Logger logger = LoggerFactory.getLogger(ChatSocket.class);
 	
 	private static TicketRepository ticketRepository;
-	private static ChatMessageRepository chatRepository;
-	private static ActorRepository actorRepository;
-	
 	@Autowired
 	public void setTicketRepository(TicketRepository repo) {
-		ticketRepository = repo;  // we are setting the static variable
-	}
-
-	@Autowired
-	public void setChatMessageRepository(ChatMessageRepository repo) {
-		chatRepository = repo;  // we are setting the static variable
+		ticketRepository = repo;
 	}
 	
+	private static ChatMessageRepository chatRepository;
+	@Autowired
+	public void setChatRepository(ChatMessageRepository repo) {
+		chatRepository = repo;
+	}
+	
+	private static ActorRepository actorRepository;
 	@Autowired
 	public void setActorRepository(ActorRepository repo) {
-		actorRepository = repo;  // we are setting the static variable
+		actorRepository = repo;
 	}
 	
 
@@ -60,23 +59,29 @@ public class ChatSocket {
       throws IOException {
 
 		logger.info("Entered into Open");
-		System.out.println("Entered into Open");
 		
 		Ticket ticket = ticketRepository.findById(ticketID);
 		
 		actorSessionMap.put(actorID, session);
 		
-		if(ticket.isAssociated(actorID)) {
-			// store the actorID and ticketID 
-			logger.info("This Actor is associated with this ticket.");
-			sessionActorMap.put(session, new Integer[] {actorID, ticketID});
+		if(ticket != null) {
+			if(ticket.isAssociated(actorID)) {
+				// store the actorID and ticketID 
+				logger.info("This Actor is associated with this ticket.");
+				sessionActorMap.put(session, new Integer[] {actorID, ticketID});
+				session.getBasicRemote().sendText(getChatHistory(ticket));
+				//session.getBasicRemote().sendText("You have connected via ticket " + ticketID);
+			} else {
+				// access denied
+				logger.info("Failed, actor is not associated with this ticket.");
+				sessionActorMap.put(session, new Integer[] {actorID, 0});
+				session.getBasicRemote().sendText("This actor doesn't have access to this ticket.");
+			}
 		} else {
-			// access denied
-			logger.info("Failed, actor is not associated with this ticket.");
+			// non-existing ticket
 			sessionActorMap.put(session, new Integer[] {actorID, 0});
+			session.getBasicRemote().sendText("This ticket doesn't exist.");
 		}
-		
-		session.getBasicRemote().sendText("You have connected via ticket " + ticketID);
 	}
 
 
@@ -136,7 +141,10 @@ public class ChatSocket {
 					technicianSession.getBasicRemote().sendText(text);
 				
 				// Saving chat history to repository
-				chatRepository.save(new ChatMessage(actor_id, ticket, message));
+				ChatMessage newMessage = new ChatMessage(actor_id, ticket, text);
+				ticket.addMessage(newMessage);
+				chatRepository.save(newMessage);
+				ticketRepository.save(ticket);
 				
 			} else {
 				
@@ -145,7 +153,7 @@ public class ChatSocket {
 			
 		} catch(Exception e) {
 			
-			logger.info("Exception: " + e.getMessage().toString());
+			//logger.info("Exception: " + e.getMessage().toString());
 			e.printStackTrace();
 		}
 		
@@ -160,7 +168,7 @@ public class ChatSocket {
 		StringBuilder sb = new StringBuilder();
 		if(messages != null && messages.size() != 0) {
 			for (ChatMessage message : messages) {
-				sb.append(message.getMessage() + "\n");
+				sb.append("\n" + message.getMessage());
 			}
 		}
 		return sb.toString();

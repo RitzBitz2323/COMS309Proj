@@ -8,10 +8,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
-import coms309.cyhelp.model.Category;
-import io.swagger.annotations.ApiModelProperty;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import io.swagger.annotations.ApiModelProperty;
 /**
 * This is the Tags model class.
 * @author Ritvik Ambekar, Brandon Schumacher

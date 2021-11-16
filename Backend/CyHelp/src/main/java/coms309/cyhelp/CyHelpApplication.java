@@ -20,7 +20,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @EnableSwagger2
 @EntityScan(basePackages = {"coms309.cyhelp.model"})
 @EnableJpaRepositories(basePackages = {"coms309.cyhelp.repository"})
-@ComponentScan(basePackages = {"coms309.cyhelp.controller","coms309.cyhelp.service"})
+@ComponentScan(basePackages = {"coms309.cyhelp.controller","coms309.cyhelp.service","coms309.cyhelp.chat"})
 public class CyHelpApplication {
 
 	public static void main(String[] args) {

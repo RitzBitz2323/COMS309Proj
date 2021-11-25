@@ -66,12 +66,15 @@ public class TechActivity extends AppCompatActivity {
 
     int techID;
 
+    int categoryID;
+
     @Override public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         Intent intent = getIntent();
 
         techID = intent.getIntExtra("id", 2);
+        categoryID = intent.getIntExtra("categoryID", 1);
 
         // load/initialize the osmdroid configuration, this can be done
         ctx = getApplicationContext();
@@ -162,19 +165,25 @@ public class TechActivity extends AppCompatActivity {
                                     for(int i = 0; i < response.length(); i++){
                                         JSONObject jsonObject = response.getJSONObject(i);
 
-                                        // get latitude and longitude for each ticket and store in corresponding list
-                                        double latitudeU = jsonObject.getDouble("latitude");
-                                        double longitudeU = jsonObject.getDouble("longitude");
-                                        titles.add(jsonObject.getString("title"));
-                                        problemDescs.add(jsonObject.getString("description"));
-                                        int ticketId = jsonObject.getInt("id");
-                                        latitudeList.add(latitudeU);
-                                        longitudeList.add(longitudeU);
-                                        ticketIds.add(ticketId);
+                                        int ticketCategoryID = jsonObject.getJSONObject("category").getInt("id");
 
-                                        System.out.println("JSON object: " + jsonObject);
-                                        System.out.println("Ticket Latitude: " + latitudeU);
-                                        System.out.println("Ticket Longitude: " + longitudeU);
+                                        if (ticketCategoryID == categoryID) {
+
+                                            // get latitude and longitude for each ticket and store in corresponding list
+                                            double latitudeU = jsonObject.getDouble("latitude");
+                                            double longitudeU = jsonObject.getDouble("longitude");
+                                            titles.add(jsonObject.getString("title"));
+                                            problemDescs.add(jsonObject.getString("description"));
+                                            int ticketId = jsonObject.getInt("id");
+                                            latitudeList.add(latitudeU);
+                                            longitudeList.add(longitudeU);
+                                            ticketIds.add(ticketId);
+
+                                            System.out.println("JSON object: " + jsonObject);
+                                            System.out.println("Ticket Latitude: " + latitudeU);
+                                            System.out.println("Ticket Longitude: " + longitudeU);
+
+                                        }
                                     }
 
                                     // the items are the icons that will be displayed on the map

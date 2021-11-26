@@ -39,7 +39,8 @@ public class TechFilterActivity extends AppCompatActivity implements AdapterView
 
     /**
      * This method is called when an item is selected from the Category drop down menu
-     * It records the item selected so that it can be sent to the server as part of a ticket
+     * It records the item selected so that it can be sent to the Tech Activity while will filter the
+     * tickets according to category
      * @param parent The AdapterView where the selection happened
      * @param view The View within the AdapterView that was selected
      * @param pos The position of the item selected, starting at 0

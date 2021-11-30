@@ -104,7 +104,7 @@ public class LoginActivity extends AppCompatActivity {
                         i.putExtra("userType", userType);
                         startActivity(i);
                     } else if (userType == 1) {
-                        Intent i = new Intent(LoginActivity.this, TechActivity.class);
+                        Intent i = new Intent(LoginActivity.this, TechFilterActivity.class);
                         i.putExtra("id", userID);
                         i.putExtra("userType", userType);
                         startActivity(i);

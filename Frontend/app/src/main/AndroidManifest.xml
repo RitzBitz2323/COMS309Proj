@@ -23,6 +23,9 @@
         android:theme="@style/Theme.CyHelp"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".TechFilterActivity"
+            android:exported="false" />
+        <activity
             android:name=".ViewUserTicketActivity"
             android:exported="true" />
         <activity

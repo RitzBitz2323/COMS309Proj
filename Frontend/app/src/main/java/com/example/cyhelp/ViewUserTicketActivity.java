@@ -159,6 +159,17 @@ public class ViewUserTicketActivity extends AppCompatActivity {
             }
         });
 
+        Button chatButton = (Button) findViewById(R.id.Chat_Button_ViewUserTicketActivity);
+        chatButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent1 = new Intent(ViewUserTicketActivity.this, User_Chat_Activity.class);
+                intent1.putExtra("ticketID", TicketPosition);
+                startActivity(intent1);
+            }
+        });
+
+
 
     }
 

@@ -73,4 +73,37 @@ public class Actor {
      */
     public int getActorID() {return actorID;}
 
+
+    /**
+     * Returns true if the actor is a user else false.
+     */
+    public boolean actorIsUser() {
+        if (actorType == 0) { return true; }
+        return false;
+    }
+
+    /**
+     * Returns true if actor is a technician else false.
+     */
+    public boolean actorIsTechnician() {
+        if (actorType == 1) { return true;}
+        return false;
+    }
+
+    /**
+     * Returns true if actor is a company else false.
+     */
+    public boolean actorIsCompany() {
+        if (actorType == 2) { return true; }
+        return false;
+    }
+
+    /**
+     * Returns true if actor is an Admin.
+     */
+    public boolean actorIsAdmin() {
+        if (actorType == 3) { return true; }
+        return false;
+    }
+
 }

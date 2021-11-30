@@ -46,7 +46,7 @@ dependencies {
     implementation 'com.android.volley:volley:1.2.1'
     implementation 'org.osmdroid:osmdroid-android:6.1.10'
     testImplementation 'org.mockito:mockito-core:2.22.0'
-
+    implementation files('libs/java_websocket.jar')
 
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test:rules:1.0.2'

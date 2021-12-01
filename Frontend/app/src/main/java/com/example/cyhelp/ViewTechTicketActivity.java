@@ -1,6 +1,7 @@
 package com.example.cyhelp;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -32,6 +33,9 @@ public class ViewTechTicketActivity extends AppCompatActivity {
 
     int techID;
 
+    double latitude;
+    double longitude;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,6 +60,8 @@ public class ViewTechTicketActivity extends AppCompatActivity {
                     String title = response.getString("title");
                     String description = response.getString("description");
                     String address = response.getJSONObject("customer").getString("homeAddress");
+                    latitude = response.getDouble("latitude");
+                    longitude = response.getDouble("longitude");
 
                     TextView titleView = (TextView) findViewById(R.id.title);
                     TextView descriptionView = (TextView) findViewById(R.id.description);
@@ -121,8 +127,18 @@ public class ViewTechTicketActivity extends AppCompatActivity {
 
         requestQueue.add(jsonObjectRequest);
 
-        Intent intent = new Intent(this, TechActivity.class);
-        intent.putExtra("id", techID);
-        startActivity(intent);
+//        Intent intent = new Intent(this, TechActivity.class);
+//        intent.putExtra("id", techID);
+//        startActivity(intent);
+          Uri ticketLocation = Uri.parse("geo:" + latitude + "," + longitude);
+          showMap(ticketLocation);
+    }
+
+    public void showMap(Uri geoLocation) {
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        intent.setData(geoLocation);
+        if (intent.resolveActivity(getPackageManager()) != null) {
+            startActivity(intent);
+        }
     }
 }

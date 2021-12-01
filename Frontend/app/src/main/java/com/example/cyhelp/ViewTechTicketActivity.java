@@ -130,7 +130,7 @@ public class ViewTechTicketActivity extends AppCompatActivity {
 //        Intent intent = new Intent(this, TechActivity.class);
 //        intent.putExtra("id", techID);
 //        startActivity(intent);
-          Uri ticketLocation = Uri.parse("geo:" + latitude + "," + longitude);
+          Uri ticketLocation = Uri.parse("geo:0,0?q=" + latitude + "," + longitude + " (ticket)");
           showMap(ticketLocation);
     }
 

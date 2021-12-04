@@ -127,11 +127,9 @@ public class ViewTechTicketActivity extends AppCompatActivity {
 
         requestQueue.add(jsonObjectRequest);
 
-//        Intent intent = new Intent(this, TechActivity.class);
-//        intent.putExtra("id", techID);
-//        startActivity(intent);
-          Uri ticketLocation = Uri.parse("geo:0,0?q=" + latitude + "," + longitude + " (ticket)");
-          showMap(ticketLocation);
+        Intent intent = new Intent(this, TechHomeActivity.class);
+        intent.putExtra("id", techID);
+        startActivity(intent);
     }
 
     public void showMap(Uri geoLocation) {

@@ -26,7 +26,8 @@ import java.util.ArrayList;
 public class TechHomeActivity extends AppCompatActivity {
 
     String url = "http://coms-309-051.cs.iastate.edu:8080/actors/";
-    int ID;
+    int techID;
+    int userID;
     ArrayAdapter adapter;
 
     @Override
@@ -36,9 +37,9 @@ public class TechHomeActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
 
-        ID = intent.getIntExtra("id", 2);
+        techID = intent.getIntExtra("id", 2);
 
-        url += ID + "/tickets";
+        url += techID + "/tickets";
 
         ArrayList<String> jsonResponses = new ArrayList<> ();
 
@@ -51,6 +52,7 @@ public class TechHomeActivity extends AppCompatActivity {
                     for(int i = 0; i < response.length(); i++){
                         JSONObject jsonObject = response.getJSONObject(i);
                         String title = jsonObject.getString("title");
+                        userID = jsonObject.getJSONObject("customer").getInt("id");
 
                         try {
                             jsonObject.getJSONObject("technician");
@@ -80,9 +82,9 @@ public class TechHomeActivity extends AppCompatActivity {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Intent intent = new Intent(TechHomeActivity.this, ViewUserTicketActivity.class);
-                intent.putExtra("TicketPosition", i);
-                intent.putExtra("UserId", ID);
+                Intent intent = new Intent(TechHomeActivity.this, ViewTechHomeTicket.class);
+                intent.putExtra("ticketPosition", i);
+                intent.putExtra("userId", userID);
                 startActivity(intent);
             }
         });

@@ -23,6 +23,9 @@
         android:theme="@style/Theme.CyHelp"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".ViewTechHomeTicket"
+            android:exported="false" />
+        <activity
             android:name=".TechHomeActivity"
             android:exported="false" />
         <activity

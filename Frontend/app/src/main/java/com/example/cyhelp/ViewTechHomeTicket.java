@@ -77,7 +77,26 @@ public class ViewTechHomeTicket extends AppCompatActivity {
                 try {
                     System.out.println("Received Server Response");
                     System.out.println(response);
-                    JSONObject jsonObject = response.getJSONObject(TicketPosition);
+                    System.out.println("Ticket Position: " + TicketPosition);
+
+                    int count = -1;
+
+                    JSONObject jsonObject = null;
+
+                    for(int i = 0; i < response.length(); i++){
+                        int state = response.getJSONObject(i).getInt("state");
+
+                        if (state == 1) {
+                            count++;
+                        }
+
+                        if (count == TicketPosition) {
+                            jsonObject = response.getJSONObject(TicketPosition);
+                            break;
+                        }
+                    }
+
+
                     System.out.println(jsonObject.toString());
 
                     latitude = jsonObject.getDouble("latitude");

@@ -51,15 +51,11 @@ public class TechHomeActivity extends AppCompatActivity {
                     for(int i = 0; i < response.length(); i++){
                         JSONObject jsonObject = response.getJSONObject(i);
                         String title = jsonObject.getString("title");
+                        int state = jsonObject.getInt("state");
 
-                        try {
-                            jsonObject.getJSONObject("technician");
-                            title += " (Accepted)";
-                        } catch (JSONException e) {
-
+                        if (state == 1) {
+                            jsonResponses.add(title);
                         }
-
-                        jsonResponses.add(title);
                     }
                     fillList(jsonResponses);
                 } catch (JSONException e) {

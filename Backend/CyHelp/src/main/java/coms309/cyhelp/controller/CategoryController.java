@@ -10,10 +10,11 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import coms309.cyhelp.model.Category;
-import coms309.cyhelp.repository.CategoryRepository;
+import coms309.cyhelp.service.CategoryService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 @Api(value="Category Controller", description = "Rest controller for Category entity")
@@ -21,7 +22,7 @@ import io.swagger.annotations.ApiOperation;
 public class CategoryController {
 
 	@Autowired
-	CategoryRepository categoryRepository;
+	CategoryService categoryService;
 
 	/**
 	 * Gets all of the category in the repository.
@@ -29,8 +30,8 @@ public class CategoryController {
 	 */
 	@ApiOperation(value="To obtain the list of all categories within the database.")
 	@GetMapping("/categories")
-	public List<Category> getAllCategories() {
-		return categoryRepository.findAll();
+	public @ResponseBody List<Category> getAllCategories() {
+		return categoryService.getAllCategories();
 	}
 	
 	/**
@@ -40,8 +41,8 @@ public class CategoryController {
 	 */
 	@ApiOperation(value="To obtain a specific category by an input of ID within the database.")
 	@GetMapping("/categories/{id}")
-	public Category getCategory(@PathVariable int id) {
-		return categoryRepository.findById(id);
+	public @ResponseBody Category getCategory(@PathVariable int id) {
+		return categoryService.getCategory(id);
 	}
 	
 }

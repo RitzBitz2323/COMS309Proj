@@ -20,7 +20,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @EnableSwagger2
 @EntityScan(basePackages = {"coms309.cyhelp.model"})
 @EnableJpaRepositories(basePackages = {"coms309.cyhelp.repository"})
-@ComponentScan(basePackages = {"coms309.cyhelp.controller"})
+@ComponentScan(basePackages = {"coms309.cyhelp.controller","coms309.cyhelp.service","coms309.cyhelp.chat"})
 public class CyHelpApplication {
 
 	public static void main(String[] args) {
@@ -30,21 +30,23 @@ public class CyHelpApplication {
 	@Bean
 	CommandLineRunner initCategory(CategoryRepository catRepo) {
 		return args ->{
-		Category cat0 = new Category("None");
-		Category cat1 = new Category("Plumber");
-		Category cat2 = new Category("Electrical and Electronic Installer and Repairer");
-		Category cat3 = new Category("Automotive Mechanic");
-		Category cat4 = new Category("Computer and Office Machine Technician");
-		Category cat5 = new Category("Heating, Air Conditioning, and Refrigeration Mechanic");
-		Category cat6 = new Category("Home Appliance Repairer");
 		
-		catRepo.save(cat0);
-		catRepo.save(cat1);
-		catRepo.save(cat2);
-		catRepo.save(cat3);
-		catRepo.save(cat4);
-		catRepo.save(cat5);
-		catRepo.save(cat6);
+			String[] categories = {
+					"None",
+					"Plumber",
+					"Electrical and Electronic Installer and Repairer",
+					"Automotive Mechanic",
+					"Computer and Office Machine Technician",
+					"Heating, Air Conditioning, and Refrigeration Mechanic",
+					"Home Appliance Repairer"
+			};
+		
+			for(String category : categories) {
+				Category cat = new Category(category);
+				if(catRepo.findByTitle(cat.getTitle()) == null) 
+					catRepo.save(cat);
+			}
+			
 		};
 	}
 	

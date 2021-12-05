@@ -102,9 +102,16 @@ public class ViewUserTicketActivity extends AppCompatActivity {
                     UserFullName = UserFirstName + " " + UserLastName;
                     TicketId = jsonObject.getInt("id");
 
+                    TitleText.setText(Title);
+                    UserFullNameText.setText(UserFullName);
+                    UsernameText.setText(Username);
+                    CategoryText.setText(Category);
+                    AddressText.setText(Address);
+                    DescriptionText.setText(Description);
+
                     JSONObject obj;
 
-                    if ( (obj = jsonObject.optJSONObject("Technician")) == null) { //jsonObject.getJSONObject("technician").isNull("username")
+                    if ( (obj = jsonObject.optJSONObject("technician")) == null) { //jsonObject.getJSONObject("technician").isNull("username")
                         TechUsername = "";
                         TechFirstName = "";
                         TechLastName = "";
@@ -117,12 +124,6 @@ public class ViewUserTicketActivity extends AppCompatActivity {
                         TechFullName = TechFirstName + " " + TechLastName;
                     }
 
-                    TitleText.setText(Title);
-                    UserFullNameText.setText(UserFullName);
-                    UsernameText.setText(Username);
-                    CategoryText.setText(Category);
-                    AddressText.setText(Address);
-                    DescriptionText.setText(Description);
                     TechFullNameText.setText(TechFullName);
                     TechUsernameText.setText(TechUsername);
 

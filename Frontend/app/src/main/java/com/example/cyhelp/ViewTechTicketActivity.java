@@ -32,6 +32,7 @@ public class ViewTechTicketActivity extends AppCompatActivity {
     String acceptTicketURL = "http://coms-309-051.cs.iastate.edu:8080/tickets/";
 
     int techID;
+    int categoryID;
 
     double latitude;
     double longitude;
@@ -42,6 +43,8 @@ public class ViewTechTicketActivity extends AppCompatActivity {
         setContentView(R.layout.activity_view_tech_ticket);
 
         Intent intent = getIntent();
+
+        categoryID = intent.getIntExtra("categoryID", 2);
 
         int ticketID = intent.getIntExtra("ticketID", 2);
         techID = intent.getIntExtra("techID", 2);
@@ -89,6 +92,7 @@ public class ViewTechTicketActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(ViewTechTicketActivity.this, TechActivity.class);
                 intent.putExtra("id", techID);
+                intent.putExtra("categoryID", categoryID);
                 startActivity(intent);
             }
         });
@@ -127,11 +131,9 @@ public class ViewTechTicketActivity extends AppCompatActivity {
 
         requestQueue.add(jsonObjectRequest);
 
-//        Intent intent = new Intent(this, TechActivity.class);
-//        intent.putExtra("id", techID);
-//        startActivity(intent);
-          Uri ticketLocation = Uri.parse("geo:0,0?q=" + latitude + "," + longitude + " (ticket)");
-          showMap(ticketLocation);
+        Intent intent = new Intent(this, TechHomeActivity.class);
+        intent.putExtra("id", techID);
+        startActivity(intent);
     }
 
     public void showMap(Uri geoLocation) {

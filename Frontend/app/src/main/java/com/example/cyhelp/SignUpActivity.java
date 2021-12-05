@@ -123,7 +123,7 @@ public class SignUpActivity extends AppCompatActivity implements AdapterView.OnI
                 i.putExtra("userType", ActorType);
                 startActivity(i);
             } else if (ActorType == 1) {
-                Intent i = new Intent(SignUpActivity.this, TechFilterActivity.class);
+                Intent i = new Intent(SignUpActivity.this, TechHomeActivity.class);
                 i.putExtra("id", ActorID);
                 i.putExtra("userType", ActorType);
                 startActivity(i);

@@ -47,12 +47,6 @@ public class ChatSocket {
 		chatRepository = repo;
 	}
 	
-	private static ActorRepository actorRepository;
-	@Autowired
-	public void setActorRepository(ActorRepository repo) {
-		actorRepository = repo;
-	}
-	
 
 	@OnOpen
 	public void onOpen(Session session, @PathParam("ticket_id") int ticketID, @PathParam("actor_id") int actorID) 
@@ -121,8 +115,6 @@ public class ChatSocket {
 		
 		try {
 			
-			Actor actor = actorRepository.findById(actor_id);
-			
 			if(ticket_id != NO_TICKET) {
 				
 				Ticket ticket = ticketRepository.findById(ticket_id);
@@ -131,7 +123,7 @@ public class ChatSocket {
 				Session customerSession = actorSessionMap.get(customerID);
 				Session technicianSession = actorSessionMap.get(technicianID);
 				
-				String text = "<" + actor.getUsername() + "> " + message;
+				String text = message;
 				
 				// send the message to the customer (if connected)
 				if(customerSession != null)

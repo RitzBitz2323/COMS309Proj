@@ -20,7 +20,7 @@ public class TechFilterActivity extends AppCompatActivity implements AdapterView
         setContentView(R.layout.activity_tech_filter);
 
         Intent intent = getIntent();
-        techID = intent.getIntExtra("id", 2);
+        techID = intent.getIntExtra("techID", 2);
 
         Spinner spinner = (Spinner) findViewById(R.id.spinner);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.categories, R.layout.spinner_item);

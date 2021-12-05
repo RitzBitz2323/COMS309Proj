@@ -11,16 +11,12 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import org.java_websocket.WebSocket;
 import org.java_websocket.client.WebSocketClient;
-import org.java_websocket.drafts.Draft;
-import org.java_websocket.drafts.Draft_6455;
 import org.java_websocket.handshake.ServerHandshake;
 
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.text.SimpleDateFormat;
-import java.util.Collection;
 import java.util.Date;
 
 
@@ -77,13 +73,9 @@ public class User_Chat_Activity extends AppCompatActivity {
         chat = "";
         chatMessages.setText("Chat is empty! Send a message");
 
-        connectButton.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View view) {
-                Draft[] drafts = {
-                        new Draft_6455()
-                };
-
+        //connectButton.setOnClickListener(new View.OnClickListener(){
+            //@Override
+            //public void onClick(View view) {
                 String w = "ws://coms-309-051.cs.iastate.edu:8080/chat/" + ticketID + "/" + actorId;
                 System.out.println("Trying URL:" + w);
                 try {
@@ -93,19 +85,7 @@ public class User_Chat_Activity extends AppCompatActivity {
                 }
 
                 Log.d("Socket:", "Trying socket");
-                cc = new WebSocketClient(uri, (Draft) drafts[0]) {
-                    @Override
-                    protected Collection<WebSocket> getConnections() {
-                        Log.d("","getting connections");
-                        return super.getConnections();
-                    }
-
-                    @Override
-                    public boolean connectBlocking() throws InterruptedException {
-                        Log.d("","connection blocked");
-                        return super.connectBlocking();
-                    }
-
+                cc = new WebSocketClient(uri) {
                     @Override
                     public void onOpen(ServerHandshake serverHandshake) {
                         Log.d("OPEN", "run() returned: " + "is connecting");
@@ -138,22 +118,23 @@ public class User_Chat_Activity extends AppCompatActivity {
                         Log.d("Exception:", e.toString());
                     }
                 };
+                cc.connect();
 
 
 
-
-            }
-        });
+           // }
+       //});
 
         sendButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 try {
-                    cc.send(sendMessageText.getText().toString());
-                    dateTime = sdf.format(new Date());
-                    chat = chat + "\n" + username + ": " + dateTime + "\n" + sendMessageText.getText().toString();
-                    chatMessages.setText(chat);
 
+                    dateTime = sdf.format(new Date());
+                    //chat = chat + "\n" + username + ": " + dateTime + "\n" + sendMessageText.getText().toString();
+                    //chatMessages.setText(chat);
+                    cc.send("\n" + username + ": " + dateTime + "\n" + sendMessageText.getText().toString() + "\n");
+                    sendMessageText.setText("");
                     //Scrolls to bottom of chat
                     int scrollAmount = chatMessages.getLayout().getLineTop(chatMessages.getLineCount()) - chatMessages.getHeight();
                     if (scrollAmount > 0) {

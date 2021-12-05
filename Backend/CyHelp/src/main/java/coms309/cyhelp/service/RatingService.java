@@ -2,6 +2,7 @@ package coms309.cyhelp.service;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -32,12 +33,17 @@ public class RatingService {
 		return newRating;
 	}
 	
-	public String updateRating(double rate, int userID) {
-		if(rate < 0) return ("Inputted number is not an acceptable value ");
+	public HashMap<String, String> updateRating(double rate, int userID) {
+		HashMap<String, String> result = new HashMap<String, String>();
+		if(rate < 0) {
+			result.put("message", "Inputted number is not an acceptable value");
+			return result;
+		};
 		
 		Rating rating = ratingRepository.getById(userID);
 		rating.updateRating(rate);
-		return ("Updated rating. Rating now" + rating.getRating());
+		result.put("Message", ("Updated rating. Rating now" + rating.getRating()));
+		return result;
 	}
 	
 	public String clearRating(int id) {
@@ -47,14 +53,19 @@ public class RatingService {
 	}
 	
 	
-	public String deleteRatingById(int id) {
+	public HashMap<String, String> deleteRatingById(int id) {
+		
+		HashMap<String, String> result = new HashMap<String, String>();
 		
 		Rating rating = ratingRepository.findById(id);
 		if(rating == null) {
-			return ("Could not find rating for specified user");
+			result.put("message", "Could not find rating for specified user");
+			return result;
 		}
 		
 		ratingRepository.delete(rating);
-		return ("Successfully deleted rating associated with user");
+		result.put("message", "Successfully deleted rating associated with user");
+		
+		return result;
 	}
 }

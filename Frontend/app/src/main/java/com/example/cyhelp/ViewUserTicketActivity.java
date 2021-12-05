@@ -35,6 +35,7 @@ public class ViewUserTicketActivity extends AppCompatActivity {
 
     protected int UserId;
     protected int TicketPosition;
+    protected int TicketId;
     protected String Title;
     protected String Description;
     protected String Category;
@@ -63,6 +64,7 @@ public class ViewUserTicketActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         TicketPosition = intent.getIntExtra("TicketPosition", 1);
+        TicketId = 0;
         UserId = intent.getIntExtra("UserId", 2);
 
         TitleText = (TextView) findViewById(R.id.TicketTitle_ViewUserTicketActivity);
@@ -92,12 +94,13 @@ public class ViewUserTicketActivity extends AppCompatActivity {
                     System.out.println(jsonObject.toString());
                     Title = jsonObject.getString("title");
                     Description = jsonObject.getString("description");
-                    Address = jsonObject.getString("address");
+                    Address = jsonObject.getJSONObject("customer").getString("homeAddress");
                     Category = jsonObject.getJSONObject("category").getString("title");
                     Username = jsonObject.getJSONObject("customer").getString("username");
                     UserFirstName = jsonObject.getJSONObject("customer").getString("firstName");
                     UserLastName = jsonObject.getJSONObject("customer").getString("lastName");
                     UserFullName = UserFirstName + " " + UserLastName;
+                    TicketId = jsonObject.getInt("id");
 
                     JSONObject obj;
 
@@ -164,7 +167,11 @@ public class ViewUserTicketActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent1 = new Intent(ViewUserTicketActivity.this, User_Chat_Activity.class);
-                intent1.putExtra("ticketID", TicketPosition);
+                intent1.putExtra("TicketPosition", TicketPosition);
+                intent1.putExtra("ticketID", TicketId);
+                intent1.putExtra("actorId", UserId);
+                intent1.putExtra("userName", Username);
+                intent1.putExtra("ticketTitle", Title);
                 startActivity(intent1);
             }
         });

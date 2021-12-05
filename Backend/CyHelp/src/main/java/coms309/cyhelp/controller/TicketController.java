@@ -83,6 +83,18 @@ public class TicketController {
 	}
 	
 	/**
+	 * Close ticket with id
+	 * @param id
+	 * @return ticket
+	 */
+	@ApiOperation(value = "Closes the ticket")
+	@PutMapping("/tickets/{id}/close")
+	public Ticket closeTicket(@PathVariable int id) {
+		
+		return ticketService.closeTicket(id);
+	}
+	
+	/**
 	 * Deletes a ticket based on the ticket provided by
 	 * the RequestBody.
 	 * @param ticket

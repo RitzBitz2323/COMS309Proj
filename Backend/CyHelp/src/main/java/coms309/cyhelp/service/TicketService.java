@@ -103,6 +103,17 @@ public class TicketService {
 		return result;
 	}
 	
+	public Ticket closeTicket(int id) {
+		if(id < 0) return null;
+		
+		Ticket ticket = ticketRepository.findById(id);
+		ticket.setState(3);
+		ticketRepository.save(ticket);
+		return ticket;
+		
+		
+	}
+	
 	
 	
 	

@@ -94,7 +94,7 @@ public class ViewUserTicketActivity extends AppCompatActivity {
                     System.out.println(jsonObject.toString());
                     Title = jsonObject.getString("title");
                     Description = jsonObject.getString("description");
-                    Address = jsonObject.getJSONObject("customer").getString("homeAddress");
+                    Address = jsonObject.getString("address");
                     Category = jsonObject.getJSONObject("category").getString("title");
                     Username = jsonObject.getJSONObject("customer").getString("username");
                     UserFirstName = jsonObject.getJSONObject("customer").getString("firstName");

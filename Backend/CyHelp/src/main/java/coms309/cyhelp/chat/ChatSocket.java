@@ -47,12 +47,6 @@ public class ChatSocket {
 		chatRepository = repo;
 	}
 	
-	private static ActorRepository actorRepository;
-	@Autowired
-	public void setActorRepository(ActorRepository repo) {
-		actorRepository = repo;
-	}
-	
 
 	@OnOpen
 	public void onOpen(Session session, @PathParam("ticket_id") int ticketID, @PathParam("actor_id") int actorID) 

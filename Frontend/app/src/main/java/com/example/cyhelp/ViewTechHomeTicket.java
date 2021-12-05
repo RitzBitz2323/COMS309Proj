@@ -29,7 +29,7 @@ import org.json.JSONObject;
 
 public class ViewTechHomeTicket extends AppCompatActivity {
 
-    protected int UserId;
+    protected int techID;
     protected int TicketPosition;
     protected String Title;
     protected String Description;
@@ -55,7 +55,7 @@ public class ViewTechHomeTicket extends AppCompatActivity {
 
         Intent intent = getIntent();
         TicketPosition = intent.getIntExtra("ticketPosition", 1);
-        UserId = intent.getIntExtra("userId", 2);
+        techID = intent.getIntExtra("techID", 2);
 
         TitleText = (TextView) findViewById(R.id.TicketTitle_ViewUserTicketActivity);
         UserFullNameText = (TextView) findViewById(R.id.UserFullName_ViewUserTicketActivity);
@@ -67,7 +67,7 @@ public class ViewTechHomeTicket extends AppCompatActivity {
 
         String url = "http://coms-309-051.cs.iastate.edu:8080/actors/";
 
-        String postURL = url + UserId + "/tickets";
+        String postURL = url + techID + "/tickets";
 
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, postURL, null, new Response.Listener<JSONArray>() {
@@ -130,7 +130,7 @@ public class ViewTechHomeTicket extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(ViewTechHomeTicket.this, TechHomeActivity.class);
-                intent.putExtra("id", UserId);
+                intent.putExtra("id", techID);
                 startActivity(intent);
             }
         });
@@ -148,7 +148,7 @@ public class ViewTechHomeTicket extends AppCompatActivity {
 
     }
 
-    public void openMap(View view) {
+    public void showDirections(View view) {
         Uri ticketLocation = Uri.parse("geo:0,0?q=" + latitude + "," + longitude + " (ticket)");
         showMap(ticketLocation);
     }

@@ -27,7 +27,6 @@ public class TechHomeActivity extends AppCompatActivity {
 
     String url = "http://coms-309-051.cs.iastate.edu:8080/actors/";
     int techID;
-    int userID;
     ArrayAdapter adapter;
 
     @Override
@@ -52,7 +51,6 @@ public class TechHomeActivity extends AppCompatActivity {
                     for(int i = 0; i < response.length(); i++){
                         JSONObject jsonObject = response.getJSONObject(i);
                         String title = jsonObject.getString("title");
-                        userID = jsonObject.getJSONObject("customer").getInt("id");
 
                         try {
                             jsonObject.getJSONObject("technician");
@@ -84,7 +82,7 @@ public class TechHomeActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Intent intent = new Intent(TechHomeActivity.this, ViewTechHomeTicket.class);
                 intent.putExtra("ticketPosition", i);
-                intent.putExtra("userId", userID);
+                intent.putExtra("techID", techID);
                 startActivity(intent);
             }
         });
@@ -101,6 +99,12 @@ public class TechHomeActivity extends AppCompatActivity {
 
     public void viewClosedTickets(View v) {
 
+    }
+
+    public void openMap(View v) {
+        Intent intent = new Intent(TechHomeActivity.this, TechFilterActivity.class);
+        intent.putExtra("techID", techID);
+        startActivity(intent);
     }
 
     /**

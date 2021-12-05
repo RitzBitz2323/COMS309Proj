@@ -64,6 +64,7 @@
         android:backgroundTint="#4CAF50"
         android:text="Open Map"
         tools:layout_editor_absoluteX="148dp"
-        tools:layout_editor_absoluteY="529dp" />
+        tools:layout_editor_absoluteY="529dp"
+        android:onClick="openMap"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -107,7 +107,7 @@ public class TicketService {
 		if(id < 0) return null;
 		
 		Ticket ticket = ticketRepository.findById(id);
-		ticket.setState(3);
+		ticket.setState(Ticket.CLOSED);
 		ticketRepository.save(ticket);
 		return ticket;
 		

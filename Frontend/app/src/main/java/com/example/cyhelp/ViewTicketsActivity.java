@@ -57,15 +57,15 @@ public class ViewTicketsActivity extends AppCompatActivity {
                     for(int i = 0; i < response.length(); i++){
                         JSONObject jsonObject = response.getJSONObject(i);
                         String title = jsonObject.getString("title");
+                        int state = jsonObject.getInt("state");
 
-                        try {
-                            jsonObject.getJSONObject("technician");
+                        if (state == 1) {
                             title += " (Accepted)";
-                        } catch (JSONException e) {
-
                         }
 
-                        jsonResponses.add(title);
+                        if (state != 3) {
+                            jsonResponses.add(title);
+                        }
                     }
                     fillList(jsonResponses);
                 } catch (JSONException e) {

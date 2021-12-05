@@ -21,6 +21,7 @@ import com.android.volley.ServerError;
 import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 
 import org.json.JSONArray;
@@ -31,6 +32,7 @@ public class ViewTechHomeTicket extends AppCompatActivity {
 
     protected int techID;
     protected int TicketPosition;
+    protected int ticketID;
     protected String Title;
     protected String Description;
     protected String Category;
@@ -56,6 +58,7 @@ public class ViewTechHomeTicket extends AppCompatActivity {
         Intent intent = getIntent();
         TicketPosition = intent.getIntExtra("ticketPosition", 1);
         techID = intent.getIntExtra("techID", 2);
+        ticketID = intent.getIntExtra("ticketID", 2);
 
         TitleText = (TextView) findViewById(R.id.TicketTitle_ViewUserTicketActivity);
         UserFullNameText = (TextView) findViewById(R.id.UserFullName_ViewUserTicketActivity);
@@ -90,8 +93,11 @@ public class ViewTechHomeTicket extends AppCompatActivity {
                             count++;
                         }
 
+                        System.out.println("State: " + state + " Count: " + count);
+
                         if (count == TicketPosition) {
-                            jsonObject = response.getJSONObject(TicketPosition);
+                            jsonObject = response.getJSONObject(i);
+                            ticketID = jsonObject.getInt("id");
                             break;
                         }
                     }
@@ -164,7 +170,28 @@ public class ViewTechHomeTicket extends AppCompatActivity {
     }
 
     public void closeTicket(View view) {
+        System.out.println("Ticket ID: " + ticketID);
+        String closeURL = "http://coms-309-051.cs.iastate.edu:8080/tickets/" + ticketID + "/close";
 
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.PUT, closeURL, null, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                System.out.println(response);
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                error.printStackTrace();
+            }
+        });
+
+        requestQueue.add(jsonObjectRequest);
+
+        Intent intent = new Intent(this, TechHomeActivity.class);
+        intent.putExtra("techID", techID);
+        startActivity(intent);
     }
 
     public void showDirections(View view) {

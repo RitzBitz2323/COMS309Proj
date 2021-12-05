@@ -207,6 +207,7 @@ public class TechActivity extends AppCompatActivity {
                                                     Intent intent = new Intent(TechActivity.this, ViewTechTicketActivity.class);
                                                     intent.putExtra("ticketID", currentTicket);
                                                     intent.putExtra("techID", techID);
+                                                    intent.putExtra("categoryID", categoryID);
                                                     startActivity(intent);
                                                     return true;
                                                 }

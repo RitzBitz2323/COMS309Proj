@@ -20,7 +20,7 @@ public class CompanyController {
 	@PostMapping("/company")
 	public @ResponseBody Company addCompany(@RequestBody Company company) {
 		if(company == null) return null;
-		return company; //change 
+		return companyService.addCompany(company);
 	}
 	
 }

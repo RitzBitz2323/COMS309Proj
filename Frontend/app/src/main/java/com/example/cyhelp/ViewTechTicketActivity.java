@@ -62,7 +62,7 @@ public class ViewTechTicketActivity extends AppCompatActivity {
                     System.out.println(response);
                     String title = response.getString("title");
                     String description = response.getString("description");
-                    String address = response.getJSONObject("customer").getString("homeAddress");
+                    String address = response.getString("address");
                     latitude = response.getDouble("latitude");
                     longitude = response.getDouble("longitude");
 

@@ -35,7 +35,7 @@ public class ViewUserTicketActivity extends AppCompatActivity {
 
     protected int UserId;
     protected int TicketPosition;
-    protected int TicketId;
+    protected int ticketID;
     protected String Title;
     protected String Description;
     protected String Category;
@@ -64,7 +64,7 @@ public class ViewUserTicketActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         TicketPosition = intent.getIntExtra("TicketPosition", 1);
-        TicketId = 0;
+        ticketID = 0;
         UserId = intent.getIntExtra("UserId", 2);
 
         TitleText = (TextView) findViewById(R.id.TicketTitle_ViewUserTicketActivity);
@@ -90,7 +90,27 @@ public class ViewUserTicketActivity extends AppCompatActivity {
                 try {
                     System.out.println("Received Server Response");
                     System.out.println(response);
-                    JSONObject jsonObject = response.getJSONObject(TicketPosition);
+
+                    int count = -1;
+
+                    JSONObject jsonObject = null;
+
+                    for(int i = 0; i < response.length(); i++){
+                        int state = response.getJSONObject(i).getInt("state");
+
+                        if (state != 3) {
+                            count++;
+                        }
+
+                        System.out.println("State: " + state + " Count: " + count);
+
+                        if (count == TicketPosition) {
+                            jsonObject = response.getJSONObject(i);
+                            ticketID = jsonObject.getInt("id");
+                            break;
+                        }
+                    }
+
                     System.out.println(jsonObject.toString());
                     Title = jsonObject.getString("title");
                     Description = jsonObject.getString("description");
@@ -100,7 +120,7 @@ public class ViewUserTicketActivity extends AppCompatActivity {
                     UserFirstName = jsonObject.getJSONObject("customer").getString("firstName");
                     UserLastName = jsonObject.getJSONObject("customer").getString("lastName");
                     UserFullName = UserFirstName + " " + UserLastName;
-                    TicketId = jsonObject.getInt("id");
+                    ticketID = jsonObject.getInt("id");
 
                     TitleText.setText(Title);
                     UserFullNameText.setText(UserFullName);
@@ -169,7 +189,7 @@ public class ViewUserTicketActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent1 = new Intent(ViewUserTicketActivity.this, User_Chat_Activity.class);
                 intent1.putExtra("TicketPosition", TicketPosition);
-                intent1.putExtra("ticketID", TicketId);
+                intent1.putExtra("ticketID", ticketID);
                 intent1.putExtra("actorId", UserId);
                 intent1.putExtra("userName", Username);
                 intent1.putExtra("ticketTitle", Title);

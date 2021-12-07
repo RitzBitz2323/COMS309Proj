@@ -4,11 +4,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import io.swagger.annotations.ApiModelProperty;
 
@@ -25,7 +21,6 @@ public class Rating {
 	@GeneratedValue(strategy= GenerationType.IDENTITY)
 	@ApiModelProperty(notes = "Identification Number of the Rating to associate with user",name="userid")
 	private int userid;
-	
 	/**
 	 * Rating number
 	 */

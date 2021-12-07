@@ -2,13 +2,11 @@ package coms309.cyhelp.service;
 
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import coms309.cyhelp.model.Rating;
-import coms309.cyhelp.model.Tags;
 import coms309.cyhelp.repository.RatingRepository;
 
 @Service

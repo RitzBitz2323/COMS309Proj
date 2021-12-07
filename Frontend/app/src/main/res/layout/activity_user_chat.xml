@@ -14,22 +14,10 @@
         android:text="Back"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.482"
-        app:layout_constraintStart_toEndOf="@+id/connectButton_UserChatActivity"
-        app:layout_constraintTop_toBottomOf="@+id/Ticket_Title_UserChatActivity"
-        app:layout_constraintVertical_bias="0.047" />
-
-    <Button
-        android:id="@+id/connectButton_UserChatActivity"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Connect"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.251"
+        app:layout_constraintHorizontal_bias="0.916"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/Ticket_Title_UserChatActivity"
-        app:layout_constraintVertical_bias="0.047" />
+        app:layout_constraintVertical_bias="0.0" />
 
     <EditText
         android:id="@+id/chatMessage_UserChatActivity"
@@ -76,14 +64,14 @@
 
     <TextView
         android:id="@+id/chatTextView_activity_user_chat"
-        android:layout_width="355dp"
-        android:layout_height="353dp"
+        android:layout_width="357dp"
+        android:layout_height="418dp"
         android:text="TextView"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         android:textColor="#FFFFFF"
         app:layout_constraintBottom_toTopOf="@+id/chatMessage_UserChatActivity"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/connectButton_UserChatActivity" />
+        app:layout_constraintTop_toBottomOf="@+id/Ticket_Title_UserChatActivity" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

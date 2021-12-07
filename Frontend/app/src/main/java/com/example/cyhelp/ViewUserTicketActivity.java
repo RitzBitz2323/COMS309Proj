@@ -193,6 +193,7 @@ public class ViewUserTicketActivity extends AppCompatActivity {
                 intent1.putExtra("actorId", UserId);
                 intent1.putExtra("userName", Username);
                 intent1.putExtra("ticketTitle", Title);
+                intent1.putExtra("actorType", 0);
                 startActivity(intent1);
             }
         });

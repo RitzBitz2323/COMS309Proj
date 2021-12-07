@@ -3,10 +3,13 @@ package coms309.cyhelp.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -43,16 +46,21 @@ public class Actor {
 	private String home_address;
 	
 	// list of tickets that this actor is the customer of
-	@OneToMany
+	@OneToMany(cascade = CascadeType.ALL)
 	@JsonIgnore
 	@ApiModelProperty(notes = "List of tickets that this actor is the customer.")
 	private List<Ticket> customerTickets; 
 	
 	// list of tickets that this actor is the technician of
-	@OneToMany
+	@OneToMany(cascade = CascadeType.ALL)
 	@JsonIgnore
 	@ApiModelProperty(notes = "List of tickets that this actor is the technician.")
 	private List<Ticket> technicianTickets;
+	
+	@ManyToOne
+	@JsonIgnore
+	@ApiModelProperty(notes = "The Company that this Actor is associated with.")
+	private Company company;
 	
 	public Actor() {
 		this.customerTickets = new ArrayList<>();
@@ -77,7 +85,14 @@ public class Actor {
 	public int getId() {
 		return this.id;
 	}
-
+	
+	public void setCompany(Company company) {
+		this.company = company;
+	}
+	
+	public Company getCompany() {
+		return this.company;
+	}
 	
 	public void setCustomerTickets(List<Ticket> customerTickets) {
 		this.customerTickets = customerTickets;

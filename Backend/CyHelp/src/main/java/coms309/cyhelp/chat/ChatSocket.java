@@ -18,10 +18,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
-import coms309.cyhelp.model.Actor;
 import coms309.cyhelp.model.ChatMessage;
 import coms309.cyhelp.model.Ticket;
-import coms309.cyhelp.repository.ActorRepository;
 import coms309.cyhelp.repository.ChatMessageRepository;
 import coms309.cyhelp.repository.TicketRepository;
 

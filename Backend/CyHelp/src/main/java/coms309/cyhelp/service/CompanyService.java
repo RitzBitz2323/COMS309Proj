@@ -1,5 +1,7 @@
 package coms309.cyhelp.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,16 +24,64 @@ public class CompanyService {
 		if(findByUsername(company.getUsername()) == null) {
 			
 			Actor companyUser = new Actor(Actor.COMPANY, "", "", company.getUsername(), company.getPassword());
-			actorRepository.save(companyUser);
+			companyUser = actorRepository.save(companyUser);
 			
 			company.setUserId(companyUser.getId());
-			
 			companyRepository.save(company);
+			
+			companyUser.setCompany(company);
+			companyUser = actorRepository.save(companyUser);
 			
 			return company;
 		}
 		
 		return null;
+	}
+	
+	public List<Company> getCompanies() {
+		return companyRepository.findAll();
+	}
+	
+	public Company getCompany(int id) {
+		try {
+			return companyRepository.findById(id);
+		} catch(Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
+	public List<Actor> getEmployees(int id) {
+		try {
+			Company company = getCompany(id);
+			return company.getEmployees();
+		} catch(Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
+	
+	public Actor addEmployee(int id, Actor actor) {
+		try {
+			Company company = getCompany(id);
+			Actor tech = actorRepository.findById(actor.getId());
+			
+			if(tech.getUserType() == Actor.TECHNICIAN && company != null) {
+				
+				tech.setCompany(company);
+				company.addEmployees(tech);
+				
+				companyRepository.save(company);
+				actorRepository.save(tech);
+				
+				return tech;
+			
+			} else return null;
+		} catch(Exception e) {
+			e.printStackTrace();
+			return null;
+		}
 	}
 	
 	public Actor findByUsername(String username) {

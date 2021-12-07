@@ -41,11 +41,10 @@ public class Actor {
 	private long password;
 	@ApiModelProperty(notes = "The type of Actor: 0 = USER, 1 = TECHNICIAN, 2 = COMPANY, 3 = ADMINISTRATOR")
 	private int user_type;
-	@ApiModelProperty(notes = "The average rating of the actor.")
 	
 	@OneToOne(cascade = CascadeType.ALL)
 	@JsonIgnore
-    @JoinColumn(name = "rating")
+	@ApiModelProperty(notes = "The average rating of the actor.")
 	private Rating rating;
 	
 	@ApiModelProperty(notes = "The home address of the actor.")

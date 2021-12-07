@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import coms309.cyhelp.model.Actor;
+import coms309.cyhelp.model.Company;
 import coms309.cyhelp.model.Ticket;
 import coms309.cyhelp.repository.ActorRepository;
 
@@ -23,7 +24,10 @@ public class ActorService {
 		return null;
 	}
 	
-	
+	public Company getActorCompany(int id) {	
+		Actor actor = actorRepository.findById(id);
+		return actor.getCompany();
+	}
 	
 	public Actor updateActor(Actor actor) {
 		actorRepository.save(actor);

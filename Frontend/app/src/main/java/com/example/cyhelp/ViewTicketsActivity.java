@@ -131,6 +131,7 @@ public class ViewTicketsActivity extends AppCompatActivity {
     public void viewClosedTickets(View v) {
         Intent intent = new Intent(this, ViewUserClosedTicketsActivity.class);
         intent.putExtra("id", ID);
+        intent.putExtra("actorType", "user");
         startActivity(intent);
     }
 

@@ -27,6 +27,7 @@ public class ViewUserClosedTicketsActivity extends AppCompatActivity {
 
     String url = "http://coms-309-051.cs.iastate.edu:8080/actors/";
     int ID;
+    String actorType;
     ArrayAdapter adapter;
 
 
@@ -38,6 +39,9 @@ public class ViewUserClosedTicketsActivity extends AppCompatActivity {
         Intent intent = getIntent();
 
         ID = intent.getIntExtra("id", 2);
+        actorType = intent.getStringExtra("actorType");
+
+        System.out.println("Actor Type: " + actorType);
 
         url += ID + "/tickets";
 
@@ -80,6 +84,7 @@ public class ViewUserClosedTicketsActivity extends AppCompatActivity {
                 Intent intent = new Intent(ViewUserClosedTicketsActivity.this, ViewUserClosedTicketActivity.class);
                 intent.putExtra("TicketPosition", i);
                 intent.putExtra("UserId", ID);
+                intent.putExtra("actorType", actorType);
                 startActivity(intent);
             }
         });
@@ -100,7 +105,12 @@ public class ViewUserClosedTicketsActivity extends AppCompatActivity {
     }
 
     public void back(View v) {
-        Intent intent = new Intent(this, ViewTicketsActivity.class);
+        Intent intent;
+        if (actorType.equals("user")) {
+            intent = new Intent(this, ViewTicketsActivity.class);
+        } else {
+            intent = new Intent(this, TechHomeActivity.class);
+        }
         intent.putExtra("id", ID);
         startActivity(intent);
     }

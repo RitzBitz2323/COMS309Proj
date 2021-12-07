@@ -51,6 +51,7 @@ public class ViewUserClosedTicketActivity extends AppCompatActivity {
     protected TextView DescriptionText;
     protected TextView TechFullNameText;
     protected TextView TechUsernameText;
+    String actorType;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,6 +62,7 @@ public class ViewUserClosedTicketActivity extends AppCompatActivity {
         TicketPosition = intent.getIntExtra("TicketPosition", 1);
         ticketID = 0;
         UserId = intent.getIntExtra("UserId", 2);
+        actorType = intent.getStringExtra("actorType");
 
         TitleText = (TextView) findViewById(R.id.TicketTitle_ViewUserTicketActivity);
         UserFullNameText = (TextView) findViewById(R.id.UserFullName_ViewUserTicketActivity);
@@ -174,6 +176,7 @@ public class ViewUserClosedTicketActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(ViewUserClosedTicketActivity.this, ViewUserClosedTicketsActivity.class);
                 intent.putExtra("id", UserId);
+                intent.putExtra("actorType", actorType);
                 startActivity(intent);
             }
         });

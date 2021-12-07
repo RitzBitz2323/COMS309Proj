@@ -94,7 +94,10 @@ public class TechHomeActivity extends AppCompatActivity {
     }
 
     public void viewClosedTickets(View v) {
-
+        Intent intent = new Intent(this, ViewUserClosedTicketsActivity.class);
+        intent.putExtra("id", techID);
+        intent.putExtra("actorType", "tech");
+        startActivity(intent);
     }
 
     public void openMap(View v) {

@@ -44,7 +44,8 @@ public class Actor {
 	@ApiModelProperty(notes = "The average rating of the actor.")
 	
 	@OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "rating")
+	@JsonIgnore
+    //@JoinColumn(name = "rating")
 	private Rating rating;
 	
 	@ApiModelProperty(notes = "The home address of the actor.")

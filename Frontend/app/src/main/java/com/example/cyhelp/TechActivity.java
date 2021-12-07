@@ -166,9 +166,10 @@ public class TechActivity extends AppCompatActivity {
                                         JSONObject jsonObject = response.getJSONObject(i);
 
                                         int ticketCategoryID = jsonObject.getJSONObject("category").getInt("id");
+                                        int state = jsonObject.getInt("state");
 
                                         // only display ticket on map if category of ticket matches the category selected by technician
-                                        if (ticketCategoryID == categoryID) {
+                                        if (ticketCategoryID == categoryID && state == 0) {
 
                                             // get latitude and longitude for each ticket and store in corresponding list
                                             double latitudeU = jsonObject.getDouble("latitude");

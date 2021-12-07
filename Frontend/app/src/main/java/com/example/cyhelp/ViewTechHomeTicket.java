@@ -58,6 +58,7 @@ public class ViewTechHomeTicket extends AppCompatActivity {
         Intent intent = getIntent();
         TicketPosition = intent.getIntExtra("ticketPosition", 1);
         techID = intent.getIntExtra("techID", 2);
+        System.out.println("Tech ID in ViewTechHomeTicket: " + techID);
         ticketID = intent.getIntExtra("ticketID", 2);
 
         TitleText = (TextView) findViewById(R.id.TicketTitle_ViewUserTicketActivity);
@@ -190,7 +191,7 @@ public class ViewTechHomeTicket extends AppCompatActivity {
         requestQueue.add(jsonObjectRequest);
 
         Intent intent = new Intent(this, TechHomeActivity.class);
-        intent.putExtra("techID", techID);
+        intent.putExtra("id", techID);
         startActivity(intent);
     }
 

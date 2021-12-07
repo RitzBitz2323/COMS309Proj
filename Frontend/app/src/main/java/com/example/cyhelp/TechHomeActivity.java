@@ -37,6 +37,7 @@ public class TechHomeActivity extends AppCompatActivity {
         Intent intent = getIntent();
 
         techID = intent.getIntExtra("id", 2);
+        System.out.println("Tech ID in TechHomeActivity: " + techID);
 
         url += techID + "/tickets";
 

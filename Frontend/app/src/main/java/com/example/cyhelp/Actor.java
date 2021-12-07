@@ -127,4 +127,13 @@ public class Actor {
 
     }
 
+    public boolean closeTicket(Ticket ticket) {
+        if (ticket.getTicketState() == 2) {
+            ticket.closeTicket();
+            return true;
+        } else {
+            return false;
+        }
+    }
+
 }

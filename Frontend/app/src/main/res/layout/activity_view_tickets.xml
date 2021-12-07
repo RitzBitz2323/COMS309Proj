@@ -22,6 +22,7 @@
         android:id="@+id/button3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:backgroundTint="#58D50A"
         android:onClick="createNewTicket"
         android:text="Create New Ticket"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -60,12 +61,13 @@
         android:id="@+id/button9"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:backgroundTint="@color/red_highlight"
+        android:onClick="viewClosedTickets"
         android:text="View Closed Tickets"
         app:layout_constraintBottom_toTopOf="@+id/button3"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/list_view"
-        app:layout_constraintVertical_bias="0.964"
-        android:onClick="viewClosedTickets"/>
+        app:layout_constraintVertical_bias="0.964" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

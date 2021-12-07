@@ -3,11 +3,14 @@ package coms309.cyhelp.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -38,7 +41,11 @@ public class Actor {
 	@ApiModelProperty(notes = "The type of Actor: 0 = USER, 1 = TECHNICIAN, 2 = COMPANY, 3 = ADMINISTRATOR")
 	private int user_type;
 	@ApiModelProperty(notes = "The average rating of the actor.")
-	private float rating;
+	
+	@OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "rating")
+	private Rating rating;
+	
 	@ApiModelProperty(notes = "The home address of the actor.")
 	private String home_address;
 	
@@ -57,7 +64,7 @@ public class Actor {
 	public Actor() {
 		this.customerTickets = new ArrayList<>();
 		this.technicianTickets = new ArrayList<>();
-		this.rating = 5;
+		this.rating = new Rating();
 		this.home_address = "";
 	}
 	
@@ -135,12 +142,13 @@ public class Actor {
 		return this.user_type;
 	}
 	
-	public void setRating(float n) {
-		this.rating = n;
+	public void setRating(double n) {
+		this.rating.setRating(n);
 	}
 	
-	public float getRating() {
-		return this.rating;
+	public double getRating() {
+		double rate = this.rating.getRating();
+		return rate;
 	}
 	
 	public void setHomeAddress(String address) {

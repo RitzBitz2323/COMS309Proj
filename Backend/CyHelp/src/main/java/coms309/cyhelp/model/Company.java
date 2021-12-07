@@ -22,12 +22,16 @@ public class Company {
 
 	@Id
 	@GeneratedValue(strategy= GenerationType.IDENTITY)
+	@ApiModelProperty(notes = "The id of the company.")
 	private int id;
 	
-	@ApiModelProperty(notes = "The name of the Company")
+	@ApiModelProperty(notes = "The name of the Company.")
 	private String name;
 	
+	@ApiModelProperty(notes = "The username of the company user.")
 	private String username;
+	
+	@ApiModelProperty(notes = "The password of the company user.")
 	private long password;
 	
 	@ApiModelProperty(notes = "The id of the actor associated with this company.")
@@ -35,6 +39,7 @@ public class Company {
 	
 	@OneToMany(mappedBy="company", cascade=CascadeType.ALL, fetch = FetchType.LAZY)
 	@JsonIgnore
+	@ApiModelProperty(notes = "The list of technicians that are employees of this company.")
 	private List<Actor> companyEmployees = new ArrayList<Actor>();
 	
 	public Company() {}

@@ -4,10 +4,10 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import io.swagger.annotations.ApiModelProperty;
 
@@ -22,15 +22,16 @@ public class Rating {
 	/** Id associated with USER**/
 	@Id
 	@GeneratedValue(strategy= GenerationType.IDENTITY)
-	@ApiModelProperty(notes = "Identification Number of the Rating to associate with user",name="userid")
+	@ApiModelProperty(notes = "Identification Number of the Rating to associate with user", name="userid")
 	private int userid;
 	
-	@OneToOne(mappedBy = "ratings")
+	@JsonIgnore
+	@OneToOne(mappedBy = "rating")
     private Actor actor;
 	/**
 	 * Rating number
 	 */
-	@ApiModelProperty(notes = "Rating number out of 5" ,name="rating")
+	@ApiModelProperty(notes = "Rating number out of 5", name="rating")
 	private double ratingNum;
 	
 	public Rating() {}

@@ -71,6 +71,9 @@ public class ActorController {
 		return actorService.updateActor(actor);
 	}
 	
+	
+	
+	
 	@ApiOperation(value = "Checks if the provided username and password is correct and returns the corresponding actor.")
 	@PostMapping("/actors/login")
 	public @ResponseBody Actor actorLogin(@RequestBody Actor actor) {
@@ -87,7 +90,9 @@ public class ActorController {
 	public @ResponseBody Actor findActorById(@PathVariable int id) {
 		return actorService.findById(id);
 	}
-
+	
+	
+	
 	/**
 	 * Get the tickets of the specified Actor.
 	 * @param id

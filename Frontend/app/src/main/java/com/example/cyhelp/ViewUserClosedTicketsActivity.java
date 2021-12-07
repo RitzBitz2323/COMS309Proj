@@ -1,5 +1,7 @@
 package com.example.cyhelp;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -7,8 +9,6 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
-
-import androidx.appcompat.app.AppCompatActivity;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -23,12 +23,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-/**
- * ViewTicketsActivity allows a user to view all of their tickets.
- *
- * @author Parthiv Ganguly
- */
-public class ViewTicketsActivity extends AppCompatActivity {
+public class ViewUserClosedTicketsActivity extends AppCompatActivity {
 
     String url = "http://coms-309-051.cs.iastate.edu:8080/actors/";
     int ID;
@@ -38,7 +33,7 @@ public class ViewTicketsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_view_tickets);
+        setContentView(R.layout.activity_view_user_closed_tickets);
 
         Intent intent = getIntent();
 
@@ -59,11 +54,7 @@ public class ViewTicketsActivity extends AppCompatActivity {
                         String title = jsonObject.getString("title");
                         int state = jsonObject.getInt("state");
 
-                        if (state == 1) {
-                            title += " (Accepted)";
-                        }
-
-                        if (state != 3) {
+                        if (state == 3) {
                             jsonResponses.add(title);
                         }
                     }
@@ -86,34 +77,14 @@ public class ViewTicketsActivity extends AppCompatActivity {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Intent intent = new Intent(ViewTicketsActivity.this, ViewUserTicketActivity.class);
+                Intent intent = new Intent(ViewUserClosedTicketsActivity.this, ViewUserClosedTicketActivity.class);
                 intent.putExtra("TicketPosition", i);
                 intent.putExtra("UserId", ID);
                 startActivity(intent);
             }
         });
 
-        Button logout = (Button) findViewById(R.id.logout_Button_ViewTicketsActivity);
-        logout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(ViewTicketsActivity.this, MainActivity.class);
-                startActivity(intent);
-            }
-        });
 
-
-    }
-
-    /**
-     * This method is called when the Create New Ticket button is pressed by the user.
-     * It starts the Create New Ticket Activity
-     * @param view
-     */
-    public void createNewTicket(View view) {
-        Intent intent = new Intent(this, CreateNewTicketActivity.class);
-        intent.putExtra("id", ID);
-        startActivity(intent);
     }
 
     /**
@@ -128,10 +99,9 @@ public class ViewTicketsActivity extends AppCompatActivity {
         listView.setAdapter(adapter);
     }
 
-    public void viewClosedTickets(View v) {
-        Intent intent = new Intent(this, ViewUserClosedTicketsActivity.class);
+    public void back(View v) {
+        Intent intent = new Intent(this, ViewTicketsActivity.class);
         intent.putExtra("id", ID);
         startActivity(intent);
     }
-
 }

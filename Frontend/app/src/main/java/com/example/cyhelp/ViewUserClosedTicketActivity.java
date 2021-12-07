@@ -1,13 +1,13 @@
 package com.example.cyhelp;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import androidx.appcompat.app.AppCompatActivity;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.NetworkError;
@@ -26,12 +26,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-/**
- * ViewUserTicketActivity allows a user to view the details of a ticket they select from the ViewTicketsActivity.
- *
- * @author Nick Sandeen
- */
-public class ViewUserTicketActivity extends AppCompatActivity {
+public class ViewUserClosedTicketActivity extends AppCompatActivity {
 
     protected int UserId;
     protected int TicketPosition;
@@ -60,7 +55,7 @@ public class ViewUserTicketActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_view_user_ticket);
+        setContentView(R.layout.activity_view_user_closed_ticket);
 
         Intent intent = getIntent();
         TicketPosition = intent.getIntExtra("TicketPosition", 1);
@@ -98,7 +93,7 @@ public class ViewUserTicketActivity extends AppCompatActivity {
                     for(int i = 0; i < response.length(); i++){
                         int state = response.getJSONObject(i).getInt("state");
 
-                        if (state != 3) {
+                        if (state == 3) {
                             count++;
                         }
 
@@ -177,28 +172,13 @@ public class ViewUserTicketActivity extends AppCompatActivity {
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(ViewUserTicketActivity.this, ViewTicketsActivity.class);
+                Intent intent = new Intent(ViewUserClosedTicketActivity.this, ViewUserClosedTicketsActivity.class);
                 intent.putExtra("id", UserId);
                 startActivity(intent);
-            }
-        });
-
-        Button chatButton = (Button) findViewById(R.id.Chat_Button_ViewUserTicketActivity);
-        chatButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent1 = new Intent(ViewUserTicketActivity.this, User_Chat_Activity.class);
-                intent1.putExtra("TicketPosition", TicketPosition);
-                intent1.putExtra("ticketID", ticketID);
-                intent1.putExtra("actorId", UserId);
-                intent1.putExtra("userName", Username);
-                intent1.putExtra("ticketTitle", Title);
-                startActivity(intent1);
             }
         });
 
 
 
     }
-
 }

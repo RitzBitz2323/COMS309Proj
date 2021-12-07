@@ -23,6 +23,12 @@
         android:theme="@style/Theme.CyHelp"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".ViewUserClosedTicketActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ViewUserClosedTicketsActivity"
+            android:exported="false" />
+        <activity
             android:name=".ViewTechHomeTicket"
             android:exported="false" />
         <activity

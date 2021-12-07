@@ -6,9 +6,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import io.swagger.annotations.ApiModelProperty;
 
@@ -26,6 +25,8 @@ public class Rating {
 	@ApiModelProperty(notes = "Identification Number of the Rating to associate with user",name="userid")
 	private int userid;
 	
+	@OneToOne(mappedBy = "ratings")
+    private Actor actor;
 	/**
 	 * Rating number
 	 */

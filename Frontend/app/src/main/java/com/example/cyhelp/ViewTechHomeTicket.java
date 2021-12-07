@@ -1,7 +1,5 @@
 package com.example.cyhelp;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -9,6 +7,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.NetworkError;
@@ -41,6 +41,7 @@ public class ViewTechHomeTicket extends AppCompatActivity {
     protected String UserFirstName;
     protected String UserLastName;
     protected String UserFullName;
+    protected String techUsername;
     protected TextView TitleText;
     protected TextView UserFullNameText;
     protected TextView UsernameText;
@@ -59,6 +60,7 @@ public class ViewTechHomeTicket extends AppCompatActivity {
         TicketPosition = intent.getIntExtra("ticketPosition", 1);
         techID = intent.getIntExtra("techID", 2);
         ticketID = intent.getIntExtra("ticketID", 2);
+        techUsername = "N/A";
 
         TitleText = (TextView) findViewById(R.id.TicketTitle_ViewUserTicketActivity);
         UserFullNameText = (TextView) findViewById(R.id.UserFullName_ViewUserTicketActivity);
@@ -98,6 +100,7 @@ public class ViewTechHomeTicket extends AppCompatActivity {
                         if (count == TicketPosition) {
                             jsonObject = response.getJSONObject(i);
                             ticketID = jsonObject.getInt("id");
+                            techUsername = jsonObject.getJSONObject("technician").getString("username");
                             break;
                         }
                     }
@@ -200,6 +203,13 @@ public class ViewTechHomeTicket extends AppCompatActivity {
     }
 
     public void openChat(View view) {
-
+        Intent intent1 = new Intent(ViewTechHomeTicket.this, User_Chat_Activity.class);
+        intent1.putExtra("TicketPosition", TicketPosition);
+        intent1.putExtra("ticketID", ticketID);
+        intent1.putExtra("actorId", techID);
+        intent1.putExtra("userName", techUsername);
+        intent1.putExtra("ticketTitle", Title);
+        intent1.putExtra("actorType", 1);
+        startActivity(intent1);
     }
 }

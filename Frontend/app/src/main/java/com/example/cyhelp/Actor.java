@@ -26,7 +26,12 @@ public class Actor {
      * @param actorID
      */
     public Actor (String username, String firstName, String lastName, String address, int actorType, int actorID) {
-
+        this.username = username;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.address = address;
+        this.actorType = actorType;
+        this.actorID = actorID;
     }
 
     /**
@@ -104,6 +109,22 @@ public class Actor {
     public boolean actorIsAdmin() {
         if (actorType == 3) { return true; }
         return false;
+    }
+
+    public void createTicket(int ticketId, String title, String description, String address) {
+        Ticket ticket = new Ticket(ticketId, this, title, description, address);
+    }
+
+    public boolean acceptTicket(Ticket ticket) {
+
+        if (ticket.getTicketState() == 1) {
+            ticket.acceptTicket(this);
+            return true;
+        } else {
+            return false;
+        }
+
+
     }
 
 }

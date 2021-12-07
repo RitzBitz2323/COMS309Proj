@@ -62,6 +62,7 @@ public class ViewUserClosedTicketActivity extends AppCompatActivity {
         TicketPosition = intent.getIntExtra("TicketPosition", 1);
         ticketID = 0;
         UserId = intent.getIntExtra("UserId", 2);
+        System.out.println("Tech/User ID in ViewUserClosedTicketActivity: " + UserId);
         actorType = intent.getStringExtra("actorType");
 
         TitleText = (TextView) findViewById(R.id.TicketTitle_ViewUserTicketActivity);

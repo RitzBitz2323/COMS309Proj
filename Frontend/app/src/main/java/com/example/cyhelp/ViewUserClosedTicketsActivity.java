@@ -39,6 +39,7 @@ public class ViewUserClosedTicketsActivity extends AppCompatActivity {
         Intent intent = getIntent();
 
         ID = intent.getIntExtra("id", 2);
+        System.out.println("Tech/User ID in ViewUserClosedTicketsActivity: " + ID);
         actorType = intent.getStringExtra("actorType");
 
         System.out.println("Actor Type: " + actorType);
@@ -52,7 +53,7 @@ public class ViewUserClosedTicketsActivity extends AppCompatActivity {
             @Override
             public void onResponse(JSONArray response) {
                 try {
-                    //System.out.println(response);
+                    System.out.println("Closed Tickets response: " + response);
                     for(int i = 0; i < response.length(); i++){
                         JSONObject jsonObject = response.getJSONObject(i);
                         String title = jsonObject.getString("title");

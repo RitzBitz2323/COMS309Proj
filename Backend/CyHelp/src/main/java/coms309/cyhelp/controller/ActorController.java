@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import coms309.cyhelp.model.Actor;
+import coms309.cyhelp.model.Company;
 import coms309.cyhelp.model.Ticket;
 import coms309.cyhelp.service.ActorService;
 import io.swagger.annotations.Api;
@@ -91,7 +92,11 @@ public class ActorController {
 		return actorService.findById(id);
 	}
 	
-	
+	@ApiOperation("Gets the company of the actor.")
+	@GetMapping("/actors/{id}/company")
+	public @ResponseBody Company getActorCompany(@PathVariable int id) {
+		return actorService.getActorCompany(id);
+	}
 	
 	/**
 	 * Get the tickets of the specified Actor.

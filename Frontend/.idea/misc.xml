@@ -12,9 +12,12 @@
         <entry key="..\:/Users/nicks/Git/Projects/3_mc_2/Frontend/app/src/main/res/layout/activity_main.xml" value="0.371875" />
         <entry key="..\:/Users/nicks/Git/Projects/3_mc_2/Frontend/app/src/main/res/layout/activity_sign_up.xml" value="0.33" />
         <entry key="..\:/Users/nicks/Git/Projects/3_mc_2/Frontend/app/src/main/res/layout/activity_tech.xml" value="0.371875" />
+        <entry key="..\:/Users/nicks/Git/Projects/3_mc_2/Frontend/app/src/main/res/layout/activity_tech_home.xml" value="0.371875" />
         <entry key="..\:/Users/nicks/Git/Projects/3_mc_2/Frontend/app/src/main/res/layout/activity_tech_ticket_finder_map.xml" value="0.371875" />
         <entry key="..\:/Users/nicks/Git/Projects/3_mc_2/Frontend/app/src/main/res/layout/activity_user.xml" value="0.371875" />
-        <entry key="..\:/Users/nicks/Git/Projects/3_mc_2/Frontend/app/src/main/res/layout/activity_view_tech_ticket.xml" value="0.5" />
+        <entry key="..\:/Users/nicks/Git/Projects/3_mc_2/Frontend/app/src/main/res/layout/activity_user_chat.xml" value="0.371875" />
+        <entry key="..\:/Users/nicks/Git/Projects/3_mc_2/Frontend/app/src/main/res/layout/activity_view_tech_home_ticket.xml" value="0.371875" />
+        <entry key="..\:/Users/nicks/Git/Projects/3_mc_2/Frontend/app/src/main/res/layout/activity_view_tech_ticket.xml" value="0.33" />
         <entry key="..\:/Users/nicks/Git/Projects/3_mc_2/Frontend/app/src/main/res/layout/activity_view_tickets.xml" value="0.33" />
         <entry key="..\:/Users/nicks/Git/Projects/3_mc_2/Frontend/app/src/main/res/layout/activity_view_user_ticket.xml" value="0.33" />
         <entry key="..\:/Users/nicks/Git/Projects/3_mc_2/Frontend/app/src/main/res/layout/drawer_items.xml" value="0.3578125" />
@@ -33,12 +36,9 @@
         <entry key="..\:/Users/parth/Documents/COMS_309/3_mc_2/Frontend/app/src/main/res/layout/activity_tech_home.xml" value="0.2" />
         <entry key="..\:/Users/parth/Documents/COMS_309/3_mc_2/Frontend/app/src/main/res/layout/activity_user.xml" value="0.22" />
         <entry key="..\:/Users/parth/Documents/COMS_309/3_mc_2/Frontend/app/src/main/res/layout/activity_user_chat.xml" value="0.22" />
-        <entry key="..\:/Users/parth/Documents/COMS_309/3_mc_2/Frontend/app/src/main/res/layout/activity_view_tech_closed_tickets.xml" value="0.2" />
         <entry key="..\:/Users/parth/Documents/COMS_309/3_mc_2/Frontend/app/src/main/res/layout/activity_view_tech_home_ticket.xml" value="0.2" />
         <entry key="..\:/Users/parth/Documents/COMS_309/3_mc_2/Frontend/app/src/main/res/layout/activity_view_tech_ticket.xml" value="0.25" />
         <entry key="..\:/Users/parth/Documents/COMS_309/3_mc_2/Frontend/app/src/main/res/layout/activity_view_tickets.xml" value="0.20416666666666666" />
-        <entry key="..\:/Users/parth/Documents/COMS_309/3_mc_2/Frontend/app/src/main/res/layout/activity_view_user_closed_ticket.xml" value="0.22" />
-        <entry key="..\:/Users/parth/Documents/COMS_309/3_mc_2/Frontend/app/src/main/res/layout/activity_view_user_closed_tickets.xml" value="0.2" />
         <entry key="..\:/Users/parth/Documents/COMS_309/3_mc_2/Frontend/app/src/main/res/layout/activity_view_user_ticket.xml" value="0.2" />
         <entry key="..\:/Users/parth/Documents/COMS_309/3_mc_2/Frontend/app/src/main/res/layout/spinner_item.xml" value="0.1" />
         <entry key="..\:/Users/parth/Documents/COMS_309/3_mc_2/Frontend/app/src/main/res/layout/spinner_item_sign_up.xml" value="0.1" />

@@ -23,6 +23,9 @@
         android:theme="@style/Theme.CyHelp"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".JoinCompanyActivity"
+            android:exported="false" />
+        <activity
             android:name=".ViewUserClosedTicketActivity"
             android:exported="false" />
         <activity

@@ -3,6 +3,7 @@ package com.example.cyhelp;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -117,5 +118,11 @@ public class TechHomeActivity extends AppCompatActivity {
 
         ListView listView = (ListView) findViewById(R.id.list_view);
         listView.setAdapter(adapter);
+    }
+
+    public void joinCompany(View v) {
+        Intent intent = new Intent(this, JoinCompanyActivity.class);
+        intent.putExtra("techID", techID);
+        startActivity(intent);
     }
 }

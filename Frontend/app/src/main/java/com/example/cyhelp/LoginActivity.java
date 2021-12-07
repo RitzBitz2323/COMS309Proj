@@ -76,6 +76,8 @@ public class LoginActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
 
+            System.out.println("User Log In Object: " + userLogin);
+
             /**
              * Creates JsonObjectRequest
              */
@@ -96,6 +98,8 @@ public class LoginActivity extends AppCompatActivity {
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
+
+                    System.out.println("User ID: " + userID + " User Type: " + userType);
 
                     //Check user type to determine what screen to send them to upon successful login.
                     if (userType == 0){

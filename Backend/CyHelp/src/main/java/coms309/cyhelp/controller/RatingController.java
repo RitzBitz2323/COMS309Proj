@@ -34,7 +34,7 @@ public class RatingController {
 	public @ResponseBody List<Rating> getAllRatings() {
 		return ratingService.getAllRatings();
 	}
-	
+
 	@GetMapping("/ratings/{id}")
 	public Rating getRating(@PathVariable int id) {
 		return ratingService.getRating(id);

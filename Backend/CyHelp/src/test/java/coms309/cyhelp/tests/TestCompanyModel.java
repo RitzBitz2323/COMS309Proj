@@ -27,6 +27,7 @@ public class TestCompanyModel{
 		temp.addEmployees(tempTwo);
 		temp.addEmployees(tempThree);
 		
+		
 		List<Actor> employees = asList(tempOne, tempTwo, tempThree);
 		assertTrue(temp.getEmployees().equals(employees));
 		 
